@@ -1,0 +1,14 @@
+@import url("~leaflet/dist/leaflet.css");
+
+.leaflet-container {
+  width: 100%;
+  height: 500px;
+}
+
+.outerMap {
+    margin: 0 auto;
+    width: 80%;
+    min-width: 700px;
+
+
+ }
