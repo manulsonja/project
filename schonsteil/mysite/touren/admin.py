@@ -2,11 +2,22 @@ from xml.dom import HierarchyRequestErr
 from django.contrib import admin
 from .models import *
 
+class PhotoAdmin(admin.StackedInline):
+    model = Image
+
+
+
+
+
+
 
 class WandernAdmin(admin.ModelAdmin):
     model = Wandern
-    readonly_fields=('track',)
-      
+    exclude=('track',)
+    readonly_fields=('distance','geojson_track',)
+    inlines = [PhotoAdmin]
+
+
 # Register your models here.
 admin.site.register(Klettertour)
 admin.site.register(Skitour)

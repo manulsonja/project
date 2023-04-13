@@ -12,22 +12,23 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function InfoBox() {
+export default function InfoBox(props) {
+  const { data } = props;
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', backgroundColor: '', padding: '10px 10px 10px' }}>
+            <h3>Tourdaten</h3>
+
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={3}>
-          <Item>1</Item>
+        <Grid item xs={4}>
+          <Item>Distanz<h1>{data.posts.distance}</h1></Item>
         </Grid>
-        <Grid item xs={3}>
-          <Item>2</Item>
+        <Grid item xs={4}>
+          <Item>Hohenmeter<h1>12000m</h1></Item>
         </Grid>
-        <Grid item xs={6}>
-          <Item>3</Item>
+        <Grid item xs={4}>
+          <Item>Zeitbedarf<h1>{data.posts.tour_duration}</h1></Item>
         </Grid>
-        <Grid item xs={6}>
-          <Item>4</Item>
-        </Grid>
+      
       </Grid>
     </Box>
   );

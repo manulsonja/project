@@ -15,7 +15,7 @@ import Register from './components/register';
 import Logout from './components/logout';
 import Login from './components/login';
 import Leaflet from './components/map';
-
+import Gallery from './components/gallery.js';
 
 const routing = (
 	<BrowserRouter>

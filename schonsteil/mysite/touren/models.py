@@ -8,15 +8,23 @@ from django.contrib.gis.geos import Point
 from utils.parser.parse import parse_gpx
 from django.conf import settings
 from django.utils.text import slugify
-
+from shapely import wkt
+import pyproj
+from shapely.ops import transform
+from functools import partial
+from galleryfield.fields import GalleryField
+from django.utils.translation import gettext_lazy as _
+import shapely
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
 
 class Tour(models.Model):
-
+    tour_duration = models.DurationField(null=True)
     gpxfile = models.FileField(upload_to='files', null=True)
-    track = models.LineStringField(null=True, dim=3)
-    tourtype=models.CharField(max_length=30, editable=False)
+    track = models.LineStringField(null=True, dim=3, srid=4326)
+    geojson_track = models.TextField(null=True)
+
+    tourtype = models.CharField(max_length=30, editable=False)
     class TourObjects(models.Manager):
         def get_queryset(self):
             return super().get_queryset() .filter(status='published')
@@ -33,6 +41,7 @@ class Tour(models.Model):
     title = models.CharField(max_length=30)
     subtitle = models.CharField(max_length=100)
     text =  tinymce_models.HTMLField()
+    distance = models.FloatField(null=True)
     image = models.ImageField("Image", upload_to=upload_to, default='tour/default.jpg')
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
@@ -50,18 +59,16 @@ class Tour(models.Model):
 
     class Meta:
         ordering = ('-published',)
-
     def __str__(self):
         return self.title
-
-   
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+class Image(models.Model):
+    image = models.ImageField(upload_to=upload_to)
+    parent = models.ForeignKey(Tour,on_delete=models.CASCADE,related_name="album")
     
-
-
 class Klettertour(Tour):
     protection_choices=[(0,"alpin"),(1,"mittel"),(2,"gut"),(3,"sehr gut")]
     grades_choices=[("1",0),("1+",1),
@@ -72,17 +79,14 @@ class Klettertour(Tour):
                     ("6-",14),("6",15),("6+",16),
                     ("7-",17),("7",18),("7+",19),
                     ("8-",20),("8",21),("8+",22),
-                    ("9-",23),("9",24),("9+",25)
-
-                   ]
+                    ("9-",23),("9",24),("9+",25)]
     g_choices = []  
     for grade in grades_choices:
         g_choices.append((grade[1],grade[0]))
 
     climbing_grades=models.IntegerField(
         choices=g_choices,
-        default=1,
-    )
+        default=1,)
 
     protection=models.IntegerField(
         choices=protection_choices,
@@ -108,9 +112,20 @@ class Hochtour(Tour):
 
 class Wandern(Tour):
     def save(self, *args, **kwargs):
+        
         file_url = self.gpxfile
         ls = parse_gpx(file_url)
         self.track = ls
+        shapely_ls = wkt.loads(ls.wkt)
+        self.geojson_track = shapely.to_geojson(shapely_ls)
+        
+        project = partial(
+            pyproj.transform,
+            pyproj.Proj('EPSG:4326'),
+            pyproj.Proj('EPSG:32633'))
+
+        line2 = transform(project, shapely_ls)
+        self.distance = line2.length
         self.tourtype = "Klettern"
         self.tourtype = "Wandern"
         super().save(*args, **kwargs)

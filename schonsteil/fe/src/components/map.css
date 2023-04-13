@@ -1,4 +1,5 @@
 @import url("~leaflet/dist/leaflet.css");
+@import url("~react-image-gallery/styles/css/image-gallery.css");
 
 .leaflet-container {
   width: 100%;
@@ -7,7 +8,6 @@
 
 .outerMap {
     margin: 0 auto;
-    width: 80%;
     min-width: 700px;
 
 

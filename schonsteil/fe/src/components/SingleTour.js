@@ -8,17 +8,19 @@ import Typography from '@material-ui/core/Typography';
 import Rating from '@mui/material/Rating';
 import AuthorCard from './authorCard.tsx';
 import InfoBox from './box.tsx';
+import Gallery from './gallery.js';
+import './singlePost.css'
+import DetailMap from './detailMap.js';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		marginTop: theme.spacing(8),
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center',
-	},
+		alignItems: 'center',},
+
 	image: {
-		width:'100%'
-	
+		width:'100%'	
 	},
 }));
 
@@ -37,7 +39,6 @@ export default function SingleTour() {
 	}, [setData]);
 
 	const [value, setValue] = useState({ value: 3 });
-
 	useEffect(() => {
 	
 	}, [setValue]);
@@ -45,47 +46,29 @@ export default function SingleTour() {
 
 
 	return (
-		
 		<Container component="main" maxWidth="xl">
-
 				<CssBaseline />
-					<Container maxWidth="sm">
-						<div className={classes.paper}>
-							<img src={data.posts.image} className={classes.image}/>
-						</div>
+					<Container maxWidth="sm">				
 				</Container>
-
-
-				<Container maxWidth="md"
-							>
-			{/* 	<Typography component="legend">Controlled</Typography>
-					<Rating
-					name="simple-controlled"
-					value={value}
-					onChange={(event, newValue) => {
-						setValue(newValue);
-					}}
-					/> */}
-						<Typography component="legend"></Typography>
-						<Rating name="read-only" value={tour_rating} readOnly />
-					
-				</Container>
-
-
-
-			<div className={classes.heroContent}>
 				<Container maxWidth="md">
-
 					<Typography
 						component="h1"
 						variant="h2"
 						align="center"
 						color="textPrimary"
-						gutterBottom
-					>
+						gutterBottom>
 						{data.posts.title}
 					</Typography>
-					<InfoBox/>
+					<div className="rating"> 
+							<Rating name="read-only" value={tour_rating} readOnly />			
+        				</div>
+					<Gallery props={data.posts.photoalbum}/>
+					<InfoBox data={data}/>
+					<DetailMap data={data}/>			
+				</Container>
+
+			<div className={classes.heroContent}>
+				<Container maxWidth="md">		
 					<Typography
 						variant="h5"
 						align="left"

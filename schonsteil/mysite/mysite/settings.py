@@ -15,7 +15,6 @@ SECRET_KEY = '5i3*6r1r%6l3r^l_%=i=zkl2$_rms65=s$hwf&8&6ei6+882%5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
@@ -41,10 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'sorl.thumbnail',
+    'galleryfield',
     'tinymce',
     'rest_framework',
     'users',
     'touren',
+    'mountain_huts',
     'api',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework_simplejwt',
