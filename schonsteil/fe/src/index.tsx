@@ -27,8 +27,8 @@ const routing = (
 					<Route path="/login" element={<Login/>} />
 					<Route path="/logout" element={<Logout/>} />
 				</Routes>
-			<Footer />
-	</BrowserRouter>
+{/* 			<Footer />
+ */}	</BrowserRouter>
 );
 
 ReactDOM.render(routing, document.getElementById('root'));

@@ -12,13 +12,12 @@ const icon = L.icon({
   iconAnchor: [13,41]
 });
 
-export default function Leaflet(props) {
+export default function Leaflet(props, screen) {
     const position = [47.259659,11.400375]
     const { data } = props;
     const generate_markers = (data) => {
-      if ((!data || data.length === 0) ) return;
-      return(data.map((datapoint) => {
-        console.log(typeof datapoint.starting_pnt[0])
+      if ((!data.posts || data.posts.length === 0) ) return;
+      return(data.posts.map((datapoint) => {
           return ( 
           <Marker position={[datapoint.starting_pnt[0],datapoint.starting_pnt[1]]} icon={icon}>
              <Popup><Link
@@ -33,33 +32,39 @@ export default function Leaflet(props) {
       }))
     
     }
+    const resize = (data) => {
+      if ((!data.screenSize || data.screenSize.length === 0) ) return;
+      console.log(data.screenSize.height)
+      return (data.screenSize.height-120)
 
+    }
     function MyComponent() {
       const map = useMap()
-      console.log('map center:', map.getBounds())
       return null
     }
     function MyComponentTwo() {
       const map = useMapEvent('zoomanim', () => {
-        console.log(map.getBounds())
       })
       return null
     }
     function MyComponentThree() {
       const map = useMapEvent('mouseup', () => {
-        console.log(map.getBounds())
       })
       return null
     }
   
 return (
-    <div className="outerMap" style={{"height" : "500px"}}>
+  <div className="outerMap"  style={{height:  resize(data)
+  }} 
+  >
   <MapContainer center={position} zoom={11} scrollWheelZoom={false}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
     />
-
+{/*     https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png
+https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
+ */}    
 {generate_markers(data)}
 
  

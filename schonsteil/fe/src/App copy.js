@@ -13,10 +13,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import ChipsArray from './components/chips.tsx';
 
-function getCurrentDimension(){
-    return { width: window.innerWidth, height: window.innerHeight }}
-
-const query_string="?tourtypes="
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -32,7 +28,9 @@ const names = [
   'ht',
   'kt',
   'haf',
-  'st', ];
+  'st',
+];
+const query_string="?tourtypes="
 
 function App() {
 	const [personName, setPersonName] = React.useState([]);
@@ -40,7 +38,6 @@ function App() {
 	const [appState, setAppState] = useState({
 		loading: false,
 		posts: null,
-		screenSize: getCurrentDimension(),
 	});
 
 	useEffect(() => {
@@ -65,18 +62,12 @@ function App() {
 		typeof value === 'string' ? value.split(',') : value
 	  );
 	};
-	const handleResize = () => {
-		setAppState({ ...appState, screenSize: getCurrentDimension() });}
-
 
 	return (
-		window.addEventListener('resize', handleResize),
-
 		<div className="App">
-			 <div className="FilterBar">
-				<h1>Tourentyp</h1>
-      <FormControl sx={{ m: 0.5, width: 300 }}>
-        {/* <InputLabel id="demo-multiple-checkbox-label"></InputLabel> */}
+			 <div>
+      <FormControl sx={{ m: 1, width: 300 }}>
+        <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
@@ -95,12 +86,11 @@ function App() {
           ))}
         </Select>
       </FormControl>
-{/* 	  <ChipsArray/>
- */}    </div>
-			<div className='outerBox'>
-			<div className='leftColumn'><Leaflet data={appState}/></div>
-			<div className='rightColumn' style={{height:appState.screenSize.height-120}}><PostLoading isLoading={appState.loading} posts={appState.posts} /></div>
-			</div>
+	  <ChipsArray/>
+    </div>
+			<div><Leaflet data={appState.posts}/></div>
+			<h1>Neueste Touren</h1>
+			<PostLoading isLoading={appState.loading} posts={appState.posts} />
 		</div>
 	);
 }

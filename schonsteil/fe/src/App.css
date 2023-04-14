@@ -1,7 +1,28 @@
+
 .App {
   text-align: center;
+ 
 }
+#demo-multiple-checkbox {
+  height: 10px,
+}
+.FilterBar {
+  height: 65px;
+  box-shadow: 0 4px 2px -2px gray;
+  position: relative;
+  width: 100%;
+  z-index: 10000;
+  text-align: left;
 
+}
+.FilterBar h1 {
+  color: black;
+  float: left;
+  margin: 20px 20px 10px 20px;
+  font-size: 18px;
+
+
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -25,7 +46,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: white;
 }
 
 @keyframes App-logo-spin {

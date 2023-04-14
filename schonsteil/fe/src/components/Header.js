@@ -11,12 +11,20 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
 	appBar: {
 		borderBottom: `1px solid ${theme.palette.divider}`,
+		height: "55px",
+		backgroundColor: '#272727',
+ 
 	},
 	link: {
-		margin: theme.spacing(1, 1.5),
+		margin: theme.spacing(1, 1.5), 
+		color: 'white',
+		borderColor: 'white',
+
 	},
 	toolbarTitle: {
 		flexGrow: 1,
+		color: 'white',
+		fontWeight: 700,
 	},
 }));
 
@@ -32,22 +40,22 @@ function Header() {
 				className={classes.appBar}
 			>
 				<Toolbar className={classes.toolbar}>
-					<Typography
-						variant="h6"
-						color="inherit"
+				 	<Typography
+						variant="button"
 						noWrap
 						className={classes.toolbarTitle}
-					>
+					> 
 						<Link
+							className={classes.link}
 							component={NavLink}
 							to="/"
 							underline="none"
-							color="textPrimary"
 						>
 							Schon steil.com
 						</Link>
-					</Typography>
-					<nav>
+ 					</Typography>
+ 					<nav 
+>
 						<Link
 							color="textPrimary"
 							href="#"

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: '56.25%', // 16:9
 	},
 	link: {
-		margin: theme.spacing(1, 1.5),
+		margin: theme.spacing(0, 1.5),
 	},
 	cardHeader: {
 		backgroundColor:
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 				: theme.palette.grey[700],
 	},
 	postTitle: {
-		fontSize: '16px',
+		fontSize: '20px',
 		textAlign: 'left',
 	},
 	tourType: {
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'left',
 		alignItems: 'baseline',
-		fontSize: '12px',
+		fontSize: '16px',
 		textAlign: 'left',
 		marginBottom: theme.spacing(2),
 	},
@@ -69,13 +69,12 @@ const Posts = (props) => {
 	if ((!posts || posts.length === 0) ) return <p>Can not find any posts, sorry</p>;
 	return (
 		<React.Fragment>
-			<Container maxWidth="md" component="main">
-				<Grid container spacing={5} alignItems="flex-end">
+			<Container maxWidth="md" component="main" disableGutters="true">
+				<Grid container spacing={1} alignItems="flex-end">
 					{posts.map((post) => {
 						setcolor(post.tourtype)
 						return (
-							// Enterprise card is full width at sm breakpoint
-							<Grid item key={post.id} xs={12} md={4}>
+							<Grid item key={post.id} xs={12} md={12}>
 								<Card className={classes.card}>
 									<Link
 									href={'tour/'+post.tourtype+'/'+post.slug}>
@@ -97,8 +96,8 @@ const Posts = (props) => {
 										</Typography>
 										<Typography
 											gutterBottom
-											variant="h6"
-											component="h2"
+											variant="h1"
+											component="h1"
 											className={classes.postTitle}
 										>
 											{post.title.substr(0, 50)}...

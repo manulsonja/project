@@ -46,7 +46,7 @@ export default function SingleTour() {
 
 
 	return (
-		<Container component="main" maxWidth="xl">
+		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
 					<Container maxWidth="sm">				
 				</Container>

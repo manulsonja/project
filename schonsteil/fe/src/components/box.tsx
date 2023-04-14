@@ -11,6 +11,25 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
+const roundToDeciKMs = (meters) => {
+  const kms = meters/1000;
+  const formatted = kms.toFixed(1);
+  return formatted;
+}
+const format_duration = (duration) => {
+	if ((!duration || duration.length === 0) ) return;
+
+  const time_array = duration.split(':');
+  let return_string = "";
+  console.log(time_array[0])
+
+  if(!(time_array[0]=='00')) return_string+=time_array[0]+"Tage";
+  if(!(time_array[1]=='00')) return_string+=time_array[1]+"h";
+  if(!(time_array[2]=='00')) return_string+=time_array[2]+"m";
+
+  return return_string;
+
+};
 
 export default function InfoBox(props) {
   const { data } = props;
@@ -20,13 +39,13 @@ export default function InfoBox(props) {
 
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={4}>
-          <Item>Distanz<h1>{data.posts.distance}</h1></Item>
+          <Item>Distanz<h1>{roundToDeciKMs(data.posts.distance)}km</h1></Item>
         </Grid>
         <Grid item xs={4}>
           <Item>Hohenmeter<h1>12000m</h1></Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>Zeitbedarf<h1>{data.posts.tour_duration}</h1></Item>
+          <Item>Zeitbedarf<h1>{format_duration(data.posts.tour_duration)}</h1></Item>
         </Grid>
       
       </Grid>
