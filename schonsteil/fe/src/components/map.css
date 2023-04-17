@@ -10,19 +10,7 @@ html, body {
   margin: 0 auto;
   min-width: 700px; }
 
- .leftColumn {
-  width: 70%;
-  float: left; }
 
- .rightColumn {
-  width: 30%;
-  float: left; 
-  height: 80vh;
-  overflow: scroll;
-  padding-left: 8px;
-  padding-right: 8px;
-
-}
   .outerBox {
     float: left;
     width: 100%;
@@ -32,4 +20,14 @@ html, body {
   }
   .outerMap {
     height: 80vh;
+  }
+  .markerImage {
+    width: 150px;
+  }
+  .markerLink {
+    color: black;
+    width: 150px;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 5px;
   }

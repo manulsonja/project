@@ -11,34 +11,41 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions
 from ast import literal_eval
 from itertools import chain
+from rest_framework import filters
+
+class PictureField(viewsets.ModelViewSet):
+    queryset = Tour.tourobjects.all()
+    serializer_class = PictureSerializer
 
 class ViewTouren(viewsets.ModelViewSet):
-
+    filter_backends = [filters.SearchFilter]
     serializer_class = TourSerializer
-    permission_classes = [IsAuthenticated]
+    search_fields = ["^title"]
+
     def get_object(self, queryset=None, **kwargs):
         item = self.kwargs.get('pk')
         return get_object_or_404(Tour, slug=item)
 
     # Define Custom Queryset
     def get_queryset(self):
-        params = self.request.query_params['tourtypes'].split(",")
-        kt=haf=wd=st=ht  = Tour.objects.none()
-        if "kt" in params:
-            kt  = Klettertour.tourobjects.all()
-        if "haf" in params:
-            haf = HikeAndFly.tourobjects.all()
-        if "wd" in params:
-            wd  = Wandern.tourobjects.all()
-        if "st" in params:
-            st  = Skitour.tourobjects.all()
-        if "ht" in params:
-            ht  = Hochtour.tourobjects.all()
- 
-        return list(chain(kt,haf,wd,st,ht))
+        try:
+            diff = self.request.query_params.get('diff', None)
+            diff = diff.split(',')
+            tourtype = self.request.query_params.get('tourtypes', None)  
+            tourtype = tourtype.split(',')
+            if tourtype==[""] and diff == [""]:
+                return
+            if tourtype!=[""]:  
+                qs = Tour.tourobjects.filter(tourtype__in=tourtype)
+            if diff!=[""]:
+                qs = qs.filter(difficulty__in=diff)
+
+        except:
+            qs = Tour.tourobjects.all()
+            print('exception api/views.py line 54 Probably insufficient or no query params provided but required for filtering in django')
+        return qs
 
 class ViewHochtouren(viewsets.ModelViewSet):
-
     queryset = Hochtour.tourobjects.all()
     serializer_class = HochtourSerializer
 

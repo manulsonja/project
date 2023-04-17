@@ -1,16 +1,17 @@
 import ImageGallery from 'react-image-gallery';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { MEDIA_URL } from '../SETTINGS';
 
 const img = (props) => {
   if ((!props || props.length === 0) ) return [];
 
   const image_array = []
   props.map((image) => {
+    console.log(image.image.ratios['16/9'].sources['image/jpeg']['1200'])
     image_array.push(
       {
-          original: image,
-          thumbnail: image
+          original: MEDIA_URL+image.image.ratios['16/9'].sources['image/jpeg']['1200'],
+          thumbnail: MEDIA_URL+image.image.ratios['16/9'].sources['image/jpeg']['200']
       }
     )
 
@@ -18,22 +19,6 @@ const img = (props) => {
  return image_array;
 }
 
-
-
-const images = [
-  {
-    original: 'https://picsum.photos/id/1018/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1018/250/150/',
-  },
-  {
-    original: 'https://picsum.photos/id/1015/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1015/250/150/',
-  },
-  {
-    original: 'https://picsum.photos/id/1019/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1019/250/150/',
-  },
-];
 const useStyles = makeStyles((theme) => ({
 
 	gallerybox: {

@@ -7,7 +7,6 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-
   cardMedia: {
     borderRadius: '50%',
 },
@@ -15,7 +14,6 @@ card: {
   width: "300px",
   margin: "0 auto",
   boxShadow: "none"},
-
 }));
 
 export default function AuthorCard(props) {

@@ -11,6 +11,7 @@ import InfoBox from './box.tsx';
 import Gallery from './gallery.js';
 import './singlePost.css'
 import DetailMap from './detailMap.js';
+import rd3 from 'react-d3-library'
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -43,8 +44,7 @@ export default function SingleTour() {
 	
 	}, [setValue]);
 	const tour_rating = parseInt(data.posts.rating)
-
-
+	
 	return (
 		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
@@ -73,10 +73,8 @@ export default function SingleTour() {
 						variant="h5"
 						align="left"
 						color="textSecondary"
-						paragraph
-					>
-						<div dangerouslySetInnerHTML={{__html: `${data.posts.text}`}} />
-						
+						paragraph >
+						<div dangerouslySetInnerHTML={{__html: `${data.posts.text}`}} />	
 					</Typography>
 					<AuthorCard data={data}/>
 				</Container>

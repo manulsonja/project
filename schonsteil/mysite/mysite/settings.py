@@ -41,18 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'sorl.thumbnail',
-    'galleryfield',
     'tinymce',
     'rest_framework',
     'users',
     'touren',
+    'pictures',
     'mountain_huts',
     'api',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework_simplejwt',
     'django.contrib.gis',
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -158,3 +157,19 @@ SIMPLE_JWT = {
 }
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# the following are defaults, but you can override them
+PICTURES = {
+    "BREAKPOINTS": {
+        "xs": 576,
+        "s": 768,
+        "m": 992,
+        "l": 1200,
+        "xl": 1400,
+    },
+    "GRID_COLUMNS": 12,
+    "CONTAINER_WIDTH": 1200,
+    "FILE_TYPES": ["JPEG"],
+    "PIXEL_DENSITIES": [1, 2],
+}
+PICTURES["USE_PLACEHOLDERS"] = True

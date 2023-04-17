@@ -24,6 +24,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from pictures.conf import get_settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,7 +37,11 @@ urlpatterns = [
     path('api/user/', include('users.urls', namespace='users')),   
 ]
 
+if get_settings().USE_PLACEHOLDERS:
+    urlpatterns += [
+        path("media/posts/", include("pictures.urls")),
+    ]
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += [path(r"images-handler/", include("galleryfield.urls"))]
 
  

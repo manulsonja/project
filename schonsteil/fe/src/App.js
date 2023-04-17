@@ -12,11 +12,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import ChipsArray from './components/chips.tsx';
+import TextField from '@mui/material/TextField';
 
 function getCurrentDimension(){
     return { width: window.innerWidth, height: window.innerHeight }}
 
 const query_string="?tourtypes="
+const diff_querystring='&diff='
+const search_querystring='&search='
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -28,19 +31,25 @@ const MenuProps = {
   },
 };
 const names = [
-  'wd',
-  'ht',
-  'kt',
-  'haf',
-  'st', ];
-
+  'Wandern',
+  'Hochtour',
+  'Klettertour',
+  'Hike and Fly',
+  'Skitour', ];
+  const diff_array = [
+	'leicht',
+	'mittel',
+	'schwierig' ];
 function App() {
 	const [personName, setPersonName] = React.useState([]);
+	const [screenSize, setScreenSize] = useState(getCurrentDimension());
+	const [SearchString, setSearchString] = React.useState('');
+	const [difficulty, setDifficulty] = React.useState([]);
+
 	const PostLoading = PostLoadingComponent(Posts);
 	const [appState, setAppState] = useState({
 		loading: false,
 		posts: null,
-		screenSize: getCurrentDimension(),
 	});
 
 	useEffect(() => {
@@ -49,12 +58,12 @@ function App() {
 			 name_array=names
 		}
 		else name_array=personName;
-
-		axiosInstance.get("touren/"+query_string+name_array).then((res) => {
+		const url = "touren/"+query_string+name_array+search_querystring+SearchString+diff_querystring+difficulty
+		axiosInstance.get(url).then((res) => {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
-	}, [personName]);
+	}, [personName, SearchString, difficulty]);
 
 	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
 	  const {
@@ -65,20 +74,39 @@ function App() {
 		typeof value === 'string' ? value.split(',') : value
 	  );
 	};
+
+	const handleChangeDiff = (event: SelectChangeEvent<typeof difficulty>) => {
+		const {
+		  target: { value },
+		} = event;
+		setDifficulty(
+		  // On autofill we get a stringified value.
+		  typeof value === 'string' ? value.split(',') : value
+		);
+	  };
 	const handleResize = () => {
-		setAppState({ ...appState, screenSize: getCurrentDimension() });}
+		setScreenSize(getCurrentDimension());}
 
-
+	React.useEffect(() => {
+			window.addEventListener('resize', handleResize);	
+			// cleanup this component
+			return () => {
+				window.addEventListener('resize', handleResize);
+			};
+		  }, []);
+	
 	return (
-		window.addEventListener('resize', handleResize),
-
 		<div className="App">
 			 <div className="FilterBar">
-				<h1>Tourentyp</h1>
-      <FormControl sx={{ m: 0.5, width: 300 }}>
-        {/* <InputLabel id="demo-multiple-checkbox-label"></InputLabel> */}
+	<div className='searchField'>
+		<h1>Search</h1>
+			<TextField id="standard-basic" label="Sucheingabe" variant="standard" 
+			onKeyUp={(ev)=>{setSearchString(ev.target.value); console.log(ev.target.value) }}/></div>
+	<div className='selectors'>
+		<h1>Tourentyp</h1>
+      <FormControl sx={{ m: 0.5, width: 300, paddingTop:1}}>
         <Select
-          labelId="demo-multiple-checkbox-label"
+		  size="small"
           id="demo-multiple-checkbox"
           multiple
           value={personName}
@@ -95,11 +123,38 @@ function App() {
           ))}
         </Select>
       </FormControl>
+	  </div>
+
+	  <div className='selectors_two'>
+
+	  <h1>Anspruch</h1>
+     
+	  <FormControl sx={{ m: 0.5, width: 300, paddingTop:1}}>
+        <Select 
+		  size="small"
+          id="difficulty-checkbox"
+          multiple
+          value={difficulty}
+          onChange={handleChangeDiff}
+          input={<OutlinedInput label="Tag" />}
+          renderValue={(selected) => selected.join(', ')}
+          MenuProps={MenuProps}
+        >
+          {diff_array.map((diff) => (
+            <MenuItem key={diff} value={diff}>
+              <Checkbox checked={difficulty.indexOf(diff) > -1} />
+              <ListItemText primary={diff} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+	</div>
+	
 {/* 	  <ChipsArray/>
  */}    </div>
 			<div className='outerBox'>
-			<div className='leftColumn'><Leaflet data={appState}/></div>
-			<div className='rightColumn' style={{height:appState.screenSize.height-120}}><PostLoading isLoading={appState.loading} posts={appState.posts} /></div>
+			<div className='leftColumn'><Leaflet data={[appState,screenSize]}/></div>
+			<div className='rightColumn' style={{height:screenSize.height-120}}><PostLoading isLoading={appState.loading} posts={appState.posts} /></div>
 			</div>
 		</div>
 	);

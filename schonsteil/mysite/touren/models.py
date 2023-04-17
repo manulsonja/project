@@ -12,9 +12,11 @@ from shapely import wkt
 import pyproj
 from shapely.ops import transform
 from functools import partial
-from galleryfield.fields import GalleryField
 from django.utils.translation import gettext_lazy as _
 import shapely
+import PIL.Image
+from pictures.models import PictureField
+
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
 
@@ -23,8 +25,8 @@ class Tour(models.Model):
     gpxfile = models.FileField(upload_to='files', null=True)
     track = models.LineStringField(null=True, dim=3, srid=4326)
     geojson_track = models.TextField(null=True)
-
     tourtype = models.CharField(max_length=30, editable=False)
+    
     class TourObjects(models.Manager):
         def get_queryset(self):
             return super().get_queryset() .filter(status='published')
@@ -37,12 +39,17 @@ class Tour(models.Model):
         ("3","3"),
         ("4","4"),
         ("5","5"),]
-   
+    diff_choices = [
+        ("leicht","LEICHT"),
+        ("mittel","MITTEL"),
+        ("schwierig","SCHWIERIG"),
+       ]
     title = models.CharField(max_length=30)
     subtitle = models.CharField(max_length=100)
     text =  tinymce_models.HTMLField()
     distance = models.FloatField(null=True)
-    image = models.ImageField("Image", upload_to=upload_to, default='tour/default.jpg')
+    
+    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"])
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
         NewUser, on_delete=models.CASCADE, related_name='tour_posts',) 
@@ -52,7 +59,10 @@ class Tour(models.Model):
         max_length=1,
         choices=rating_choices,
         default='1',)
-
+    difficulty = models.CharField(
+        max_length=10,
+        choices=diff_choices,
+        default='schwierig',)
     slug = models.SlugField(max_length=250, unique_for_date='published', editable=False)
     objects = models.Manager()  # default manager
     tourobjects = TourObjects()  # custom manager
@@ -62,13 +72,26 @@ class Tour(models.Model):
     def __str__(self):
         return self.title
     def save(self, *args, **kwargs):
+        file_url = self.gpxfile
+        ls = parse_gpx(file_url)
+        self.track = ls
+        shapely_ls = wkt.loads(ls.wkt)
+        self.geojson_track = shapely.to_geojson(shapely_ls)
+        project = partial(
+            pyproj.transform,
+            pyproj.Proj('EPSG:4326'),
+            pyproj.Proj('EPSG:32633'))
+        line2 = transform(project, shapely_ls)
+        self.distance = line2.length
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
 class Image(models.Model):
-    image = models.ImageField(upload_to=upload_to)
+    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"]) 
     parent = models.ForeignKey(Tour,on_delete=models.CASCADE,related_name="album")
-    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
 class Klettertour(Tour):
     protection_choices=[(0,"alpin"),(1,"mittel"),(2,"gut"),(3,"sehr gut")]
     grades_choices=[("1",0),("1+",1),
@@ -94,9 +117,6 @@ class Klettertour(Tour):
 
     topo = models.ImageField("topo", upload_to=upload_to, default='topo/default.jpg')
     def save(self, *args, **kwargs):
-        file_url = self.gpxfile
-        ls = parse_gpx(file_url)
-        self.track = ls
         self.tourtype = "Klettern"
         super().save(*args, **kwargs)
 
@@ -111,22 +131,7 @@ class Hochtour(Tour):
         super().save(*args, **kwargs)
 
 class Wandern(Tour):
-    def save(self, *args, **kwargs):
-        
-        file_url = self.gpxfile
-        ls = parse_gpx(file_url)
-        self.track = ls
-        shapely_ls = wkt.loads(ls.wkt)
-        self.geojson_track = shapely.to_geojson(shapely_ls)
-        
-        project = partial(
-            pyproj.transform,
-            pyproj.Proj('EPSG:4326'),
-            pyproj.Proj('EPSG:32633'))
-
-        line2 = transform(project, shapely_ls)
-        self.distance = line2.length
-        self.tourtype = "Klettern"
+    def save(self, *args, **kwargs):  
         self.tourtype = "Wandern"
         super().save(*args, **kwargs)
 

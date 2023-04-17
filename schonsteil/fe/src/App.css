@@ -1,7 +1,25 @@
 
+
+
+.leftColumn {
+  width: 73%;
+  float: left; }
+
+ .rightColumn {
+  width: 27%;
+  float: left; 
+  height: 80vh;
+  overflow: scroll;
+  padding-left: 8px;
+  padding-right: 8px;
+
+}
 .App {
   text-align: center;
  
+}
+.selectors, .searchField {
+  float: left;
 }
 #demo-multiple-checkbox {
   height: 10px,
@@ -14,7 +32,9 @@
   z-index: 10000;
   text-align: left;
 
+
 }
+
 .FilterBar h1 {
   color: black;
   float: left;
