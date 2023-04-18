@@ -72,5 +72,6 @@ class SkitourSerializer(TourDetailSerializer):
 class HutSerializer(serializers.ModelSerializer):
         image = PictureField()
         class Meta:
-                fields = ('id', 'name', 'position','image','text','hut_type','rating','slug')
+                fields = ('id', 'name', 'position','image','text','hut_type','rating','slug','subtitle',
+                'telephone','website','email')
                 model = MountainHut

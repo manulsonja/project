@@ -1,23 +1,54 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import { roundToDeciKMs, format_duration } from '../utils/formatting';
-import { API_URL } from '../SETTINGS';
-import { useState, useEffect } from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import axiosInstance from '../axios';
+import { useState, useEffect } from 'react';
+import { API_URL, MEDIA_URL } from '../SETTINGS';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Link from '@material-ui/core/Link';
+import Rating from '@mui/material/Rating';
+import AlertDialog from './contactDialog.tsx';
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
+const useStyles = makeStyles((theme) => ({
+	cardMedia: {
+		paddingTop: '56.25%', // 16:9
+	},
+	link: {
+		margin: theme.spacing(1, 1.5),
+	},
+	cardHeader: {
+		backgroundColor:
+			theme.palette.type === 'light'
+				? theme.palette.grey[200]
+				: theme.palette.grey[700],
+	},
+	postTitle: {
+		fontSize: '16px',
+		textAlign: 'left',
+	},
+	postText: {
+		display: 'flex',
+		justifyContent: 'left',
+		alignItems: 'baseline',
+		fontSize: '12px',
+		textAlign: 'left',
+		marginBottom: theme.spacing(2),
+	},
+    firstRow: {
+        width: "100%",
+        float: 'left',
+    }
 }));
 
-export default function HutList(props) {
 
+export default function HutList(props) {
+	const classes = useStyles();
 	const [appState, setAppState] = useState({
 		loading: false,
 		posts: null,
@@ -33,29 +64,60 @@ export default function HutList(props) {
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 
+
   return (
-    
-   appState.posts.map((huette) => {
-        console.log(huette);
-        return (
-          
-            <Box sx={{ width: '100%', backgroundColor: '', padding: '10px 10px 10px' }}>
-            <h3>Tourdaten</h3>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={4}>
-          <Item>{huette.name}</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>{huette.id}</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>{huette.text}</Item>
-        </Grid>    
-      </Grid>
-    </Box>
-  
-        )
-    })
-   
-  );
+    <React.Fragment>
+        <Container maxWidth="xl" component="main">
+            <Grid container spacing={5} alignItems="flex-end">
+                {appState.posts.map((huette) => {
+                    return (
+                        // Enterprise card is full width at sm breakpoint
+                        <Grid item key={huette.id} xs={12} md={4}>
+                            <Card className={classes.card}>
+                                <Link
+                                    color="textPrimary"
+                                    href={'huts/' + huette.slug}
+                                    className={classes.link}
+                                >
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image={MEDIA_URL+huette.image.ratios['16/9'].sources['image/jpeg']['400']}
+                                        title="Image title"
+                                    />
+                                </Link>
+                                <CardContent className={classes.cardContent}>
+                                        <div className={classes.firstRow}> 
+                                            <div style={{float: "left", width: '60%'}}> <h2>{huette.name}</h2></div>
+                                            <div style={{float: "left", width: '40%'}}>
+                                                <div style={{float: "right"}}>
+
+                                                <Rating name="read-only" value={huette.rating} readOnly />	
+                                                </div>		
+                                            </div>
+                                        </div>
+                                        <div className={classes.secondRow}> 
+                                            <div dangerouslySetInnerHTML={{__html: `${huette.subtitle}`}} />	</div>
+                                        <div className={classes.thirdRow}> 
+                                        
+                                        <AlertDialog props={huette}/>
+ </div>
+
+
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    );
+                })}
+            </Grid>
+        </Container>
+    </React.Fragment>
+);
+
+
+
+
 }
+
+
+
+

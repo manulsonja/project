@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-//MaterialUI
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -11,7 +10,6 @@ import InfoBox from './box.tsx';
 import Gallery from './gallery.js';
 import './singlePost.css'
 import DetailMap from './detailMap.js';
-import rd3 from 'react-d3-library'
 
 const useStyles = makeStyles((theme) => ({
 	paper: {

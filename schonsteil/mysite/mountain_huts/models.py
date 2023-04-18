@@ -8,6 +8,11 @@ def upload_to(instance, filename):
     return 'huts/{filename}'.format(filename=filename)
 
 class MountainHut(models.Model): 
+    subtitle = models.CharField(max_length=150, null=True)
+    telephone = models.CharField(max_length=20, null=True)
+    email = models.CharField(max_length=50,null=True)  
+    website = models.CharField(max_length=50, null=True)
+    # Oeffnungszeiten
     name = models.CharField(max_length=30)   
     position = models.PointField(null=True)   
     hut_type_options = (
@@ -28,7 +33,7 @@ class MountainHut(models.Model):
         ("5","5"),]
    
     text =  tinymce_models.HTMLField()
-    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg')
+    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg', aspect_ratios=["16/9"])
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
         NewUser, on_delete=models.CASCADE, related_name='hut_posts',) 
