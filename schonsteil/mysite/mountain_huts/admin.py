@@ -1,5 +1,12 @@
+from xml.dom import HierarchyRequestErr
 from django.contrib import admin
-from .models import MountainHut
+from .models import *
 
-# Register your models here.
-admin.site.register(MountainHut)
+class PhotoAdmin(admin.StackedInline):
+    model = HutGallery
+
+class MountainHutAdmin(admin.ModelAdmin):
+    model = MountainHut
+    inlines = [PhotoAdmin]
+
+admin.site.register(MountainHut, MountainHutAdmin)

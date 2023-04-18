@@ -5,12 +5,6 @@ from .models import *
 class PhotoAdmin(admin.StackedInline):
     model = Image
 
-
-
-
-
-
-
 class WandernAdmin(admin.ModelAdmin):
     model = Wandern
     exclude=('track',)

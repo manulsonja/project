@@ -14,14 +14,15 @@ import SingleTour from './components/SingleTour';
 import Register from './components/register';
 import Logout from './components/logout';
 import Login from './components/login';
-import Leaflet from './components/map';
-import Gallery from './components/gallery.js';
+import HutList from './components/huts.tsx';
 
 const routing = (
 	<BrowserRouter>
 			<Header />
 			<Routes>
-				<Route exact path="" element={<App/>} />
+					<Route exact path="" element={<App/>} />
+					<Route exact path="huts" element={<HutList/>} />
+
         			<Route path="/tour/:category/:slug" element={<SingleTour/>} />
 					<Route path="/register" element={<Register/>} />
 					<Route path="/login" element={<Login/>} />

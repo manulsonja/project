@@ -3,6 +3,7 @@ from touren.models import Tour, Hochtour, Wandern, Klettertour, HikeAndFly, Skit
 import json
 from shapely import wkt 
 from pictures.contrib.rest_framework import PictureField
+from mountain_huts.models import MountainHut
 
 
 class PictureSerializer(serializers.Serializer):
@@ -30,6 +31,7 @@ class TourDetailSerializer(TourSerializer):
         profile_pk = serializers.SerializerMethodField()
         photoalbum = serializers.SerializerMethodField()
         image = PictureField()
+      
         def get_photoalbum(self,obj):
                 return PictureSerializer(obj.album.all(), many=True).data 
         def get_author_name(self,obj):
@@ -66,3 +68,9 @@ class SkitourSerializer(TourDetailSerializer):
         fields = GLOBAL_FIELDS
         model = Skitour
 
+
+class HutSerializer(serializers.ModelSerializer):
+        image = PictureField()
+        class Meta:
+                fields = ('id', 'name', 'position','image','text','hut_type','rating','slug')
+                model = MountainHut

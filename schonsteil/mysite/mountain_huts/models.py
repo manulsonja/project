@@ -2,13 +2,12 @@ from django.contrib.gis.db import models
 from tinymce import models as tinymce_models
 from django.utils import timezone
 from users.models import NewUser 
+from pictures.models import PictureField
 
-
-# Create your models here.
 def upload_to(instance, filename):
     return 'huts/{filename}'.format(filename=filename)
 
-class MountainHut(models.Model):
+class MountainHut(models.Model): 
     name = models.CharField(max_length=30)   
     position = models.PointField(null=True)   
     hut_type_options = (
@@ -29,7 +28,7 @@ class MountainHut(models.Model):
         ("5","5"),]
    
     text =  tinymce_models.HTMLField()
-    image = models.ImageField("Image", upload_to=upload_to, default='tour/default.jpg')
+    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg')
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
         NewUser, on_delete=models.CASCADE, related_name='hut_posts',) 
@@ -42,5 +41,18 @@ class MountainHut(models.Model):
         max_length=1,
         choices=rating_choices,
         default='1',)
+    slug = models.SlugField(max_length=250, unique_for_date='published', editable=False, null=True)
+    class Meta:
+        ordering = ('-published',)
+    def __str__(self):
+        return self.name
 
-    #slug = models.SlugField(max_length=250, unique_for_date='published', editable=False)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+class HutGallery(models.Model):
+    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"]) 
+    parent = models.ForeignKey(MountainHut, on_delete=models.CASCADE, related_name="gallery")
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+

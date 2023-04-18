@@ -12,10 +12,14 @@ from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, IsAuthenti
 from ast import literal_eval
 from itertools import chain
 from rest_framework import filters
+from mountain_huts.models import MountainHut
 
 class PictureField(viewsets.ModelViewSet):
     queryset = Tour.tourobjects.all()
     serializer_class = PictureSerializer
+class ViewHut(viewsets.ModelViewSet):
+    queryset = MountainHut.objects.all()
+    serializer_class = HutSerializer
 
 class ViewTouren(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
