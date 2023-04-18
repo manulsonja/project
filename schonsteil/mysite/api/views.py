@@ -13,6 +13,7 @@ from ast import literal_eval
 from itertools import chain
 from rest_framework import filters
 from mountain_huts.models import MountainHut
+from parking.models import Parking
 
 class PictureField(viewsets.ModelViewSet):
     queryset = Tour.tourobjects.all()
@@ -20,7 +21,9 @@ class PictureField(viewsets.ModelViewSet):
 class ViewHut(viewsets.ModelViewSet):
     queryset = MountainHut.objects.all()
     serializer_class = HutSerializer
-
+class ViewParking(viewsets.ModelViewSet):
+    queryset = Parking.objects.all()
+    serializer_class = ParkingSerializer
 class ViewTouren(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     serializer_class = TourSerializer

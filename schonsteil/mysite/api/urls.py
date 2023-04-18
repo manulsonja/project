@@ -11,7 +11,8 @@ router.register('schitour', ViewSkitour, basename='skitour')
 router.register('hike and fly', ViewHaF, basename='hikeandflz')
 router.register('klettern', ViewKlettertour, basename='hikeandflz')
 router.register('test', PictureField , basename='pic')
-router.register('huette', ViewHut, basename='')
+router.register('huette', ViewHut, basename='huette')
+router.register('parking', ViewParking, basename='parking')
 
 
 urlpatterns = router.urls

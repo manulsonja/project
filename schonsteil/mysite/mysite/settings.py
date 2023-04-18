@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'touren',
     'pictures',
     'mountain_huts',
+    'parking',
     'api',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework_simplejwt',
