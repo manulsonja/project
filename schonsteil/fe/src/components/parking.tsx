@@ -76,7 +76,7 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
                             <Card className={classes.card}>
                                 <Link
                                     color="textPrimary"
-                                    href={'huts/' + parking.slug}
+                                    href={'parking/' + parking.slug}
                                     className={classes.link}
                                 >
                                     <CardMedia

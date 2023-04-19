@@ -18,12 +18,19 @@ from parking.models import Parking
 class PictureField(viewsets.ModelViewSet):
     queryset = Tour.tourobjects.all()
     serializer_class = PictureSerializer
+    
 class ViewHut(viewsets.ModelViewSet):
     queryset = MountainHut.objects.all()
     serializer_class = HutSerializer
+    def get_object(self, queryset=None, **kwargs):
+        item = self.kwargs.get('pk')
+        return get_object_or_404(MountainHut, slug=item)
 class ViewParking(viewsets.ModelViewSet):
     queryset = Parking.objects.all()
     serializer_class = ParkingSerializer
+    def get_object(self, queryset=None, **kwargs):
+        item = self.kwargs.get('pk')
+        return get_object_or_404(Parking, slug=item)
 class ViewTouren(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     serializer_class = TourSerializer

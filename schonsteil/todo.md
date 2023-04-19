@@ -7,12 +7,12 @@ hohe prioritaet
 2  pagination
 5  login logout button 
 6  datenschutz erklaerung fuer cookies
-
+7  touren jahreszeiten oeffnungszeiten
 ----------------------------------
 
 2 mittlere prioritaet
 
-
+prerender templates
 hoehenprofil
 profil formatierung auf single tour seite 
 karte ausblenden wenn kein track vorhanden 
@@ -32,4 +32,12 @@ erledigt
 3  problem mit window.listener reload in react loesen 
 2  andere filter implementieren
 4  thumbnails!!!!!!
+
+
+startseite
+
+neueste touren 
+touren aktuell moeglich 
+hinweis auf karte 
+blogstories 
 

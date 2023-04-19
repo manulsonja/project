@@ -63,8 +63,6 @@ export default function HutList(props) {
 	}, []);
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
-
-
   return (
     <React.Fragment>
         <Container maxWidth="xl" component="main">
@@ -76,21 +74,19 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
                             <Card className={classes.card}>
                                 <Link
                                     color="textPrimary"
-                                    href={'huts/' + huette.slug}
+                                    href={'hut/' + huette.slug}
                                     className={classes.link}
                                 >
                                     <CardMedia
                                         className={classes.cardMedia}
                                         image={MEDIA_URL+huette.image.ratios['16/9'].sources['image/jpeg']['400']}
-                                        title="Image title"
-                                    />
+                                        title="Image title"     />
                                 </Link>
                                 <CardContent className={classes.cardContent}>
                                         <div className={classes.firstRow}> 
                                             <div style={{float: "left", width: '60%'}}> <h2>{huette.name}</h2></div>
                                             <div style={{float: "left", width: '40%'}}>
                                                 <div style={{float: "right"}}>
-
                                                 <Rating name="read-only" value={huette.rating} readOnly />	
                                                 </div>		
                                             </div>
@@ -98,12 +94,9 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
                                         <div className={classes.secondRow}> 
                                             <div dangerouslySetInnerHTML={{__html: `${huette.subtitle}`}} />	</div>
                                         <div className={classes.thirdRow}> 
-                                        
                                         <AlertDialog props={huette}/>
- </div>
-
-
-                                </CardContent>
+                                    </div>
+                         </CardContent>
                             </Card>
                         </Grid>
                     );

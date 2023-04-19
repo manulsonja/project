@@ -17,6 +17,8 @@ import Login from './components/login';
 import HutList from './components/huts.tsx';
 import ParkingList from './components/parking.tsx';
 import TourList from './components/tours.tsx';
+import SingleHut from './components/SingleHut';
+import SingleParking from './components/singleParking';
 
 const routing = (
 	<BrowserRouter>
@@ -27,6 +29,8 @@ const routing = (
 					<Route exact path="parking" element={<ParkingList/>} />
 					<Route exact path="tours" element={<TourList/>} />
         			<Route path="/tour/:category/:slug" element={<SingleTour/>} />
+					<Route path="/hut/:slug" element={<SingleHut/>} />
+					<Route path="/parking/:slug" element={<SingleParking/>} />
 					<Route path="/register" element={<Register/>} />
 					<Route path="/login" element={<Login/>} />
 					<Route path="/logout" element={<Logout/>} />
