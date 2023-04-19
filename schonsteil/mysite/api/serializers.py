@@ -68,16 +68,15 @@ class SkitourSerializer(TourDetailSerializer):
         fields = GLOBAL_FIELDS
         model = Skitour
 
-
 class HutSerializer(serializers.ModelSerializer):
         image = PictureField()
         class Meta:
                 fields = ('id', 'name', 'position','image','text','hut_type','rating','slug','subtitle',
-                'telephone','website','email')
+                'telephone','website','email','slug')
                 model = MountainHut
 
 class ParkingSerializer(serializers.ModelSerializer):
         image = PictureField()
         class Meta:
-                fields = ('parkingtype', 'name', 'position','image','toilet','fees',)
+                fields = ('parkingtype', 'name', 'position','image','toilet','fees','slug',)
                 model = Parking

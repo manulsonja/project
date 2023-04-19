@@ -4,6 +4,7 @@ REMOVE NULL TRUE FIELDS WHEN READY
 hohe prioritaet
 
 1  geosearch implementieren
+2  pagination
 5  login logout button 
 6  datenschutz erklaerung fuer cookies
 

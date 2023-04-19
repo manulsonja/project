@@ -3,6 +3,8 @@ from tinymce import models as tinymce_models
 from django.utils import timezone
 from users.models import NewUser 
 from pictures.models import PictureField
+from django.utils.text import slugify
+
 
 def upload_to(instance, filename):
     return 'huts/{filename}'.format(filename=filename)
@@ -54,6 +56,7 @@ class MountainHut(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
 class HutGallery(models.Model):
