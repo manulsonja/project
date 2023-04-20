@@ -19,12 +19,24 @@ import ParkingList from './components/parking.tsx';
 import TourList from './components/tours.tsx';
 import SingleHut from './components/SingleHut';
 import SingleParking from './components/singleParking';
+import Landing from './LandingPage.tsx';
+import PrivateRoute from './utils/PrivateRoute';
+import { AuthProvider } from './context/AuthContext';
 
 const routing = (
 	<BrowserRouter>
+			<AuthProvider>
+
 			<Header />
 			<Routes>
-					<Route exact path="" element={<App/>} />
+			<Route exact path=""element={
+            <PrivateRoute>
+            	<Landing />
+            </PrivateRoute>
+          }
+        />					
+		
+					<Route exact path="map" element={<App/>} />
 					<Route exact path="huts" element={<HutList/>} />
 					<Route exact path="parking" element={<ParkingList/>} />
 					<Route exact path="tours" element={<TourList/>} />
@@ -36,7 +48,7 @@ const routing = (
 					<Route path="/logout" element={<Logout/>} />
 				</Routes>
 {/* 			<Footer />
- */}	</BrowserRouter>
+ */}	</AuthProvider></BrowserRouter>
 );
 
 ReactDOM.render(routing, document.getElementById('root'));

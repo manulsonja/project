@@ -7,7 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
-
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -30,8 +31,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header() {
+	let { name } = useContext(AuthContext);
 	const classes = useStyles();
-	
+	console.log(name)
 	return (
 		<React.Fragment>
 			<CssBaseline />
@@ -53,7 +55,7 @@ function Header() {
 							to="/"
 							underline="none"
 						>
-							Schon steil.com
+							Schon steil.com 
 						</Link>
  					</Typography>
  					<nav 

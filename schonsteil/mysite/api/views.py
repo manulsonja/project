@@ -14,6 +14,9 @@ from itertools import chain
 from rest_framework import filters
 from mountain_huts.models import MountainHut
 from parking.models import Parking
+from blog.models import BlogArticle
+
+
 
 class PictureField(viewsets.ModelViewSet):
     queryset = Tour.tourobjects.all()
@@ -31,6 +34,12 @@ class ViewParking(viewsets.ModelViewSet):
     def get_object(self, queryset=None, **kwargs):
         item = self.kwargs.get('pk')
         return get_object_or_404(Parking, slug=item)
+class ViewArticles(viewsets.ModelViewSet):
+    queryset = BlogArticle.objects.all()
+    serializer_class = ArticleSerializer
+    def get_object(self, queryset=None, **kwargs):
+        item = self.kwargs.get('pk')
+        return get_object_or_404(BlogArticle, slug=item)
 class ViewTouren(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     serializer_class = TourSerializer
@@ -123,5 +132,18 @@ class ViewKlettertour(viewsets.ModelViewSet):
     # Define Custom Queryset
     def get_queryset(self):
         return Klettertour.objects.all()
+    
+
+    ###########################################
+    ## LANDING PAGE 
+    ###########################################
+
+
+class LPViewFeatreArticle(viewsets.ModelViewSet):
+    pass
+class LPViewNewestTours(viewsets.ModelViewSet):
+    queryset = Tour.tourobjects.all()[:5]
+    serializer_class = TourSerializer
+ 
 
 

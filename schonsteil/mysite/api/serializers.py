@@ -5,7 +5,7 @@ from shapely import wkt
 from pictures.contrib.rest_framework import PictureField
 from mountain_huts.models import MountainHut
 from parking.models import Parking
-
+from blog.models import BlogArticle
 class PictureSerializer(serializers.Serializer):
     title = serializers.CharField(required=False, allow_blank=True, max_length=100)
     image = PictureField()
@@ -78,7 +78,11 @@ class HutSerializer(serializers.ModelSerializer):
                 fields = ('id', 'name', 'position','image','text','hut_type','rating','slug','subtitle',
                 'telephone','website','email','slug','gallery')
                 model = MountainHut
-
+class ArticleSerializer(serializers.ModelSerializer):
+        image = PictureField()   
+        class Meta:
+                fields = ('id', 'title', 'image','slug','category','author','text','subtitle')
+                model = BlogArticle
 class ParkingSerializer(serializers.ModelSerializer):
         image = PictureField()
         class Meta:

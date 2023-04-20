@@ -13,6 +13,12 @@ router.register('klettern', ViewKlettertour, basename='hikeandflz')
 router.register('test', PictureField , basename='pic')
 router.register('huette', ViewHut, basename='huette')
 router.register('parking', ViewParking, basename='parking')
+router.register('articles', ViewArticles, basename='articles')
+
+
+####landingpage#####
+router.register('newest-tours', LPViewNewestTours, basename='newest_tours')
+
 
 
 urlpatterns = router.urls
