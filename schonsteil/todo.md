@@ -1,4 +1,5 @@
 REMOVE NULL TRUE FIELDS WHEN READY
+CHECK IF order_by('?') in landing page views raises performance issues.
 0  sonjas Bilder!!!
 
 hohe prioritaet
@@ -12,6 +13,7 @@ hohe prioritaet
 
 2 mittlere prioritaet
 
+profile pages
 prerender templates
 hoehenprofil
 profil formatierung auf single tour seite 
@@ -21,6 +23,8 @@ karte ausblenden wenn kein track vorhanden
 3 irgendwann mal 
 
 modelle fuer huetten und parkplaetze
+eventuell aktuelle gefahrenmeldungen / kommentare
+login crud panels
 
 
 ============================================

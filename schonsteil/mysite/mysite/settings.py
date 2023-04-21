@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'tinymce',
     'rest_framework',
+    'multiselectfield',
     'users',
     'touren',
     'pictures',

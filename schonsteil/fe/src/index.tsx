@@ -9,7 +9,8 @@ import {
 } from "react-router-dom";
 import App from './App';
 import Header from './components/Header';
-import Footer from './components/Footer';
+/* import Footer from './components/Footer';
+ */
 import SingleTour from './components/SingleTour';
 import Register from './components/register';
 import Logout from './components/logout';
@@ -21,11 +22,12 @@ import SingleHut from './components/SingleHut';
 import SingleParking from './components/singleParking';
 import Landing from './LandingPage.tsx';
 import PrivateRoute from './utils/PrivateRoute';
-import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './components/theme';
 
 const routing = (
 	<BrowserRouter>
-			<AuthProvider>
+			<ThemeProvider theme={theme}>
 
 			<Header />
 			<Routes>
@@ -46,9 +48,17 @@ const routing = (
 					<Route path="/register" element={<Register/>} />
 					<Route path="/login" element={<Login/>} />
 					<Route path="/logout" element={<Logout/>} />
+					<Route path="/reset-password" element={<ResetPassword/>} />
+					<Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordConfirm/>} />
+					<Route path="/activate/:uid/:token" element={<Activate/>} />
+
+
+
 				</Routes>
 {/* 			<Footer />
- */}	</AuthProvider></BrowserRouter>
+ */}	
+ </ThemeProvider>
+ </BrowserRouter>
 );
 
 ReactDOM.render(routing, document.getElementById('root'));

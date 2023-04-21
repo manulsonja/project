@@ -10,9 +10,9 @@ export const roundToDeciKMs = (meters) => {
   const time_array = duration.split(':');
   let return_string = "";
 
-  if(!(time_array[0]=='00')) return_string+=time_array[0]+"Tage";
-  if(!(time_array[1]=='00')) return_string+=time_array[1]+"h";
-  if(!(time_array[2]=='00')) return_string+=time_array[2]+"m";
+  if(!(time_array[0]==='00')) return_string+=time_array[0]+"Tage";
+  if(!(time_array[1]==='00')) return_string+=time_array[1]+"h";
+  if(!(time_array[2]==='00')) return_string+=time_array[2]+"m";
 
   return return_string;
 

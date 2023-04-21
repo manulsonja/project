@@ -1,10 +1,7 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import axiosInstance from '../axios';
 import { useState, useEffect } from 'react';
 import { API_URL, MEDIA_URL } from '../SETTINGS';
@@ -59,7 +56,7 @@ export default function ParkingList(props) {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
-	}, []);
+	});
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 

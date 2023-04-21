@@ -15,8 +15,13 @@ from rest_framework import filters
 from mountain_huts.models import MountainHut
 from parking.models import Parking
 from blog.models import BlogArticle
+from django.utils import timezone
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-
+@api_view()
+def hello_world(request):
+    return Response({"message": "Hello, world!"})
 
 class PictureField(viewsets.ModelViewSet):
     queryset = Tour.tourobjects.all()
@@ -139,11 +144,18 @@ class ViewKlettertour(viewsets.ModelViewSet):
     ###########################################
 
 
-class LPViewFeatreArticle(viewsets.ModelViewSet):
+class LPViewFeatureArticle(viewsets.ModelViewSet):
     pass
 class LPViewNewestTours(viewsets.ModelViewSet):
     queryset = Tour.tourobjects.all()[:5]
     serializer_class = TourSerializer
  
+class LPViewCurrentTours(viewsets.ModelViewSet):
+    time = timezone.now().date()
+    month = time.month
+    queryset = Tour.tourobjects.filter(season__contains=month).order_by('?')
+    serializer_class = TourSerializer
+ 
+
 
 

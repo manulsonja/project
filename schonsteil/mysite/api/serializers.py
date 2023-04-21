@@ -6,6 +6,10 @@ from pictures.contrib.rest_framework import PictureField
 from mountain_huts.models import MountainHut
 from parking.models import Parking
 from blog.models import BlogArticle
+
+
+
+
 class PictureSerializer(serializers.Serializer):
     title = serializers.CharField(required=False, allow_blank=True, max_length=100)
     image = PictureField()
@@ -19,7 +23,7 @@ class TourSerializer(serializers.ModelSerializer):
                 return start
         class Meta:
                 fields = ('id', 'title', 'text', 'tourtype', 'rating','author', 'published','image','slug',
-                'track','starting_pnt','subtitle','tour_duration','distance','difficulty')
+                'track','starting_pnt','subtitle','tour_duration','distance','difficulty','season')
                 model = Tour
 
 #FIELDS FOR DETAIL VIEW WITHOUT SPECIFICS -- BELONGS TO TOURDETAILSERIALIZER

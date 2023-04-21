@@ -16,6 +16,7 @@ from django.utils.translation import gettext_lazy as _
 import shapely
 import PIL.Image
 from pictures.models import PictureField
+from multiselectfield import MultiSelectField
 
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
@@ -30,6 +31,14 @@ class Tour(models.Model):
     class TourObjects(models.Manager):
         def get_queryset(self):
             return super().get_queryset() .filter(status='published')
+        
+    season_multichoices = (
+        ('1','January'),
+        ('2','February'),('3','March'),('4','April'),
+        ('5','Mai'),('6','June'),('7','July'),
+        ('8','August'),('9','September'),('10','Octobre'),
+        ('11','November'),('12','Decembre'),
+    )
     options = (
         ('draft', 'Draft'),
         ('published', 'Published'),)
@@ -48,7 +57,7 @@ class Tour(models.Model):
     subtitle = models.CharField(max_length=100)
     text =  tinymce_models.HTMLField()
     distance = models.FloatField(null=True)
-    
+    season = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"])
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(

@@ -18,12 +18,8 @@ router.register('articles', ViewArticles, basename='articles')
 
 ####landingpage#####
 router.register('newest-tours', LPViewNewestTours, basename='newest_tours')
-
+router.register('current-tours', LPViewCurrentTours, basename='current_tours')
 
 
 urlpatterns = router.urls
 
-# urlpatterns = [
-#     path('<int:pk>/', PostDetail.as_view(), name='detailcreate'),
-#     path('', PostList.as_view(), name='listcreate'),
-# ]

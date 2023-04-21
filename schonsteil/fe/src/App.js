@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Posts from './components/Posts';
 import axiosInstance from './axios';
@@ -11,7 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import PrivateRoute from './utils/PrivateRoute';
+
 
 function getCurrentDimension(){
     return { width: window.innerWidth, height: window.innerHeight }}
