@@ -1,4 +1,5 @@
-
+#schonsteil@gmail.com
+# btfm lylq udja fveb
 
 from datetime import timedelta
 import os
@@ -33,8 +34,8 @@ REST_FRAMEWORK = {
 # Application definitionbbbbbb
 AUTH_USER_MODEL = "users.NewUser"
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'tinymce',
     'rest_framework',
+    'djoser',
     'multiselectfield',
     'users',
     'touren',
@@ -71,7 +73,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,6 +141,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static')
+]
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
@@ -176,3 +182,32 @@ PICTURES = {
     "PIXEL_DENSITIES": [1, 2],
 }
 PICTURES["USE_PLACEHOLDERS"] = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'schonsteil@gmail.com'
+EMAIL_HOST_PASSWORD = 'btfmlylqudjafveb'
+EMAIL_USE_TLS = True
+
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'SET_USERNAME_RETYPE': True,
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:8000/google', 'http://localhost:8000/facebook'],
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.UserCreateSerializer',
+        'user': 'users.serializers.UserCreateSerializer',
+        'current_user': 'users.serializers.UserCreateSerializer',
+        'user_delete': 'users.serializers.UserCreateSerializer',
+    }
+}

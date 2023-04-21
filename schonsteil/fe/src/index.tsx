@@ -24,12 +24,21 @@ import Landing from './LandingPage.tsx';
 import PrivateRoute from './utils/PrivateRoute';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/theme';
+import ResetPassword from './components/resetPassword';
+import ResetPasswordConfirm from './components/resetPasswordConfirm';
+import Activate from './components/activate';
+import Layout from './hocs/Layout';
 
-const routing = (
+import { Provider } from 'react-redux';
+import store from './store';
+import SignUp from './SignUp';
+
+const routing = (    
+
+<Provider store={store}>
 	<BrowserRouter>
+			<Layout>
 			<ThemeProvider theme={theme}>
-
-			<Header />
 			<Routes>
 			<Route exact path=""element={
             <PrivateRoute>
@@ -46,7 +55,10 @@ const routing = (
 					<Route path="/hut/:slug" element={<SingleHut/>} />
 					<Route path="/parking/:slug" element={<SingleParking/>} />
 					<Route path="/register" element={<Register/>} />
+					<Route path="/signup" element={<SignUp/>} />
+
 					<Route path="/login" element={<Login/>} />
+
 					<Route path="/logout" element={<Logout/>} />
 					<Route path="/reset-password" element={<ResetPassword/>} />
 					<Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordConfirm/>} />
@@ -58,7 +70,8 @@ const routing = (
 {/* 			<Footer />
  */}	
  </ThemeProvider>
- </BrowserRouter>
+ </Layout>
+ </BrowserRouter></Provider>
 );
 
 ReactDOM.render(routing, document.getElementById('root'));

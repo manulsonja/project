@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from users.models import NewUser
-
+from djoser.serializers import UserCreateSerializer
 
 class CustomUserSerializer(serializers.ModelSerializer):
     """
@@ -23,3 +23,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+
+class UserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model = NewUser
+        fields = ('id', 'email', 'first_name', 'last_name', 'password')

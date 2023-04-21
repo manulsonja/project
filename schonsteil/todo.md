@@ -1,5 +1,6 @@
 REMOVE NULL TRUE FIELDS WHEN READY
-CHECK IF order_by('?') in landing page views raises performance issues.
+CHECK IF order_by('?') in landing page views raises performance issues. 
+REMOVE PASSWORD FOR GOOGLE FROM SETTINGS COMMENT
 0  sonjas Bilder!!!
 
 hohe prioritaet

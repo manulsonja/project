@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 //MaterialUI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,6 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { connect } from 'react-redux';
+import { login } from '../actions/auth';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -34,43 +36,45 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignIn() {
-	const navigate = useNavigate();
-	const initialFormData = Object.freeze({
-		email: '',
-		password: '',
-	});
 
-	const [formData, updateFormData] = useState(initialFormData);
-
-	const handleChange = (e) => {
-		updateFormData({
-			...formData,
-			[e.target.name]: e.target.value.trim(),
-		});
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log(formData);
-
-		axiosInstance
-			.post(`token/`, {
-				email: formData.email,
-				password: formData.password,
-			})
-			.then((res) => {
-				localStorage.setItem('access_token', res.data.access);
-				localStorage.setItem('refresh_token', res.data.refresh);
-				axiosInstance.defaults.headers['Authorization'] =
-					'JWT ' + localStorage.getItem('access_token');
-				navigate('/');
-				//console.log(res);
-				//console.log(res.data);
-			});
-	};
-
+const SignIn = ({ login, isAuthenticated }) => {
 	const classes = useStyles();
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '' 
+    });
+
+    const { email, password } = formData;
+    const onChange = e =>  setFormData({ ...formData, [e.target.name]: e.target.value });
+    const onSubmit = e => {
+        e.preventDefault();
+        login(email, password);
+    };
+
+    const continueWithGoogle = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`)
+
+            window.location.replace(res.data.authorization_url);
+        } catch (err) {
+
+        }
+    };
+
+    const continueWithFacebook = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/facebook/?redirect_uri=${process.env.REACT_APP_API_URL}/facebook`)
+
+            window.location.replace(res.data.authorization_url);
+        } catch (err) {
+
+        }
+    };
+
+    if (isAuthenticated) {
+        return <Navigate to='/' />
+    }
 
 	return (
 		<Container component="main" maxWidth="xs">
@@ -91,7 +95,8 @@ export default function SignIn() {
 						name="email"
 						autoComplete="email"
 						autoFocus
-						onChange={handleChange}
+						onChange={e => onChange(e)}
+
 					/>
 					<TextField
 						variant="outlined"
@@ -103,7 +108,8 @@ export default function SignIn() {
 						type="password"
 						id="password"
 						autoComplete="current-password"
-						onChange={handleChange}
+						onChange={e => onChange(e)}
+
 					/>
 					<FormControlLabel
 						control={<Checkbox value="remember" color="primary" />}
@@ -115,7 +121,8 @@ export default function SignIn() {
 						variant="contained"
 						color="primary"
 						className={classes.submit}
-						onClick={handleSubmit}
+						onClick={e => onSubmit(e)}
+
 					>
 						Sign In
 					</Button>
@@ -136,3 +143,9 @@ export default function SignIn() {
 		</Container>
 	);
 }
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(SignIn);

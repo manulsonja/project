@@ -8,6 +8,8 @@ import { NavLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import { useContext } from 'react';
+import { connect } from 'react-redux';
+import { logout } from '../actions/auth';
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -29,8 +31,57 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function Header() {
+function Header({ logout, isAuthenticated, user }) {
 	const classes = useStyles();
+	
+	const guestLinks = () => {
+		return(
+		<React.Fragment>
+       	<nav 
+>
+						<Link
+							color="textPrimary"
+							href="#"
+							className={classes.link}
+							component={NavLink}
+							to="/register"
+						>
+							Register
+						</Link>
+					</nav>
+					<Button
+						href="#"
+						color="primary"
+						variant="outlined"
+						className={classes.link}
+						component={NavLink}
+						to="/login"
+					>
+						Login
+					</Button>
+					<div style={{color:'white'}}>Bergrettung geh weg!</div>
+	   </React.Fragment>
+    )};
+
+    const authLinks = () => {
+		return(
+			<React.Fragment>
+					<Button
+						href="#"
+						color="primary"
+						variant="outlined"
+						className={classes.link}
+						component={NavLink}
+						to="loginauth"
+						onClick={logout}
+					>
+						Logout
+					</Button>
+					<div style={{color:'white'}}>Hallo, {user.first_name}</div>
+			</React.Fragment>
+		)  
+	};
+
 	return (
 		<React.Fragment>
 			<CssBaseline />
@@ -55,42 +106,20 @@ function Header() {
 							Schon steil.com 
 						</Link>
  					</Typography>
- 					<nav 
->
-						<Link
-							color="textPrimary"
-							href="#"
-							className={classes.link}
-							component={NavLink}
-							to="/register"
-						>
-							Register
-						</Link>
-					</nav>
-					<Button
-						href="#"
-						color="primary"
-						variant="outlined"
-						className={classes.link}
-						component={NavLink}
-						to="/login"
-					>
-						Login
-					</Button>
-					<Button
-						href="#"
-						color="primary"
-						variant="outlined"
-						className={classes.link}
-						component={NavLink}
-						to="/logout"
-					>
-						Logout
-					</Button>
+					 
+					 {(isAuthenticated && user)? authLinks() :  guestLinks()}
+
+				
+
 				</Toolbar>
 			</AppBar>
 		</React.Fragment>
 	);
 }
 
-export default Header;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+	user: state.auth.user,
+
+});
+export default connect(mapStateToProps, { logout })(Header);
