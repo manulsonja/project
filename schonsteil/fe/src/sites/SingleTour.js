@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SingleTour() {
+export default function SingleTour(values) {
+
 	const { category, slug } = useParams();
 	const classes = useStyles();
 
@@ -42,10 +43,22 @@ export default function SingleTour() {
 	useEffect(() => {
 	
 	}, [setValue]);
+	function renderAuthorCard() {
+		if(!data.posts.profilepic) return null;
+		const name = data.posts.author_name;
+		const image = data.posts.profilepic.profilepic
+		const author_name = data.posts.author_name
+
+		const props = { "profilepic" : image,
+						"author_name": author_name} 
+		return (
+			<AuthorCard data={props}/>
+ 	);
+	}
+	
 	const tour_rating = parseInt(data.posts.rating)
 	
 	return (
-		console.log(data),
 		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
 					<Container maxWidth="sm">				
@@ -76,9 +89,11 @@ export default function SingleTour() {
 						paragraph >
 						<div dangerouslySetInnerHTML={{__html: `${data.posts.text}`}} />	
 					</Typography>
-					<AuthorCard data={data}/>
 				</Container>
 			</div>
+			{renderAuthorCard(data)}
+
 		</Container>
+
 	);
 }

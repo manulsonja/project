@@ -9,7 +9,8 @@ from blog.models import BlogArticle
 
 
 
-
+class ArticleImageSerializer(serializers.Serializer):
+        profilepic=PictureField()
 class PictureSerializer(serializers.Serializer):
     title = serializers.CharField(required=False, allow_blank=True, max_length=100)
     image = PictureField()
@@ -41,9 +42,9 @@ class TourDetailSerializer(TourSerializer):
         def get_author_name(self,obj):
                 return obj.author.user_name
         def get_profilepic(self,obj):
-                request = self.context.get('request')
-                photo_url = obj.author.profile.profilepic.url
-                return request.build_absolute_uri(photo_url)
+                photos = obj.author.profile
+                return ArticleImageSerializer(photos).data
+
         def get_profile_pk(self,obj):
                 return obj.author.profile.pk
     
@@ -82,10 +83,19 @@ class HutSerializer(serializers.ModelSerializer):
                 fields = ('id', 'name', 'position','image','text','hut_type','rating','slug','subtitle',
                 'telephone','website','email','slug','gallery')
                 model = MountainHut
+
 class ArticleSerializer(serializers.ModelSerializer):
-        image = PictureField()   
+        image = PictureField()
+        author_name = serializers.SerializerMethodField()
+        profilepic = serializers.SerializerMethodField()
+        def get_profilepic(self,obj):
+               profilepic = obj.author.profile
+               return ArticleImageSerializer(profilepic).data
+               
+        def get_author_name(self,obj):
+               return obj.author.first_name
         class Meta:
-                fields = ('id', 'title', 'image','slug','category','author','text','subtitle')
+                fields = ('id', 'title', 'image','slug','category','author','text','subtitle','author_name','profilepic')
                 model = BlogArticle
 
 class LandingPageSerializer(serializers.Serializer):

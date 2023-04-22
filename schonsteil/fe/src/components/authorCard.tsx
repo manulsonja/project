@@ -1,47 +1,50 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import Grid from '@mui/material/Grid';import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
+import { MEDIA_URL } from '../SETTINGS';
 
 const useStyles = makeStyles((theme) => ({
-  cardMedia: {
+  profileImage: {
     borderRadius: '50%',
-},
-card: {
-  width: "300px",
-  margin: "0 auto",
-  boxShadow: "none"},
-}));
+    width: '100%',
+    },
+    profileCard: {
+    },
+    }));
 
 export default function AuthorCard(props) {
  const { data } = props;
  const classes = useStyles();
- 
+ const profileimage = data.profilepic.ratios['1/1'].sources['image/jpeg']['300']
   return (
-    <Card
-      className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-        	className={classes.cardMedia}
+    <div style={{marginTop:'50px'}}>
+    <Grid container spacing={5} xs={12} className={classes.profileCard}
+    
+    alignItems="center"
+    justifyContent="center"
+    
+    >
+    <Grid item lg={2}>
+          <img className={classes.profileImage} src={MEDIA_URL +profileimage}/>
+    </Grid>
+    <Grid item lg={3}>
+    <Typography gutterBottom variant="h1" component="div">
+            {data.author_name} 
+      </Typography>
+      <Typography gutterBottom component="div">
+             Max is an avid hiker and loyal writer for schonsteil.com
+      </Typography>
 
-          component="img"
-          height="140"
-          image={data.posts.profilepic}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {data.posts.author_name}
-          </Typography>
-          
-        </CardContent>
-      </CardActionArea>
-        <Button size="small" color="primary">
-          Link to profile /profile/{data.posts.profile_pk}
-        </Button>
-    </Card>
+          <Button size="small" color="primary">
+          More about {data.author_name}
+        </Button> 
+    </Grid>
+        <Grid item xs={12}>
+        </Grid>
+        <Grid item xs={12}>
+        </Grid>
+    </Grid>
+  </div> 
   );
 }

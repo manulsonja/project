@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, User
 from django.conf import settings
+from pictures.models import PictureField
 
 class CustomAccountManager(BaseUserManager):
 
@@ -58,6 +59,6 @@ def upload_to(instance, filename):
 
 class Profile(models.Model):
         first_name = models.CharField(max_length=150, blank=True)
-        profilepic = models.ImageField("Image", upload_to=upload_to, default='tour/default.jpg')
+        profilepic = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',aspect_ratios=["16/9","1/1"])
         user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
        
