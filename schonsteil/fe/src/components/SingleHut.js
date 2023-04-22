@@ -64,7 +64,7 @@ export default function SingleHut(props) {
 	});
 
 	useEffect(() => {
-        const url = API_URL + 'huette/' + slug
+        const url = API_URL + 'huette/' + slug + '/'
 		axiosInstance.get(url).then((res) => {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });

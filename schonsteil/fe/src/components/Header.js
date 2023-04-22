@@ -117,6 +117,24 @@ function Header({ logout, isAuthenticated, user }) {
 						>
 							Touren
 						</Link>
+						<Link
+							color="textPrimary"
+							href="#"
+							className={classes.link}
+							component={NavLink}
+							to="/huts"
+						>
+							Huetten
+						</Link>
+						<Link
+							color="textPrimary"
+							href="#"
+							className={classes.link}
+							component={NavLink}
+							to="/parking/"
+						>
+							Locations
+						</Link>
 					 
 					 {(isAuthenticated && user)? authLinks() :  guestLinks()}
 

@@ -40,9 +40,9 @@ export default function Landing() {
 	});
  
 	useEffect(() => {
-		let url = "articles/";
+		let url = "manual-content/";
 		axiosInstance.get(url).then((res) => {
-			const allPosts = res.data;
+			const allPosts  = res.data ? res.data : null;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
     let urltwo = "newest-tours/"
@@ -57,29 +57,31 @@ export default function Landing() {
 		});
 
 	}, []);
-
-  if (!appState.posts || appState.posts.length == 0) return;
-  console.log("heureka")
-
+  console.log(appState)
+  if (!appState.posts || !appState.posts[0].primary_feature_article_pk) return;
+  let featureArticle = appState.posts[0].primary_feature_article_pk
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="xl" style={{marginTop:'20px'}}>
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid item xs={7}>
+        <Grid item xs={12} md={7}>
+        <Link to={'/article/'+featureArticle.slug}>
           <Item>
-            <img src={MEDIA_URL + appState.posts[0].image.url} style={{width:"100%"}}/> 
-            <Typography variant='h1'>{appState.posts[0].title}</Typography>
+            <img src={MEDIA_URL + featureArticle.image.ratios['16/9'].sources['image/jpeg']['800']} style={{width:"100%"}}/> 
+            <Typography variant='h1'>{featureArticle.title}</Typography>
             <Typography>
-            {appState.posts[0].subtitle}
+            {featureArticle.subtitle}
             </Typography>
             </Item>
+            </Link>
+
         </Grid>
-         <Grid item xs={5}>
+         <Grid item xs={12} md={5}>
          <Link to='/map'>
 
-          <Typography variant='h2'>Karte oeffnen</Typography>
+          <Typography variant='h1'>Karte oeffnen</Typography>
           <Item><img src={MEDIA_URL + '/media/map.jpg'} style={{width:'100%'}}/> </Item>
           </Link>
 

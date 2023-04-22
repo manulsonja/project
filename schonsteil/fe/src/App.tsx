@@ -31,6 +31,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Facebook from './sites/Facebook';
 import Google from './sites/Google';
+import SingleArticle from './sites/singleArticle';
 
 
 const App = () => {
@@ -52,11 +53,12 @@ const App = () => {
 					<Route exact path="huts" element={<HutList/>} />
 					<Route exact path="parking" element={<ParkingList/>} />
 					<Route exact path="tours" element={<TourList/>} />
-					<Route exact path='/facebook' component={Facebook} />
-                    <Route exact path='/google' component={Google} />
+					<Route exact path='/facebook' element={<Facebook/>} />
+                    <Route exact path='/google' element={<Google/>} />
         			<Route path="/tour/:category/:slug" element={<SingleTour/>} />
 					<Route path="/hut/:slug" element={<SingleHut/>} />
 					<Route path="/parking/:slug" element={<SingleParking/>} />
+					<Route path="/article/:slug" element={<SingleArticle/>} />
 
 					<Route path="/register" element={<Register/>} />
 					<Route path="/login" element={<Login/>} />

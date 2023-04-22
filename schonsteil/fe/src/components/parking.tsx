@@ -60,7 +60,6 @@ export default function ParkingList(props) {
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 
-
   return (
     console.log(appState),
     <React.Fragment>
@@ -73,7 +72,7 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
                             <Card className={classes.card}>
                                 <Link
                                     color="textPrimary"
-                                    href={'parking/' + parking.slug}
+                                    href={ parking.slug}
                                     className={classes.link}
                                 >
                                     <CardMedia

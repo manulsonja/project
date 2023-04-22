@@ -18,10 +18,11 @@ from blog.models import BlogArticle
 from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from layout_config.models import LandingPageLayout
 
-@api_view()
-def hello_world(request):
-    return Response({"message": "Hello, world!"})
+class ViewLandingPage(viewsets.ModelViewSet):
+    queryset = LandingPageLayout.objects.all()
+    serializer_class = LandingPageSerializer
 
 class PictureField(viewsets.ModelViewSet):
     queryset = Tour.tourobjects.all()

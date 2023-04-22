@@ -88,7 +88,9 @@ const SignUp = ({ signup, isAuthenticated }) => {
     if (isAuthenticated) {
         return <Navigate to='/' />
     }
-
+    if (accountCreated) {
+        return <Navigate to='/login' />
+    }
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
@@ -204,6 +206,13 @@ const SignUp = ({ signup, isAuthenticated }) => {
 						</Grid>
 					</Grid>
 				</form>
+				<button className='btn btn-danger mt-3' onClick={continueWithGoogle}>
+                Continue With Google
+            </button>
+            <br />
+            <button className='btn btn-primary mt-3' onClick={continueWithFacebook}>
+                Continue With Facebook
+            </button>
 			</div>
 		</Container>
 	);

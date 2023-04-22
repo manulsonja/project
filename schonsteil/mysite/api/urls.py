@@ -19,6 +19,7 @@ router.register('articles', ViewArticles, basename='articles')
 ####landingpage#####
 router.register('newest-tours', LPViewNewestTours, basename='newest_tours')
 router.register('current-tours', LPViewCurrentTours, basename='current_tours')
+router.register('manual-content', ViewLandingPage, basename='manual-content')
 
 
 urlpatterns = router.urls

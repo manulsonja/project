@@ -53,12 +53,12 @@ export default function SingleParking(props) {
 	});
 
 	useEffect(() => {
-        const url = API_URL + 'parking/' + slug
+        const url = API_URL + 'parking/' + slug + '/'
 		axiosInstance.get(url).then((res) => {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
-	});
+	},[]);
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 	return (
@@ -77,9 +77,9 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 						{appState.posts.name}
 					</Typography>
 					<div className="rating"> 
-							<Rating name="read-only" value={appState.posts.rating} readOnly />			
-        				</div>
-					<Gallery props={appState.posts.gallery}/>			
+{/* 							<Rating name="read-only" value={appState.posts.rating} readOnly />			
+ */}        				</div>
+					{/* <Gallery props={appState.posts.gallery}/> */}			
 				</Container>
 			<div className={classes.heroContent}>
 				<Container maxWidth="md">		
@@ -88,7 +88,7 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 						align="left"
 						color="textSecondary"
 						paragraph >
-						<div dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}} />	
+						{/* <div dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}} />	 */}
 					</Typography>
 				</Container>
 			</div>

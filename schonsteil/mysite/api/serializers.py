@@ -87,6 +87,13 @@ class ArticleSerializer(serializers.ModelSerializer):
         class Meta:
                 fields = ('id', 'title', 'image','slug','category','author','text','subtitle')
                 model = BlogArticle
+
+class LandingPageSerializer(serializers.Serializer):
+
+        primary_feature_article_pk = serializers.SerializerMethodField()
+        def get_primary_feature_article_pk(self, obj):
+               return ArticleSerializer(obj.primary_feature_article).data
+        
 class ParkingSerializer(serializers.ModelSerializer):
         image = PictureField()
         class Meta:
