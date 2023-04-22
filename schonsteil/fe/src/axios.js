@@ -6,8 +6,8 @@ const axiosInstance = axios.create({
 	baseURL: baseURL,
 	timeout: 5000,
 	headers: {
-		Authorization: localStorage.getItem('access_token')
-			? 'JWT ' + localStorage.getItem('access_token')
+		Authorization: localStorage.getItem('access')
+			? 'JWT ' + localStorage.getItem('access')
 			: null,
 		'Content-Type': 'application/json',
 		accept: 'application/json',
@@ -43,7 +43,7 @@ axiosInstance.interceptors.response.use(
 			error.response.status === 401 &&
 			error.response.statusText === 'Unauthorized'
 		) {
-			const refreshToken = localStorage.getItem('refresh_token');
+			const refreshToken = localStorage.getItem('refresh');
 
 			if (refreshToken) {
 				const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
@@ -55,8 +55,8 @@ axiosInstance.interceptors.response.use(
 					return axiosInstance
 						.post('/token/refresh/', { refresh: refreshToken })
 						.then((response) => {
-							localStorage.setItem('access_token', response.data.access);
-							localStorage.setItem('refresh_token', response.data.refresh);
+							localStorage.setItem('access', response.data.access);
+							localStorage.setItem('refresh', response.data.refresh);
 
 							axiosInstance.defaults.headers['Authorization'] =
 								'JWT ' + response.data.access;

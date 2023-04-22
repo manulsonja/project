@@ -39,7 +39,7 @@ const names = [
 	'leicht',
 	'mittel',
 	'schwierig' ];
-function App() {
+function Map() {
 	const [personName, setPersonName] = React.useState([]);
 	const [screenSize, setScreenSize] = useState(getCurrentDimension());
 	const [SearchString, setSearchString] = React.useState('');
@@ -157,4 +157,4 @@ function App() {
 		</div>
 	);
 }
-export default App;
+export default Map;

@@ -13,8 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
-import { login } from '../actions/auth';
 import axios from 'axios';
+import { signup } from '../actions/auth';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -37,20 +37,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignIn = ({ login, isAuthenticated }) => {
+const SignUp = ({ signup, isAuthenticated }) => {
 	const classes = useStyles();
 
+	const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
         email: '',
-        password: '' 
+        password: '',
+        re_password: '',
+        user_name: ''
+
     });
 
-    const { email, password } = formData;
+
+    const { email, user_name, first_name, last_name, password, re_password  } = formData;
     const onChange = e =>  setFormData({ ...formData, [e.target.name]: e.target.value });
-    const onSubmit = e => {
+	const onSubmit = e => {
         e.preventDefault();
-        login(email, password);
+
+        if (password === re_password) {
+            signup(first_name, last_name, email, password, re_password, user_name);
+            setAccountCreated(true);
+        }
     };
+
+
 
     const continueWithGoogle = async () => {
         try {
@@ -82,7 +95,7 @@ const SignIn = ({ login, isAuthenticated }) => {
 			<div className={classes.paper}>
 				<Avatar className={classes.avatar}></Avatar>
 				<Typography component="h1" variant="h5">
-					Sign in
+					Registrieren
 				</Typography>
 				<form className={classes.form} noValidate>
 					<TextField
@@ -98,15 +111,67 @@ const SignIn = ({ login, isAuthenticated }) => {
 						onChange={e => onChange(e)}
 
 					/>
+						<TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						id="user_name"
+						label="Benutzername"
+						name="user_name"
+						autoComplete="user+name"
+						autoFocus
+						onChange={e => onChange(e)}
+
+					/>
+						<TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						id="first_name"
+						label="Vorname"
+						name="first_name"
+						autoComplete="first_name"
+						autoFocus
+						onChange={e => onChange(e)}
+
+					/>
+						<TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						id="last_name"
+						label="Nachname"
+						name="last_name"
+						autoComplete="last_name"
+						autoFocus
+						onChange={e => onChange(e)}
+
+					/>
 					<TextField
 						variant="outlined"
 						margin="normal"
 						required
 						fullWidth
 						name="password"
-						label="Password"
+						label="Passwort"
 						type="password"
 						id="password"
+						autoComplete="current-password"
+						onChange={e => onChange(e)}
+
+					/>
+						<TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						name="re_password"
+						label="Passwort"
+						type="password"
+						id="re_password"
 						autoComplete="current-password"
 						onChange={e => onChange(e)}
 
@@ -124,17 +189,17 @@ const SignIn = ({ login, isAuthenticated }) => {
 						onClick={e => onSubmit(e)}
 
 					>
-						Sign In
+						Registrieren
 					</Button>
 					<Grid container>
 						<Grid item xs>
 							<Link href="#" variant="body2">
-								Forgot password?
+								Passwort vergessen?
 							</Link>
 						</Grid>
 						<Grid item>
 							<Link href="#" variant="body2">
-								{"Don't have an account? Sign Up"}
+								{"Haben Sie einen Account? Log In"}
 							</Link>
 						</Grid>
 					</Grid>
@@ -148,4 +213,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { login })(SignIn);
+export default connect(mapStateToProps, { signup })(SignUp);

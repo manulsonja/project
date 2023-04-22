@@ -72,7 +72,7 @@ function Header({ logout, isAuthenticated, user }) {
 						variant="outlined"
 						className={classes.link}
 						component={NavLink}
-						to="loginauth"
+						to="login"
 						onClick={logout}
 					>
 						Logout
@@ -106,6 +106,17 @@ function Header({ logout, isAuthenticated, user }) {
 							Schon steil.com 
 						</Link>
  					</Typography>
+					
+					
+					 <Link
+							color="textPrimary"
+							href="#"
+							className={classes.link}
+							component={NavLink}
+							to="/tours"
+						>
+							Touren
+						</Link>
 					 
 					 {(isAuthenticated && user)? authLinks() :  guestLinks()}
 

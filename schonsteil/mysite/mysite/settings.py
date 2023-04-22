@@ -14,6 +14,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '5i3*6r1r%6l3r^l_%=i=zkl2$_rms65=s$hwf&8&6ei6+882%5'
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '523674685160-ji53fitk2k896ng5c29o5q6vhs90rg14.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', 'openid']
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = []
@@ -30,7 +35,11 @@ REST_FRAMEWORK = {
     )
 
 }
-
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend'
+)
 # Application definitionbbbbbb
 AUTH_USER_MODEL = "users.NewUser"
 INSTALLED_APPS = [
@@ -45,6 +54,7 @@ INSTALLED_APPS = [
     'tinymce',
     'rest_framework',
     'djoser',
+    'social_django',
     'multiselectfield',
     'users',
     'touren',
@@ -58,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
 ]
 MIDDLEWARE = [
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -81,6 +92,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect' 
+
             ],
         },
     },
@@ -203,7 +217,7 @@ DJOSER = {
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:8000/google', 'http://localhost:8000/facebook'],
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://127.0.0.1:8000/google', 'http://localhost:8000/facebook'],
     'SERIALIZERS': {
         'user_create': 'users.serializers.UserCreateSerializer',
         'user': 'users.serializers.UserCreateSerializer',

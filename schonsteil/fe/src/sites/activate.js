@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { verify } from '../actions/auth';
+import { useParams } from 'react-router-dom';
+const Activate = ({ verify }) => {
+    const params = useParams()
 
-const Activate = ({ verify, match }) => {
     const [verified, setVerified] = useState(false);
 
     const verify_account = e => {
-        const uid = match.params.uid;
-        const token = match.params.token;
+        const uid = params.uid;
+        const token = params.token;
 
         verify(uid, token);
         setVerified(true);

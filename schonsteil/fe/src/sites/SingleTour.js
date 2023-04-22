@@ -5,11 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@mui/material/Rating';
-import AuthorCard from './authorCard.tsx';
-import InfoBox from './box.tsx';
-import Gallery from './gallery.js';
-import './singlePost.css'
-import DetailMap from './detailMap.js';
+import AuthorCard from '../components/authorCard.tsx';
+import InfoBox from '../components/box.tsx';
+import Gallery from '../components/gallery.js';
+import DetailMap from '../components/detailMap.js';
+import './css/singleTour.css'
+
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -29,7 +30,7 @@ export default function SingleTour() {
 
 	const [data, setData] = useState({ posts: [] });
 	useEffect(() => {
-		const apiUrl = `http://127.0.0.1:8000/api/${category.toLowerCase()}/${slug}`;
+		const apiUrl = `http://127.0.0.1:8000/api/${category.toLowerCase()}/${slug}/`;
 		fetch(apiUrl)
 			.then((data) => data.json())
 			.then((posts) => {
@@ -44,6 +45,7 @@ export default function SingleTour() {
 	const tour_rating = parseInt(data.posts.rating)
 	
 	return (
+		console.log(data),
 		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
 					<Container maxWidth="sm">				

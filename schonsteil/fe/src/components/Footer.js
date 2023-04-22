@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	footer: {
@@ -64,6 +65,8 @@ const footers = [
 
 function Footer() {
 	const classes = useStyles();
+	const { pathname } = useLocation();
+	if(pathname == "/map") return null;
 	return (
 		<React.Fragment>
 			<Container maxWidth="md" component="footer" className={classes.footer}>

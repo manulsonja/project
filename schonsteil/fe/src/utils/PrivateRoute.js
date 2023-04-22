@@ -1,4 +1,5 @@
 import { Navigate } from "react-router-dom";
+import { connect } from "react-redux";
 
 function isAuth() {
   let token = localStorage.getItem('refresh');
@@ -10,4 +11,9 @@ function PrivateRoute({ children }) {
     return true ? <>{children}</> : <Navigate to="/login" />;
   }
   
-export default PrivateRoute;
+  const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+
+export default connect(mapStateToProps)(PrivateRoute);

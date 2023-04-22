@@ -6,14 +6,16 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import { MEDIA_URL } from './SETTINGS';
+import { MEDIA_URL } from '../SETTINGS';
 import Grid from '@mui/material/Grid';
 import { useState, useEffect } from 'react';
-import axiosInstance from './axios';
-import LPNewestTours from './LP/LPtours.tsx';
+import axiosInstance from '../axios';
 import "@fontsource/raleway";
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
+import LPNewestTours from '../components/LP/LPtours.tsx';
+import axios from 'axios';
+import { API_URL } from '../SETTINGS';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -26,6 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
   
 
 export default function Landing() {
+
   const [appState, setAppState] = useState({
 		posts: null,
 	});
@@ -35,7 +38,7 @@ export default function Landing() {
   const [currentTours, setCurrentTours] = useState({
 		posts: null,
 	});
-
+ 
 	useEffect(() => {
 		let url = "articles/";
 		axiosInstance.get(url).then((res) => {
@@ -56,6 +59,7 @@ export default function Landing() {
 	}, []);
 
   if (!appState.posts || appState.posts.length == 0) return;
+  console.log("heureka")
 
   return (
     <React.Fragment>
