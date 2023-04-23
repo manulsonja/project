@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
-import Posts from './components/Posts';
-import axiosInstance from './axios';
-import PostLoadingComponent from './components/PostLoading';
-import Leaflet from './components/map';
+import '../App.css';
+import Posts from '../components/Posts';
+import axiosInstance from '../axios';
+import PostLoadingComponent from '../components/PostLoading';
+import Leaflet from '../components/LeafletMap';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -57,7 +57,7 @@ function Map() {
 			 name_array=names
 		}
 		else name_array=personName;
-		const url = "touren/"+query_string+name_array+search_querystring+SearchString+diff_querystring+difficulty
+		const url = "touren/touren/"+query_string+name_array+search_querystring+SearchString+diff_querystring+difficulty
 		axiosInstance.get(url).then((res) => {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });
@@ -93,7 +93,6 @@ function Map() {
 				window.addEventListener('resize', handleResize);
 			};
 		  }, []);
-	
 	return (
 		<div className="App">
 			 <div className="FilterBar">

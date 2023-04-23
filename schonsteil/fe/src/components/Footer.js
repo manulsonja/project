@@ -35,31 +35,20 @@ function Copyright() {
 
 const footers = [
 	{
-		title: 'Company',
-		description: ['Team', 'History', 'Contact us', 'Locations'],
+		title: 'Schonsteil',
+		description: ['Warum Manul?', 'Ueber uns', 'Kontakt',],
 	},
 	{
-		title: 'Features',
+		title: 'Social',
 		description: [
-			'Cool stuff',
-			'Random feature',
-			'Team feature',
-			'Developer stuff',
-			'Another one',
+			'Facebook',
+			'Instagram ',
 		],
 	},
-	{
-		title: 'Resources',
-		description: [
-			'Resource',
-			'Resource name',
-			'Another resource',
-			'Final resource',
-		],
-	},
+
 	{
 		title: 'Legal',
-		description: ['Privacy policy', 'Terms of use'],
+		description: ['Impressum', 'Datenschutzerklaerung'],
 	},
 ];
 

@@ -12,8 +12,7 @@ const make_polyline = (track) => {
   if (track ) {
     const json_track = JSON.parse(track)
     const polyline = json_track.coordinates
-    const position = [47.259659,11.400375]
-    
+    const position = [47.259659,11.400375] 
     const bounds = L.latLngBounds(polyline.map((c) => { 
       return [c[0], c[1]]; 
     }));

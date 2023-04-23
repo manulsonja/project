@@ -8,7 +8,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@mui/material/Rating';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Gallery from './gallery.js';
+import Gallery from '../components/gallery.js';
 import { useParams } from 'react-router-dom';
 
 
@@ -53,7 +53,7 @@ export default function SingleParking(props) {
 	});
 
 	useEffect(() => {
-        const url = API_URL + 'parking/' + slug + '/'
+        const url = 'parking/' + slug + '/'
 		axiosInstance.get(url).then((res) => {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });
@@ -62,7 +62,6 @@ export default function SingleParking(props) {
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 	return (
-		console.log(appState),
 		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
 					<Container maxWidth="sm">				
@@ -76,10 +75,8 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 						gutterBottom>
 						{appState.posts.name}
 					</Typography>
-					<div className="rating"> 
-{/* 							<Rating name="read-only" value={appState.posts.rating} readOnly />			
- */}        				</div>
-					{/* <Gallery props={appState.posts.gallery}/> */}			
+					
+					<Gallery props={appState.posts.gallery}/> 			
 				</Container>
 			<div className={classes.heroContent}>
 				<Container maxWidth="md">		
@@ -88,7 +85,7 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 						align="left"
 						color="textSecondary"
 						paragraph >
-						{/* <div dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}} />	 */}
+						<div dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}} />	
 					</Typography>
 				</Container>
 			</div>

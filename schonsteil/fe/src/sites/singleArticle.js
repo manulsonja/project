@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import Typography from '@mui/material/Typography';
 import axiosInstance from '../axios';
 import { useState, useEffect } from 'react';
@@ -53,32 +52,21 @@ export default function SingleArticle(props) {
 	const classes = useStyles();
 	const [appState, setAppState] = useState({
 		loading: false,
-		posts: null,
+		article: null,
 	});
 
 	useEffect(() => {
-        const url = API_URL + 'articles/' + slug + '/'
+        const url = '/blog/articles/' + slug + '/'
 		axiosInstance.get(url).then((res) => {
-			const allPosts = res.data;
-			setAppState({ ...appState,loading: false, posts: allPosts });
+			const article = res.data;
+			setAppState({ ...appState,loading: false, article: article });
 		});
 	},[]);
 
-	function renderAuthorCard() {
-		if(!appState.posts.profilepic) return null;
-		const image = appState.posts.profilepic.profilepic
-		const author_name = appState.posts.author_name
-
-		const props = { "profilepic" : image,
-						"author_name": author_name} 
-		return (
-			<AuthorCard data={props}/>
- 	);
-	}
+ 	
 
 
-if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
-console.log(appState);	
+if ((!appState.article || appState.article.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 return (
 		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
@@ -91,14 +79,14 @@ return (
 						align="center"
 						color="textPrimary"
 						gutterBottom>
-						{appState.posts.title}
+						{appState.article.title}
 					</Typography>
-					<img src={MEDIA_URL + appState.posts.image.ratios['16/9'].sources['image/jpeg']['800']}
+					<img src={MEDIA_URL + appState.article.author.profile.profilepic.ratios['16/9'].sources['image/jpeg']['800']}
 					className={classes.articleImage}/>
 					<div className="rating"> 
-{/* 							<Rating name="read-only" value={appState.posts.rating} readOnly />			
+{/* 							<Rating name="read-only" value={appState.article.rating} readOnly />			
  */}        				</div>
-					{/* <Gallery props={appState.posts.gallery}/> */}			
+					{/* <Gallery props={appState.article.gallery}/> */}			
 				</Container>
 			<div className={classes.heroContent}>
 				<Container >		
@@ -107,11 +95,11 @@ return (
 						align="left"
 						color="textSecondary"
 						paragraph >
-						<div dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}} />	
+						<div dangerouslySetInnerHTML={{__html: `${appState.article.text}`}} />	
 					</Typography>
 				</Container>
 			</div>
-			{renderAuthorCard()}
+		   <AuthorCard data={appState.article.author}/>
 		</Container>
 	);
 }

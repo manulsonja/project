@@ -2,15 +2,11 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import axiosInstance from '../axios';
 import { useState, useEffect } from 'react';
-import { API_URL, MEDIA_URL } from '../SETTINGS';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
 import Rating from '@mui/material/Rating';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AuthorCard from '../components/authorCard.tsx';
-import DetailMap from '../components/detailMap.js';
 import Gallery from '../components/gallery.js';
 import { useParams } from 'react-router-dom';
 
@@ -46,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
 export default function SingleHut(props) {
 	const { slug } = useParams();
 	const classes = useStyles();
@@ -57,24 +52,13 @@ export default function SingleHut(props) {
 	});
 
 	useEffect(() => {
-        const url = API_URL + 'huette/' + slug + '/'
+        const url = 'huts/' + slug + '/'
 		axiosInstance.get(url).then((res) => {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
 	}, []);
 
-	function renderAuthorCard() {
-		if(!appState.posts.profilepic) return null;
-		const image = appState.posts.profilepic.profilepic
-		const author_name = appState.posts.author_name
-
-		const props = { "profilepic" : image,
-						"author_name": author_name} 
-		return (
-			<AuthorCard data={props}/>
- 	);
-	}
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 	return (
@@ -83,7 +67,7 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 				<CssBaseline />
 					<Container maxWidth="sm">				
 				</Container>
-				<Container maxWidth="md">
+				<Container maxWidth="lg">
 					<Typography
 						component="h1"
 						variant="h2"
@@ -108,7 +92,7 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 					</Typography>
 				</Container>
 			</div>
-			{renderAuthorCard()}
+			<AuthorCard data={appState.posts.author}/>
 
 		</Container>
 );

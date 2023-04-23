@@ -1,10 +1,7 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import axiosInstance from '../axios';
 import { useState, useEffect } from 'react';
 import { API_URL, MEDIA_URL } from '../SETTINGS';
@@ -13,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Rating from '@mui/material/Rating';
-import AlertDialog from './contactDialog.tsx';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -47,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function HutList(props) {
+export default function TourList(props) {
 	const classes = useStyles();
 	const [appState, setAppState] = useState({
 		loading: false,
@@ -55,48 +51,49 @@ export default function HutList(props) {
 	});
 
 	useEffect(() => {
-        const url = API_URL + 'huette'
+        const url = 'touren/touren/'
 		axiosInstance.get(url).then((res) => {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
-	}, []);
+	},[]);
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
+
+
   return (
+    console.log(appState),
     <React.Fragment>
         <Container maxWidth="xl" component="main">
             <Grid container spacing={5} alignItems="flex-end">
-                {appState.posts.map((huette) => {
+                {appState.posts.map((touren) => {
                     return (
                         // Enterprise card is full width at sm breakpoint
-                        <Grid item key={huette.id} xs={12} md={4}>
+                        <Grid item key={touren.id} xs={12} md={4}>
                             <Card className={classes.card}>
                                 <Link
                                     color="textPrimary"
-                                    href={'hut/' + huette.slug}
-                                    className={classes.link}
-                                >
+                                    href={'tour/' + touren.tourtype +"/"+touren.slug}
+                                    className={classes.link} >
                                     <CardMedia
                                         className={classes.cardMedia}
-                                        image={MEDIA_URL+huette.image.ratios['16/9'].sources['image/jpeg']['400']}
-                                        title="Image title"     />
+                                        image={MEDIA_URL+touren.image.ratios['16/9'].sources['image/jpeg']['100']}
+                                        title="Image title" />
                                 </Link>
                                 <CardContent className={classes.cardContent}>
                                         <div className={classes.firstRow}> 
-                                            <div style={{float: "left", width: '60%'}}> <h2>{huette.name}</h2></div>
+                                            <div style={{float: "left", width: '60%'}}> <h2>{touren.title}</h2></div>
                                             <div style={{float: "left", width: '40%'}}>
                                                 <div style={{float: "right"}}>
-                                                <Rating name="read-only" value={huette.rating} readOnly />	
+                                                <Rating name="read-only" value={touren.rating} readOnly />	
                                                 </div>		
                                             </div>
                                         </div>
                                         <div className={classes.secondRow}> 
-                                            <div dangerouslySetInnerHTML={{__html: `${huette.subtitle}`}} />	</div>
-                                        <div className={classes.thirdRow}> 
-                                        <AlertDialog props={huette}/>
+                                            <div dangerouslySetInnerHTML={{__html: `${touren.subtitle}`}} />	</div>
+                                        <div className={classes.thirdRow}>     
                                     </div>
-                         </CardContent>
+                                </CardContent>
                             </Card>
                         </Grid>
                     );

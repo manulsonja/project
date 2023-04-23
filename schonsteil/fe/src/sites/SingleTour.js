@@ -31,7 +31,7 @@ export default function SingleTour(values) {
 
 	const [data, setData] = useState({ posts: [] });
 	useEffect(() => {
-		const apiUrl = `http://127.0.0.1:8000/api/${category.toLowerCase()}/${slug}/`;
+		const apiUrl = `http://127.0.0.1:8000/touren/${category.toLowerCase()}/${slug}/`;
 		fetch(apiUrl)
 			.then((data) => data.json())
 			.then((posts) => {
@@ -43,27 +43,15 @@ export default function SingleTour(values) {
 	useEffect(() => {
 	
 	}, [setValue]);
-	function renderAuthorCard() {
-		if(!data.posts.profilepic) return null;
-		const name = data.posts.author_name;
-		const image = data.posts.profilepic.profilepic
-		const author_name = data.posts.author_name
 
-		const props = { "profilepic" : image,
-						"author_name": author_name} 
-		return (
-			<AuthorCard data={props}/>
- 	);
-	}
-	
 	const tour_rating = parseInt(data.posts.rating)
-	
+	if(!data.posts.author) return null;
 	return (
 		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
 					<Container maxWidth="sm">				
 				</Container>
-				<Container maxWidth="md">
+				<Container maxWidth="lg">
 					<Typography
 						component="h1"
 						variant="h2"
@@ -81,7 +69,7 @@ export default function SingleTour(values) {
 				</Container>
 
 			<div className={classes.heroContent}>
-				<Container maxWidth="md">		
+				<Container maxWidth="lg">		
 					<Typography
 						variant="h5"
 						align="left"
@@ -91,7 +79,7 @@ export default function SingleTour(values) {
 					</Typography>
 				</Container>
 			</div>
-			{renderAuthorCard(data)}
+			<AuthorCard data={data.posts.author}/>
 
 		</Container>
 

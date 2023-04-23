@@ -56,7 +56,6 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 
 
   return (
-    console.log(appState),
 
     <React.Fragment>
         <Container maxWidth="xl" component="main">

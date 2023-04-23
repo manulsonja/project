@@ -4,7 +4,8 @@ from django.utils.text import slugify
 from django.utils import timezone
 from tinymce import models as tinymce_models
 
-# Create your models here.
+def upload_to(instance, filename):
+    return 'huts/{filename}'.format(filename=filename)
 
 
 class Parking(models.Model): 
@@ -31,3 +32,11 @@ class Parking(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+    
+
+class ParkingGallery(models.Model):
+    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"]) 
+    parent = models.ForeignKey(Parking, on_delete=models.CASCADE, related_name="gallery")
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+

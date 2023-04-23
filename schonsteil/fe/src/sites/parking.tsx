@@ -51,7 +51,7 @@ export default function ParkingList(props) {
 	});
 
 	useEffect(() => {
-        const url = API_URL + 'parking'
+        const url = 'parking/'
 		axiosInstance.get(url).then((res) => {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });

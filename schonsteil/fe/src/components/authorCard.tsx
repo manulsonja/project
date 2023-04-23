@@ -16,7 +16,13 @@ const useStyles = makeStyles((theme) => ({
 export default function AuthorCard(props) {
  const { data } = props;
  const classes = useStyles();
- const profileimage = data.profilepic.ratios['1/1'].sources['image/jpeg']['300']
+
+ if(!data.first_name  || !data.profile.profilepic) {
+  console.log("No data passed or data doesnt fit the required format of the component");
+  return null;
+ }
+ const author_name = `${data.first_name} ${data.last_name}`;
+ const profileimage = data.profile.profilepic.ratios['1/1'].sources['image/jpeg']['300']
   return (
     <div style={{marginTop:'50px'}}>
     <Grid container spacing={5} xs={12} className={classes.profileCard}
@@ -30,14 +36,14 @@ export default function AuthorCard(props) {
     </Grid>
     <Grid item lg={3}>
     <Typography gutterBottom variant="h1" component="div">
-            {data.author_name} 
+            {author_name} 
       </Typography>
       <Typography gutterBottom component="div">
              Max is an avid hiker and loyal writer for schonsteil.com
       </Typography>
 
           <Button size="small" color="primary">
-          More about {data.author_name}
+          More about {author_name}
         </Button> 
     </Grid>
         <Grid item xs={12}>

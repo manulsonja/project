@@ -1,5 +1,3 @@
-
-
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -14,8 +12,6 @@ import "@fontsource/raleway";
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import LPNewestTours from '../components/LP/LPtours.tsx';
-import axios from 'axios';
-import { API_URL } from '../SETTINGS';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -40,17 +36,17 @@ export default function Landing() {
 	});
  
 	useEffect(() => {
-		let url = "manual-content/";
+		let url = "/layout-widgets/manual-content/";
 		axiosInstance.get(url).then((res) => {
 			const allPosts  = res.data ? res.data : null;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
-    let urltwo = "newest-tours/"
+    let urltwo = "/layout-widgets/newest-tours/"
     axiosInstance.get(urltwo).then((res) => {
 			const allPosts = res.data;
 			setNewestTours({ ...newestTours,loading: false, posts: allPosts });
 		});
-    let urlthree = "current-tours/"
+    let urlthree = "/layout-widgets/current-tours/"
     axiosInstance.get(urlthree).then((res) => {
 			const allPosts = res.data;
 			setCurrentTours({ ...currentTours,loading: false, posts: allPosts });

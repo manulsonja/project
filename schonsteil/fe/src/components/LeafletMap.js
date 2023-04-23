@@ -17,6 +17,7 @@ export default function Leaflet(props) {
 
     const position = [47.259659,11.400375]
     const { data } = props;
+    console.log(data)
     const screen = data[1];
     const tours = data[0];
     const generate_markers = (tours) => {
@@ -54,7 +55,6 @@ export default function Leaflet(props) {
       })
       return null
     }
-  
 return (
   <div className="outerMap"  
       style={{height:  resize(screen) }} 
