@@ -1,9 +1,4 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axiosInstance from '../axios';
 import { useState, useEffect } from 'react';
@@ -13,13 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Rating from '@mui/material/Rating';
-import AlertDialog from './contactDialog.tsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import InfoBox from './box.tsx';
-import AuthorCard from './authorCard.tsx';
-import DetailMap from './detailMap.js';
-import Gallery from './gallery.js';
-
+import AuthorCard from '../components/authorCard.tsx';
+import DetailMap from '../components/detailMap.js';
+import Gallery from '../components/gallery.js';
 import { useParams } from 'react-router-dom';
 
 
@@ -58,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SingleHut(props) {
 	const { slug } = useParams();
 	const classes = useStyles();
+
 	const [appState, setAppState] = useState({
 		loading: false,
 		posts: null,
@@ -70,6 +63,18 @@ export default function SingleHut(props) {
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
 	}, []);
+
+	function renderAuthorCard() {
+		if(!appState.posts.profilepic) return null;
+		const image = appState.posts.profilepic.profilepic
+		const author_name = appState.posts.author_name
+
+		const props = { "profilepic" : image,
+						"author_name": author_name} 
+		return (
+			<AuthorCard data={props}/>
+ 	);
+	}
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 	return (
@@ -93,7 +98,7 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 					<Gallery props={appState.posts.gallery}/>			
 				</Container>
 			<div className={classes.heroContent}>
-				<Container maxWidth="md">		
+				<Container maxWidth="lg">		
 					<Typography
 						variant="h5"
 						align="left"
@@ -103,6 +108,8 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 					</Typography>
 				</Container>
 			</div>
+			{renderAuthorCard()}
+
 		</Container>
-	);
+);
 }

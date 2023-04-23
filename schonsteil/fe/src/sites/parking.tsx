@@ -56,7 +56,7 @@ export default function ParkingList(props) {
 			const allPosts = res.data;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
-	});
+	}, []);
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 
@@ -92,7 +92,7 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
                                             </div>
                                         </div>
                                         <div className={classes.secondRow}> 
-                                            <div dangerouslySetInnerHTML={{__html: `${parking.subtitle}`}} />	</div>
+                                            <div dangerouslySetInnerHTML={{__html: `${parking.parkingtype}`}} />	</div>
                                         <div className={classes.thirdRow}> 
                                         
  </div>

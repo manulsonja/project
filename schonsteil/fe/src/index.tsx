@@ -14,7 +14,7 @@ import Register from './sites/register';
 import Logout from './components/logout';
 import Login from './sites/login';
 import HutList from './components/huts.tsx';
-import ParkingList from './components/parking.tsx';
+import ParkingList from './sites/parking';
 import TourList from './components/tours.tsx';
 import SingleHut from './components/SingleHut';
 import SingleParking from './components/singleParking';

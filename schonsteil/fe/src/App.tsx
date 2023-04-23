@@ -14,9 +14,9 @@ import Register from './sites/register';
 import Logout from './components/logout';
 import Login from './sites/login';
 import HutList from './components/huts.tsx';
-import ParkingList from './components/parking.tsx';
+import ParkingList from './sites/parking.tsx';
 import TourList from './components/tours.tsx';
-import SingleHut from './components/SingleHut';
+import SingleHut from './sites/SingleHut';
 import SingleParking from './components/singleParking';
 import Landing from './sites/LandingPage.tsx';
 import PrivateRoute from './utils/PrivateRoute';
@@ -26,7 +26,6 @@ import ResetPassword from './sites/resetPassword';
 import ResetPasswordConfirm from './sites/resetPasswordConfirm';
 import Activate from './sites/activate';
 import Layout from './hocs/Layout';
-import { useLocation } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import store from './store';
 import Facebook from './sites/Facebook';
@@ -59,7 +58,6 @@ const App = () => {
 					<Route path="/hut/:slug" element={<SingleHut/>} />
 					<Route path="/parking/:slug" element={<SingleParking/>} />
 					<Route path="/article/:slug" element={<SingleArticle/>} />
-
 					<Route path="/register" element={<Register/>} />
 					<Route path="/login" element={<Login/>} />
 					<Route path="/logout" element={<Logout/>} />
@@ -71,7 +69,8 @@ const App = () => {
 				<Footer />
  </ThemeProvider>
  </Layout>
- </BrowserRouter></Provider>
+ </BrowserRouter>
+ </Provider>
   )
 }
 

@@ -76,12 +76,21 @@ class SkitourSerializer(TourDetailSerializer):
 class HutSerializer(serializers.ModelSerializer):
         gallery = serializers.SerializerMethodField()
         image = PictureField()
-        
+        author_name = serializers.SerializerMethodField()
+        profilepic = serializers.SerializerMethodField()  
+
+        def get_author_name(self,obj):
+               name = obj.author.first_name
+               return name
+        def get_profilepic(self,obj):
+               pic = obj.author.profile
+               return ArticleImageSerializer(pic).data
+  
         def get_gallery(self,obj):
                 return PictureSerializer(obj.gallery.all(), many=True).data 
         class Meta:
                 fields = ('id', 'name', 'position','image','text','hut_type','rating','slug','subtitle',
-                'telephone','website','email','slug','gallery')
+                'telephone','website','email','slug','gallery','author_name','profilepic')
                 model = MountainHut
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -107,5 +116,5 @@ class LandingPageSerializer(serializers.Serializer):
 class ParkingSerializer(serializers.ModelSerializer):
         image = PictureField()
         class Meta:
-                fields = ('parkingtype', 'name', 'position','image','toilet','fees','slug',)
+                fields = ('parkingtype', 'name', 'position','image','toilet','fees','slug','text')
                 model = Parking

@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from pictures.models import PictureField
 from django.utils.text import slugify
 from django.utils import timezone
+from tinymce import models as tinymce_models
 
 # Create your models here.
 
@@ -15,6 +16,7 @@ class Parking(models.Model):
     toilet = (
     (True, 'Ja'),
     (False, 'Nein'),  )
+    text = tinymce_models.HTMLField(null=True)
     image = PictureField(aspect_ratios=["16/9"])
     toilet = models.BooleanField(null=True)
     fees = models.FloatField(null=True)
