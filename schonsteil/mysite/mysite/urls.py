@@ -17,29 +17,31 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
-from rest_framework.schemas import get_schema_view
-from rest_framework.documentation import include_docs_urls
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-
 from pictures.conf import get_settings
 from django.views.generic import TemplateView
 
 
+
+
 urlpatterns = [
+    path('admin/', admin.site.urls),
+############### plugins ####################
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('auth/', include('djoser.social.urls')),
-
-    path('admin/', admin.site.urls),
-    path('',         include('touren.urls')),
     path('tinymce/', include('tinymce.urls')),
+############### apps #######################
     path('api/',     include('api.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/user/', include('users.urls', namespace='users')),   
+    path('touren/', include('touren.urls')),
+    path('huts/', include('mountain_huts.urls')),
+    path('parking/', include('parking.urls')),
+    path('blog/', include('blog.urls')),
+    path('layout-widgets/', include('layout_config.urls')),
+    path('user/', include('users.urls', namespace='users')), 
 ]
 
 if get_settings().USE_PLACEHOLDERS:

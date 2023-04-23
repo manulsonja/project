@@ -32,7 +32,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
 }
 AUTHENTICATION_BACKENDS = (
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'corsheaders',
     'sorl.thumbnail',
     'tinymce',
@@ -57,6 +59,11 @@ INSTALLED_APPS = [
     'django_extensions',
     'social_django',
     'multiselectfield',
+    'drf_spectacular',
+    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt',
+    'django.contrib.gis',
+
     'layout_config',
     'users',
     'touren',
@@ -65,9 +72,6 @@ INSTALLED_APPS = [
     'parking',
     'blog',
     'api',
-    'rest_framework_simplejwt.token_blacklist',
-    'rest_framework_simplejwt',
-    'django.contrib.gis',
 ]
 MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
@@ -179,6 +183,15 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'SchonSteil API',
+    'DESCRIPTION': '',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SCHEMA_PATH_PREFIX': "api",
+   
+    # OTHER SETTINGS
 }
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

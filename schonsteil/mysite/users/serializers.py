@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from users.models import NewUser
 from djoser.serializers import UserCreateSerializer
+from pictures.contrib.rest_framework import PictureField
 
 class CustomUserSerializer(serializers.ModelSerializer):
     """
@@ -29,3 +30,16 @@ class UserCreateSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = NewUser
         fields = ('id', 'email', 'first_name', 'last_name', 'password')
+
+class ProfileImageSerializer(serializers.Serializer):
+        profilepic=PictureField()
+
+class AuthorSerializer(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+    def get_profile(self, obj):
+            photos = obj.profile
+            return ProfileImageSerializer(photos).data     
+    class Meta:
+        fields = ('first_name', 'last_name', 'profile')
+        model = NewUser
+

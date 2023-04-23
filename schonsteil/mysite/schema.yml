@@ -1,0 +1,3800 @@
+openapi: 3.0.3
+info:
+  title: Your Project API
+  version: 1.0.0
+  description: Your project description
+paths:
+  /api/articles/:
+    get:
+      operationId: api_articles_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+          description: ''
+    post:
+      operationId: api_articles_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Article'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Article'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+          description: ''
+  /api/articles/{id}/:
+    get:
+      operationId: api_articles_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this blog article.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+          description: ''
+    put:
+      operationId: api_articles_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this blog article.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Article'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Article'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+          description: ''
+    patch:
+      operationId: api_articles_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this blog article.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedArticle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedArticle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedArticle'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+          description: ''
+    delete:
+      operationId: api_articles_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this blog article.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/current-tours/:
+    get:
+      operationId: api_current_tours_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tour'
+          description: ''
+    post:
+      operationId: api_current_tours_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+  /api/current-tours/{id}/:
+    get:
+      operationId: api_current_tours_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    put:
+      operationId: api_current_tours_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    patch:
+      operationId: api_current_tours_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    delete:
+      operationId: api_current_tours_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/hike and fly/:
+    get:
+      operationId: api_hike and fly_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HikeAndFly'
+          description: ''
+    post:
+      operationId: api_hike and fly_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HikeAndFly'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HikeAndFly'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HikeAndFly'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HikeAndFly'
+          description: ''
+  /api/hike and fly/{id}/:
+    get:
+      operationId: api_hike and fly_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this hike and fly.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HikeAndFly'
+          description: ''
+    put:
+      operationId: api_hike and fly_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this hike and fly.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HikeAndFly'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HikeAndFly'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HikeAndFly'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HikeAndFly'
+          description: ''
+    patch:
+      operationId: api_hike and fly_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this hike and fly.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedHikeAndFly'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedHikeAndFly'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedHikeAndFly'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HikeAndFly'
+          description: ''
+    delete:
+      operationId: api_hike and fly_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this hike and fly.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/hochtour/:
+    get:
+      operationId: api_hochtour_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hochtour'
+          description: ''
+    post:
+      operationId: api_hochtour_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hochtour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Hochtour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Hochtour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hochtour'
+          description: ''
+  /api/hochtour/{id}/:
+    get:
+      operationId: api_hochtour_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this hochtour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hochtour'
+          description: ''
+    put:
+      operationId: api_hochtour_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this hochtour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hochtour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Hochtour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Hochtour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hochtour'
+          description: ''
+    patch:
+      operationId: api_hochtour_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this hochtour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedHochtour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedHochtour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedHochtour'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hochtour'
+          description: ''
+    delete:
+      operationId: api_hochtour_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this hochtour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/huette/:
+    get:
+      operationId: api_huette_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hut'
+          description: ''
+    post:
+      operationId: api_huette_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hut'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Hut'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Hut'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hut'
+          description: ''
+  /api/huette/{id}/:
+    get:
+      operationId: api_huette_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mountain hut.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hut'
+          description: ''
+    put:
+      operationId: api_huette_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mountain hut.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hut'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Hut'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Hut'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hut'
+          description: ''
+    patch:
+      operationId: api_huette_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mountain hut.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedHut'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedHut'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedHut'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hut'
+          description: ''
+    delete:
+      operationId: api_huette_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mountain hut.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/klettern/:
+    get:
+      operationId: api_klettern_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Klettertour'
+          description: ''
+    post:
+      operationId: api_klettern_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Klettertour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Klettertour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Klettertour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Klettertour'
+          description: ''
+  /api/klettern/{id}/:
+    get:
+      operationId: api_klettern_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this klettertour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Klettertour'
+          description: ''
+    put:
+      operationId: api_klettern_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this klettertour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Klettertour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Klettertour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Klettertour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Klettertour'
+          description: ''
+    patch:
+      operationId: api_klettern_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this klettertour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedKlettertour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedKlettertour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedKlettertour'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Klettertour'
+          description: ''
+    delete:
+      operationId: api_klettern_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this klettertour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/manual-content/:
+    get:
+      operationId: api_manual_content_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LandingPage'
+          description: ''
+    post:
+      operationId: api_manual_content_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LandingPage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LandingPage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LandingPage'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingPage'
+          description: ''
+  /api/manual-content/{id}/:
+    get:
+      operationId: api_manual_content_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this landing page layout.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingPage'
+          description: ''
+    put:
+      operationId: api_manual_content_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this landing page layout.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LandingPage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LandingPage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LandingPage'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingPage'
+          description: ''
+    patch:
+      operationId: api_manual_content_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this landing page layout.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLandingPage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLandingPage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLandingPage'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingPage'
+          description: ''
+    delete:
+      operationId: api_manual_content_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this landing page layout.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/newest-tours/:
+    get:
+      operationId: api_newest_tours_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tour'
+          description: ''
+    post:
+      operationId: api_newest_tours_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+  /api/newest-tours/{id}/:
+    get:
+      operationId: api_newest_tours_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    put:
+      operationId: api_newest_tours_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    patch:
+      operationId: api_newest_tours_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    delete:
+      operationId: api_newest_tours_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/parking/:
+    get:
+      operationId: api_parking_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Parking'
+          description: ''
+    post:
+      operationId: api_parking_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Parking'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Parking'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parking'
+          description: ''
+  /api/parking/{id}/:
+    get:
+      operationId: api_parking_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this parking.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parking'
+          description: ''
+    put:
+      operationId: api_parking_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this parking.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Parking'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Parking'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parking'
+          description: ''
+    patch:
+      operationId: api_parking_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this parking.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedParking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedParking'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedParking'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parking'
+          description: ''
+    delete:
+      operationId: api_parking_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this parking.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/schitour/:
+    get:
+      operationId: api_schitour_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skitour'
+          description: ''
+    post:
+      operationId: api_schitour_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skitour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skitour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skitour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skitour'
+          description: ''
+  /api/schitour/{id}/:
+    get:
+      operationId: api_schitour_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this skitour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skitour'
+          description: ''
+    put:
+      operationId: api_schitour_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this skitour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skitour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skitour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skitour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skitour'
+          description: ''
+    patch:
+      operationId: api_schitour_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this skitour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSkitour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSkitour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSkitour'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skitour'
+          description: ''
+    delete:
+      operationId: api_schitour_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this skitour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/test/:
+    get:
+      operationId: api_test_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Picture'
+          description: ''
+    post:
+      operationId: api_test_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Picture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Picture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Picture'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Picture'
+          description: ''
+  /api/test/{id}/:
+    get:
+      operationId: api_test_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Picture'
+          description: ''
+    put:
+      operationId: api_test_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Picture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Picture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Picture'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Picture'
+          description: ''
+    patch:
+      operationId: api_test_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPicture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPicture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPicture'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Picture'
+          description: ''
+    delete:
+      operationId: api_test_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/token/:
+    post:
+      operationId: api_token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/touren/:
+    get:
+      operationId: api_touren_list
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tour'
+          description: ''
+    post:
+      operationId: api_touren_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+  /api/touren/{id}/:
+    get:
+      operationId: api_touren_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    put:
+      operationId: api_touren_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tour'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    patch:
+      operationId: api_touren_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTour'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tour'
+          description: ''
+    delete:
+      operationId: api_touren_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tour.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/user/create/:
+    post:
+      operationId: api_user_create_create
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/user/logout/blacklist/:
+    post:
+      operationId: api_user_logout_blacklist_create
+      tags:
+      - api
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/wandern/:
+    get:
+      operationId: api_wandern_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Wandern'
+          description: ''
+    post:
+      operationId: api_wandern_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wandern'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Wandern'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Wandern'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wandern'
+          description: ''
+  /api/wandern/{id}/:
+    get:
+      operationId: api_wandern_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this wandern.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wandern'
+          description: ''
+    put:
+      operationId: api_wandern_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this wandern.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wandern'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Wandern'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Wandern'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wandern'
+          description: ''
+    patch:
+      operationId: api_wandern_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this wandern.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWandern'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWandern'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWandern'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wandern'
+          description: ''
+    delete:
+      operationId: api_wandern_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this wandern.
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /auth/jwt/create/:
+    post:
+      operationId: auth_jwt_create_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /auth/jwt/refresh/:
+    post:
+      operationId: auth_jwt_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /auth/jwt/verify/:
+    post:
+      operationId: auth_jwt_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerify'
+          description: ''
+  /auth/o/{provider}/:
+    get:
+      operationId: auth_o_retrieve
+      parameters:
+      - in: path
+        name: provider
+        schema:
+          type: string
+          pattern: ^\S+$
+        required: true
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderAuth'
+          description: ''
+    post:
+      operationId: auth_o_create
+      parameters:
+      - in: path
+        name: provider
+        schema:
+          type: string
+          pattern: ^\S+$
+        required: true
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProviderAuth'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProviderAuth'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProviderAuth'
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderAuth'
+          description: ''
+  /auth/users/:
+    get:
+      operationId: auth_users_list
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserCreate'
+          description: ''
+    post:
+      operationId: auth_users_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreatePasswordRetype'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreatePasswordRetype'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreatePasswordRetype'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreatePasswordRetype'
+          description: ''
+  /auth/users/{id}/:
+    get:
+      operationId: auth_users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this new user.
+        required: true
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+    put:
+      operationId: auth_users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this new user.
+        required: true
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+    patch:
+      operationId: auth_users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this new user.
+        required: true
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserCreate'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+    delete:
+      operationId: auth_users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this new user.
+        required: true
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /auth/users/activation/:
+    post:
+      operationId: auth_users_activation_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Activation'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activation'
+          description: ''
+  /auth/users/me/:
+    get:
+      operationId: auth_users_me_retrieve
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+    put:
+      operationId: auth_users_me_update
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+    patch:
+      operationId: auth_users_me_partial_update
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserCreate'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+    delete:
+      operationId: auth_users_me_destroy
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /auth/users/resend_activation/:
+    post:
+      operationId: auth_users_resend_activation_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /auth/users/reset_email/:
+    post:
+      operationId: auth_users_reset_email_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /auth/users/reset_email_confirm/:
+    post:
+      operationId: auth_users_reset_email_confirm_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameResetConfirm'
+          description: ''
+  /auth/users/reset_password/:
+    post:
+      operationId: auth_users_reset_password_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /auth/users/reset_password_confirm/:
+    post:
+      operationId: auth_users_reset_password_confirm_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResetConfirm'
+          description: ''
+  /auth/users/set_email/:
+    post:
+      operationId: auth_users_set_email_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUsernameRetype'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetUsernameRetype'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetUsernameRetype'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetUsernameRetype'
+          description: ''
+  /auth/users/set_password/:
+    post:
+      operationId: auth_users_set_password_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPasswordRetype'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetPasswordRetype'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetPasswordRetype'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetPasswordRetype'
+          description: ''
+components:
+  schemas:
+    Activation:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+      required:
+      - token
+      - uid
+    Article:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          nullable: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        author:
+          type: integer
+        text:
+          type: string
+        subtitle:
+          type: string
+          nullable: true
+          maxLength: 150
+        author_name:
+          type: string
+          readOnly: true
+        profilepic:
+          type: string
+          readOnly: true
+      required:
+      - author
+      - author_name
+      - id
+      - image
+      - profilepic
+      - slug
+      - text
+      - title
+    CategoryEnum:
+      enum:
+      - alm
+      - huette
+      - gasthof
+      - sonstige
+      type: string
+      description: |-
+        * `alm` - Alm
+        * `huette` - Huette
+        * `gasthof` - Gasthof
+        * `sonstige` - Sonstige
+    DifficultyEnum:
+      enum:
+      - leicht
+      - mittel
+      - schwierig
+      type: string
+      description: |-
+        * `leicht` - LEICHT
+        * `mittel` - MITTEL
+        * `schwierig` - SCHWIERIG
+    HikeAndFly:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - author
+      - author_name
+      - id
+      - image
+      - photoalbum
+      - profile_pk
+      - profilepic
+      - slug
+      - starting_pnt
+      - text
+      - title
+      - tourtype
+    Hochtour:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - author
+      - author_name
+      - id
+      - image
+      - photoalbum
+      - profile_pk
+      - profilepic
+      - slug
+      - starting_pnt
+      - text
+      - title
+      - tourtype
+    Hut:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        position:
+          type: string
+          nullable: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        text:
+          type: string
+        hut_type:
+          $ref: '#/components/schemas/HutTypeEnum'
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        slug:
+          type: string
+          readOnly: true
+          nullable: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        subtitle:
+          type: string
+          nullable: true
+          maxLength: 150
+        telephone:
+          type: string
+          nullable: true
+          maxLength: 20
+        website:
+          type: string
+          nullable: true
+          maxLength: 50
+        email:
+          type: string
+          nullable: true
+          maxLength: 50
+        gallery:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        profilepic:
+          type: string
+          readOnly: true
+      required:
+      - author_name
+      - gallery
+      - id
+      - image
+      - name
+      - profilepic
+      - slug
+      - text
+    HutTypeEnum:
+      enum:
+      - alm
+      - huette
+      - gasthof
+      - sonstige
+      type: string
+      description: |-
+        * `alm` - Alm
+        * `huette` - Huette
+        * `gasthof` - Gasthof
+        * `sonstige` - Sonstige
+    Klettertour:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - author
+      - author_name
+      - id
+      - image
+      - photoalbum
+      - profile_pk
+      - profilepic
+      - slug
+      - starting_pnt
+      - text
+      - title
+      - tourtype
+    LandingPage:
+      type: object
+      properties:
+        primary_feature_article_pk:
+          type: string
+          readOnly: true
+      required:
+      - primary_feature_article_pk
+    Parking:
+      type: object
+      properties:
+        parkingtype:
+          $ref: '#/components/schemas/ParkingtypeEnum'
+        name:
+          type: string
+          maxLength: 30
+        position:
+          type: string
+          nullable: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        toilet:
+          type: boolean
+          nullable: true
+        fees:
+          type: number
+          format: double
+          nullable: true
+        slug:
+          type: string
+          readOnly: true
+          nullable: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        text:
+          type: string
+          nullable: true
+      required:
+      - image
+      - name
+      - slug
+    ParkingtypeEnum:
+      enum:
+      - parkplatz
+      - haltestelle
+      - stellplatz
+      - sonstige
+      type: string
+      description: |-
+        * `parkplatz` - Parkplatz
+        * `haltestelle` - Haltestelle
+        * `stellplatz` - Stellplatz
+        * `sonstige` - Sonstige
+    PasswordResetConfirm:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+        new_password:
+          type: string
+      required:
+      - new_password
+      - token
+      - uid
+    PatchedArticle:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          nullable: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        author:
+          type: integer
+        text:
+          type: string
+        subtitle:
+          type: string
+          nullable: true
+          maxLength: 150
+        author_name:
+          type: string
+          readOnly: true
+        profilepic:
+          type: string
+          readOnly: true
+    PatchedHikeAndFly:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+    PatchedHochtour:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+    PatchedHut:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        position:
+          type: string
+          nullable: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        text:
+          type: string
+        hut_type:
+          $ref: '#/components/schemas/HutTypeEnum'
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        slug:
+          type: string
+          readOnly: true
+          nullable: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        subtitle:
+          type: string
+          nullable: true
+          maxLength: 150
+        telephone:
+          type: string
+          nullable: true
+          maxLength: 20
+        website:
+          type: string
+          nullable: true
+          maxLength: 50
+        email:
+          type: string
+          nullable: true
+          maxLength: 50
+        gallery:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        profilepic:
+          type: string
+          readOnly: true
+    PatchedKlettertour:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+    PatchedLandingPage:
+      type: object
+      properties:
+        primary_feature_article_pk:
+          type: string
+          readOnly: true
+    PatchedParking:
+      type: object
+      properties:
+        parkingtype:
+          $ref: '#/components/schemas/ParkingtypeEnum'
+        name:
+          type: string
+          maxLength: 30
+        position:
+          type: string
+          nullable: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        toilet:
+          type: boolean
+          nullable: true
+        fees:
+          type: number
+          format: double
+          nullable: true
+        slug:
+          type: string
+          readOnly: true
+          nullable: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        text:
+          type: string
+          nullable: true
+    PatchedPicture:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        image:
+          type: string
+          readOnly: true
+    PatchedSkitour:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+    PatchedTour:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        subtitle:
+          type: string
+          maxLength: 100
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+        difficulty:
+          $ref: '#/components/schemas/DifficultyEnum'
+        season:
+          $ref: '#/components/schemas/SeasonEnum'
+    PatchedUserCreate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+    PatchedWandern:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+    Picture:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        image:
+          type: string
+          readOnly: true
+      required:
+      - image
+    ProviderAuth:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+        user:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - refresh
+      - user
+    RatingEnum:
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      type: string
+      description: |-
+        * `1` - 1
+        * `2` - 2
+        * `3` - 3
+        * `4` - 4
+        * `5` - 5
+    SeasonEnum:
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      - '9'
+      - '10'
+      - '11'
+      - '12'
+      type: string
+      description: |-
+        * `1` - January
+        * `2` - February
+        * `3` - March
+        * `4` - April
+        * `5` - Mai
+        * `6` - June
+        * `7` - July
+        * `8` - August
+        * `9` - September
+        * `10` - Octobre
+        * `11` - November
+        * `12` - Decembre
+    SendEmailReset:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    SetPasswordRetype:
+      type: object
+      properties:
+        new_password:
+          type: string
+        re_new_password:
+          type: string
+        current_password:
+          type: string
+      required:
+      - current_password
+      - new_password
+      - re_new_password
+    SetUsernameRetype:
+      type: object
+      properties:
+        current_password:
+          type: string
+        new_email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        re_new_email:
+          type: string
+      required:
+      - current_password
+      - new_email
+      - re_new_email
+    Skitour:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - author
+      - author_name
+      - id
+      - image
+      - photoalbum
+      - profile_pk
+      - profilepic
+      - slug
+      - starting_pnt
+      - text
+      - title
+      - tourtype
+    TokenObtainPair:
+      type: object
+      properties:
+        email:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - email
+      - password
+      - refresh
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    TokenVerify:
+      type: object
+      properties:
+        token:
+          type: string
+          writeOnly: true
+      required:
+      - token
+    Tour:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        subtitle:
+          type: string
+          maxLength: 100
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+        difficulty:
+          $ref: '#/components/schemas/DifficultyEnum'
+        season:
+          $ref: '#/components/schemas/SeasonEnum'
+      required:
+      - author
+      - id
+      - image
+      - slug
+      - starting_pnt
+      - subtitle
+      - text
+      - title
+      - tourtype
+    UserCreate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - email
+      - id
+      - password
+    UserCreatePasswordRetype:
+      type: object
+      properties:
+        user_name:
+          type: string
+          maxLength: 150
+        first_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        id:
+          type: integer
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
+        re_password:
+          type: string
+      required:
+      - email
+      - id
+      - password
+      - re_password
+      - user_name
+    UsernameResetConfirm:
+      type: object
+      properties:
+        new_email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+      required:
+      - new_email
+    Wandern:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 30
+        text:
+          type: string
+        tourtype:
+          type: string
+          readOnly: true
+        rating:
+          $ref: '#/components/schemas/RatingEnum'
+        author:
+          type: integer
+        published:
+          type: string
+          format: date-time
+        profilepic:
+          type: string
+          readOnly: true
+        profile_pk:
+          type: string
+          readOnly: true
+        author_name:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        geojson_track:
+          type: string
+          nullable: true
+        starting_pnt:
+          type: string
+          readOnly: true
+        photoalbum:
+          type: string
+          readOnly: true
+        tour_duration:
+          type: string
+          nullable: true
+        distance:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - author
+      - author_name
+      - id
+      - image
+      - photoalbum
+      - profile_pk
+      - profilepic
+      - slug
+      - starting_pnt
+      - text
+      - title
+      - tourtype
+  securitySchemes:
+    jwtAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "JWT"

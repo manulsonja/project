@@ -58,7 +58,6 @@ def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
 
 class Profile(models.Model):
-        first_name = models.CharField(max_length=150, blank=True)
         profilepic = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',aspect_ratios=["16/9","1/1"])
         user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
        
