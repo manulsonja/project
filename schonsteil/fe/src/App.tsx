@@ -30,12 +30,10 @@ import Facebook from './sites/Facebook';
 import Google from './sites/Google';
 import SingleArticle from './sites/singleArticle';
 
-
 const App = () => {
   return (
 	<Provider store={store}>
 	<BrowserRouter>
-
 			<Layout>
 			<ThemeProvider theme={theme}>
 			<Routes>

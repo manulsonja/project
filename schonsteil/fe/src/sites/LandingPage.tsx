@@ -2,8 +2,6 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 import { MEDIA_URL } from '../SETTINGS';
 import Grid from '@mui/material/Grid';
 import { useState, useEffect } from 'react';
@@ -12,18 +10,23 @@ import "@fontsource/raleway";
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import LPNewestTours from '../components/LP/LPtours.tsx';
+import Picker from '../components/Picker.tsx';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
+const useStyles = makeStyles((theme) => ({
+
+	ArticleText: {
+		padding: '5px',	
     textAlign: 'center',
-    color: "black",
-    fontSize: "22px",
-  }));
-  
+    Link: {
+      color:'black',
+    }
+	},
+}));
 
 export default function Landing() {
+
+  const classes = useStyles()
 
   const [appState, setAppState] = useState({
 		posts: null,
@@ -53,33 +56,31 @@ export default function Landing() {
 		});
 
 	}, []);
-  console.log(appState)
+
+
   if (!appState.posts || !appState.posts[0].primary_feature_article_pk) return;
   let featureArticle = appState.posts[0].primary_feature_article_pk
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="xl" style={{marginTop:'20px'}}>
+      <Container maxWidth="xl" style={{marginTop:'20px', marginBottom: '30px'}}>
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={7}>
         <Link to={'/article/'+featureArticle.slug}>
-          <Item>
             <img src={MEDIA_URL + featureArticle.image.ratios['16/9'].sources['image/jpeg']['800']} style={{width:"100%"}}/> 
+            </Link>
+
+            <div className={classes.ArticleText}>
             <Typography variant='h1'>{featureArticle.title}</Typography>
             <Typography>
             {featureArticle.subtitle}
             </Typography>
-            </Item>
-            </Link>
+            </div>
 
         </Grid>
          <Grid item xs={12} md={5}>
-         <Link to='/map'>
-
-          <Typography variant='h1'>Karte oeffnen</Typography>
-          <Item><img src={MEDIA_URL + '/media/map.jpg'} style={{width:'100%'}}/> </Item>
-          </Link>
+            <Picker/>
 
         </Grid>
       

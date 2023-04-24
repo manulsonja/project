@@ -107,7 +107,15 @@ function Header({ logout, isAuthenticated, user }) {
 						</Link>
  					</Typography>
 					
-					
+					 <Link
+							color="textPrimary"
+							href="#"
+							className={classes.link}
+							component={NavLink}
+							to="/map"
+						>
+							Karte
+						</Link>
 					 <Link
 							color="textPrimary"
 							href="#"

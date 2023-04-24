@@ -31,13 +31,15 @@ class HochtourAdmin(admin.ModelAdmin):
     exclude=('track',)
     readonly_fields=('distance','geojson_track',)
     inlines = [PhotoAdmin]
-# Register your models here.
+
 admin.site.register(Klettertour, KlettertourAdmin)
 admin.site.register(Skitour,SkitourAdmin)
 admin.site.register(Wandern, WandernAdmin)
 admin.site.register(HikeAndFly, HikeAndFlyAdmin)
 admin.site.register(Hochtour, HochtourAdmin)
 admin.site.register(Image)
+admin.site.register(Region)
+
 
 
 

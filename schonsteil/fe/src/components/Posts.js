@@ -87,7 +87,7 @@ const Posts = (props) => {
 	if ((!posts || posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 	return (
 		<React.Fragment>
-			<Container maxWidth="xl" component="main" disableGutters={true}>
+			<Container maxWidth="md" component="main" disableGutters={true}>
 				<Grid container spacing={1} alignItems="flex-end">
 					{posts.map((post) => {
 

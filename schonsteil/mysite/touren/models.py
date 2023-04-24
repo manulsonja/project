@@ -21,6 +21,17 @@ from multiselectfield import MultiSelectField
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
 
+
+
+class Region(models.Model):
+    name = models.CharField(max_length=50, null=True)
+    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"]) 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+    def __str__(self):
+        return self.name
+
+
 class Tour(models.Model):
     tour_duration = models.DurationField(null=True)
     gpxfile = models.FileField(upload_to='files', null=True)
@@ -53,6 +64,7 @@ class Tour(models.Model):
         ("mittel","MITTEL"),
         ("schwierig","SCHWIERIG"),
        ]
+    region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name="regionen", null=True)
     title = models.CharField(max_length=30)
     subtitle = models.CharField(max_length=100)
     text =  tinymce_models.HTMLField()
@@ -148,7 +160,4 @@ class HikeAndFly(Tour):
     def save(self, *args, **kwargs):
         self.tourtype = "Hike and Fly"
         super().save(*args, **kwargs)
-
-
-    
 
