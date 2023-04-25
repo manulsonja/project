@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import {  Navigate } from 'react-router-dom';
 //MaterialUI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { signup } from '../actions/auth';
+import { TooShortAlert, ExistsAlert} from '../components/alerts/SuAlert.tsx';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignUp = ({ signup, isAuthenticated }) => {
+const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
 	const classes = useStyles();
 
 	const [accountCreated, setAccountCreated] = useState(false);
@@ -88,10 +89,14 @@ const SignUp = ({ signup, isAuthenticated }) => {
     if (isAuthenticated) {
         return <Navigate to='/' />
     }
-    if (accountCreated) {
+  /*   if (accountCreated) {
         return <Navigate to='/login' />
-    }
+    } */
 	return (
+		<React.Fragment>
+			{ (errorMessage == 'new user with this email address already exists.') ? <ExistsAlert/>: null }
+			{ (errorMessage == 'This password is too short. It must contain at least 8 characters.') ? <TooShortAlert/>: null }
+
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
@@ -189,7 +194,6 @@ const SignUp = ({ signup, isAuthenticated }) => {
 						color="primary"
 						className={classes.submit}
 						onClick={e => onSubmit(e)}
-
 					>
 						Registrieren
 					</Button>
@@ -214,12 +218,13 @@ const SignUp = ({ signup, isAuthenticated }) => {
                 Continue With Facebook
             </button>
 			</div>
-		</Container>
+		</Container></React.Fragment>
 	);
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+	errorMessage: state.auth.errorMessage
 });
 
 export default connect(mapStateToProps, { signup })(SignUp);

@@ -22,7 +22,6 @@ def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
 
 
-
 class Region(models.Model):
     name = models.CharField(max_length=50, null=True)
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"]) 

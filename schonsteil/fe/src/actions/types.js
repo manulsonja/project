@@ -17,3 +17,9 @@ export const GOOGLE_AUTH_FAIL = 'GOOGLE_AUTH_FAIL';
 export const FACEBOOK_AUTH_SUCCESS = 'FACEBOOK_AUTH_SUCCESS';
 export const FACEBOOK_AUTH_FAIL = 'FACEBOOK_AUTH_FAIL';
 export const LOGOUT = 'LOGOUT';
+export const ERROR_MESSAGE = 'ERROR_MESSAGE'
+
+export const DURATION_SLIDER_VALUE = '';
+export const ELEVATION_SLIDER_VALUE = '';
+export const DISTANCE_SLIDER_VALUE = '';
+

@@ -2,11 +2,9 @@ from rest_framework import serializers
 from users.models import NewUser
 from djoser.serializers import UserCreateSerializer
 from pictures.contrib.rest_framework import PictureField
-
+""" 
 class CustomUserSerializer(serializers.ModelSerializer):
-    """
     Currently unused in preference of the below.
-    """
     email = serializers.EmailField(required=True)
     user_name = serializers.CharField(required=True)
     password = serializers.CharField(min_length=8, write_only=True)
@@ -24,9 +22,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
-
+ """
 
 class UserCreateSerializer(UserCreateSerializer):
+    print('usercreateserializer')
     class Meta(UserCreateSerializer.Meta):
         model = NewUser
         fields = ('id', 'email', 'first_name', 'last_name', 'password')

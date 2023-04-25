@@ -11,11 +11,34 @@ import NativeSelect from '@mui/material/NativeSelect';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HeightIcon from '@mui/icons-material/Height';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import RangeSlider from './RangeSlider.tsx';
 import MuiToggleButton from "@mui/material/ToggleButton";
 import Button from '@mui/material/Button';
+import { useEffect } from 'react';
+import Slider from '@mui/material/Slider';
 
 
+function RangeSlider() {
+    const [value, setValue] = React.useState<number[]>([20, 37]); 
+    const handleSliderChange = (event: Event, newValue: number | number[]) => {
+      setValue(newValue as number[]);
+      console.log(value)
+    };
+    function valuetext(value: number) {
+        return `${value}°C`;
+      }
+          return (
+            
+      <Box  sx={{ flexGrow: 1 }}>
+        <Slider
+          getAriaLabel={() => 'Temperature range'}
+          value={value}
+          onChange={handleSliderChange}
+          valueLabelDisplay="auto"
+          getAriaValueText={valuetext}
+        />
+      </Box>
+    );
+  }
   
 const ToggleButton = styled(MuiToggleButton)({
    width: 'calc(20% - 4px)',
@@ -173,6 +196,7 @@ const useStyles = makeStyles({
       float: 'none',
       overflow: 'hidden',
    },
+
 })
 
 export default function Picker() {
@@ -181,19 +205,28 @@ const cat_arr = ['Wandern','Hochtour','Klettertour','Hike and Fly','Skitour']
 const buttons = ['wd.jpeg','ht.jpeg','kl.jpeg','hikeandfly1.jpeg','st.jpeg']
 const cat_obj = {'Wandern': false,'Hochtour':false,'Klettertour':false,'Hike and Fly':false,'Skitour':false}
 
-
 const diff_arr = ['leicht', 'mittel', 'schwer']
 const diff_obj = {'leicht':false,'mittel':false,'schwer':false}
 const diff_colors = ['blue', 'red', 'black']
 
 const [selected, setSelected] = React.useState(cat_obj);
-
 const classes = useStyles();
 
-const handleSubmit = () => {
-   console.log(selected)
-   
+const handleChange = () => {
+  console.log('changed')
 }
+const handleSubmit = () => {
+  console.log(selected) 
+}
+
+useEffect(() => {   
+      handleChange()
+
+ },[selected]);
+
+
+
+
 return (
     <Box sx={{ width: '100%' }}>
       <Stack spacing={0}>    
@@ -215,17 +248,17 @@ return (
                <div className={classes.sliderIcon}>
                   <AccessTimeIcon/>
                </div>
-               <div className={classes.Slider}><RangeSlider />
+               <div className={classes.Slider}>{RangeSlider()}
                </div>
                <div className={classes.sliderIcon}>
                   <HeightIcon/>
                </div>
-               <div className={classes.Slider}><RangeSlider />
+               <div className={classes.Slider}>{RangeSlider()}
                </div>
                <div className={classes.sliderIcon}>
                   <SettingsEthernetIcon/>
                </div>
-               <div className={classes.Slider}><RangeSlider />
+               <div className={classes.Slider}>{RangeSlider()}
                </div>
             </div>
 
@@ -245,10 +278,9 @@ return (
           
           </div>
           <div className={classes.divRowTwo}>
-            <img className={classes.mapButton} src={`${MEDIA_URL}/media/map2.jpg`}></img>
+            <img className={classes.mapButton} src={`${MEDIA_URL}/media/mapmap.jpeg`}></img>
           </div>
         </Item>
-        <Button variant="outlined" onClick={handleSubmit}>Outlined</Button>
 
       </Stack>
     </Box>

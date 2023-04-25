@@ -3,8 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { googleAuthenticate } from '../actions/auth';
 import queryString from 'query-string';
+import { Navigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
-const Google = ({ googleAuthenticate }) => {
+const Google = ({ googleAuthenticate, isAuthenticated }) => {
     let location = useLocation();
     useEffect(() => {
         const values = queryString.parse(location.search);
@@ -18,18 +20,21 @@ const Google = ({ googleAuthenticate }) => {
             googleAuthenticate(state, code);
         }
     }, [location]);
-
+    if (isAuthenticated) {
+        return <Navigate to='/' />
+    }
     return (
+
         <div className='container'>
-            <div class='jumbotron mt-5'>
-                <h1 class='display-4'>Welcome to Auth System!</h1>
-                <p class='lead'>This is an incredible authentication system with production level features!</p>
-                <hr class='my-4' />
-                <p>Click the Log In button</p>
-                <Link class='btn btn-primary btn-lg' to='/login' role='button'>Login</Link>
-            </div>
+                        <h1> Ihr LOGIN KONNTE NICHT ZERTIFIZIERT WERDEN</h1>
+                    <CircularProgress />
         </div>
     );
 };
 
-export default connect(null, { googleAuthenticate })(Google);
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { googleAuthenticate })(Google);

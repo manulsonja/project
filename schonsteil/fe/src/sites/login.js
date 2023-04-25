@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 import axios from 'axios';
+import AuthAlerts from '../components/alerts/loginAlerts.tsx';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignIn = ({ login, isAuthenticated }) => {
+const SignIn = ({ login, isAuthenticated, errorMessage }) => {
 	const classes = useStyles();
 
     const [formData, setFormData] = useState({
@@ -76,7 +77,10 @@ const SignIn = ({ login, isAuthenticated }) => {
         return <Navigate to='/' />
     }
 
-	return (
+	return (			
+
+		<React.Fragment>		
+		{ (errorMessage == 'No active account found with the given credentials')? <AuthAlerts/> : null }
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
@@ -149,11 +153,13 @@ const SignIn = ({ login, isAuthenticated }) => {
             </button>
 			</div>
 		</Container>
+		</React.Fragment>
 	);
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+	errorMessage: state.auth.errorMessage
 });
 
 export default connect(mapStateToProps, { login })(SignIn);

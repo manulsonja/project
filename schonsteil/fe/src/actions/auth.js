@@ -18,7 +18,8 @@ import {
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
-    LOGOUT
+    LOGOUT,
+    ERROR_MESSAGE
 } from './types';
 
 export const load_user = () => async dispatch => {
@@ -62,7 +63,7 @@ export const googleAuthenticate = (state, code) => async dispatch => {
             'state': state,
             'code': code
         };
-
+        console.log(details)
         const formBody = Object.keys(details).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(details[key])).join('&');
 
         try {
@@ -166,9 +167,15 @@ export const login = (email, password) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
         });
-
         dispatch(load_user());
+
     } catch (err) {
+        if(err.response.data.detail==='No active account found with the given credentials'){
+            dispatch({
+                type: ERROR_MESSAGE,
+                payload: err.response.data.detail
+            })}
+
         dispatch({
             type: LOGIN_FAIL
         })
@@ -183,15 +190,30 @@ export const signup = (first_name, last_name, email, password, re_password, user
     };
 
     const body = JSON.stringify({ first_name, last_name, email, password, re_password, user_name });
-
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/`, body, config);
-
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data
         });
     } catch (err) {
+
+        try {
+            if(err.response.data.password[0]==='This password is too short. It must contain at least 8 characters.'){
+                dispatch({
+                    type: ERROR_MESSAGE,
+                    payload: err.response.data.password[0]
+                })}
+        } catch (err) {}
+        try {
+            if(err.response.data.email[0]==='new user with this email address already exists.'){
+                dispatch({
+                    type: ERROR_MESSAGE,
+                    payload: err.response.data.email[0]
+                })}
+        } catch (err) {}
+       
+    
         dispatch({
             type: SIGNUP_FAIL
         })
@@ -269,3 +291,13 @@ export const logout = () => dispatch => {
         type: LOGOUT
     });
 };
+
+
+export const handle_error_message = () => dispatch => {
+    dispatch({
+        type: LOGOUT
+    });
+};
+
+
+

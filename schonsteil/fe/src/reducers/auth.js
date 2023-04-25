@@ -17,14 +17,16 @@ import {
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
-    LOGOUT
+    LOGOUT,
+    ERROR_MESSAGE, 
 } from '../actions/types';
 
 const initialState = {
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
-    user: null
+    user: null,
+    errorMessage: null,
 };
 
 export default function(state = initialState, action) {
@@ -35,6 +37,10 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: true
+            }
+        case ERROR_MESSAGE:
+            return {
+                errorMessage: payload,
             }
         case LOGIN_SUCCESS:
         case GOOGLE_AUTH_SUCCESS:
