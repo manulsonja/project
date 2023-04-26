@@ -19,7 +19,9 @@ import {
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
     LOGOUT,
-    ERROR_MESSAGE
+    ERROR_MESSAGE,
+    CLEAR_ERROR,
+    SUCCESS_MESSAGE,
 } from './types';
 
 export const load_user = () => async dispatch => {
@@ -253,13 +255,18 @@ export const reset_password = (email) => async dispatch => {
 
     try {
         await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password/`, body, config);
-
         dispatch({
             type: PASSWORD_RESET_SUCCESS
         });
     } catch (err) {
+        let resp;
+        try {
+            resp = err.response.data.email[0];
+        }
+        catch {}
         dispatch({
-            type: PASSWORD_RESET_FAIL
+            type: PASSWORD_RESET_FAIL,
+            payload: resp
         });
     }
 };
@@ -293,9 +300,14 @@ export const logout = () => dispatch => {
 };
 
 
-export const handle_error_message = () => dispatch => {
+export const clearerror = () => dispatch => {
     dispatch({
-        type: LOGOUT
+        type: CLEAR_ERROR
+    });
+};
+export const successmessage = () => dispatch => {
+    dispatch({
+        type: SUCCESS_MESSAGE
     });
 };
 

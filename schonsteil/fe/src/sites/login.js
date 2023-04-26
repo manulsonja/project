@@ -7,15 +7,16 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
-import { login } from '../actions/auth';
+import { login, clearerror } from '../actions/auth';
 import axios from 'axios';
 import AuthAlerts from '../components/alerts/loginAlerts.tsx';
+import { Link } from 'react-router-dom';
+import { NoInputAlert, ResetSuccessAlert } from '../components/alerts/SuAlert.tsx';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -38,19 +39,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignIn = ({ login, isAuthenticated, errorMessage }) => {
+const SignIn = ({ login, clearerror, isAuthenticated, errorMessage }) => {
 	const classes = useStyles();
-
     const [formData, setFormData] = useState({
         email: '',
-        password: '' 
+        password: '',
+		errormsg: '',
     });
 
     const { email, password } = formData;
-    const onChange = e =>  setFormData({ ...formData, [e.target.name]: e.target.value });
+    const onChange = e =>  {
+		setFormData({ ...formData, [e.target.name]: e.target.value, errormsg:'' }); 
+		clearerror()
+		}
     const onSubmit = e => {
-        e.preventDefault();
-        login(email, password);
+		if(formData.email =='' || formData.password=='') setFormData({...formData, errormsg: 'noInput'});
+			e.preventDefault();
+        	login(email, password);
+		
+			
     };
 
     const continueWithGoogle = async () => {
@@ -81,6 +88,10 @@ const SignIn = ({ login, isAuthenticated, errorMessage }) => {
 
 		<React.Fragment>		
 		{ (errorMessage == 'No active account found with the given credentials')? <AuthAlerts/> : null }
+		{ (errorMessage == 'success')? <ResetSuccessAlert/> : null }
+
+		{ (formData.errormsg=='noInput') ? <NoInputAlert/>: null } 
+		
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
@@ -132,12 +143,12 @@ const SignIn = ({ login, isAuthenticated, errorMessage }) => {
 					</Button>
 					<Grid container>
 						<Grid item xs>
-							<Link href="/reset-password" variant="body2">
+							<Link to="/reset-password" variant="body2">
 								Forgot password?
 							</Link>
 						</Grid>
 						<Grid item>
-							<Link href="#" variant="body2">
+							<Link to="/register" variant="body2">
 								{"Don't have an account? Sign Up"}
 							</Link>
 						</Grid>
@@ -162,4 +173,4 @@ const mapStateToProps = state => ({
 	errorMessage: state.auth.errorMessage
 });
 
-export default connect(mapStateToProps, { login })(SignIn);
+export default connect(mapStateToProps, { login, clearerror })(SignIn);

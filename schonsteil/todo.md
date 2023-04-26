@@ -9,7 +9,6 @@ hohe prioritaet
 0 social LOGIN BUGFIX
 1  geosearch implementieren
 2  pagination
-5  login logout button 
 6  datenschutz erklaerung fuer cookies
 7  touren jahreszeiten oeffnungszeiten
 ----------------------------------
@@ -41,14 +40,6 @@ erledigt
 3  problem mit window.listener reload in react loesen 
 2  andere filter implementieren
 4  thumbnails!!!!!!
-
-
-startseite
-
-neueste touren 
-touren aktuell moeglich 
-hinweis auf karte 
-blogstories 
 
 
 

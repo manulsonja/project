@@ -7,7 +7,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +14,10 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { signup } from '../actions/auth';
-import { TooShortAlert, ExistsAlert} from '../components/alerts/SuAlert.tsx';
+import { TooShortAlert, ExistsAlert, NoInputAlert, NoMatchAlert} from '../components/alerts/SuAlert.tsx';
+import { Link } from 'react-router-dom';
+import { FormControl } from '@material-ui/core';
+import { clearerror } from '../actions/auth';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -37,10 +39,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-
-const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
+const SignUp = ({ signup, isAuthenticated, errorMessage, clearerror }) => {
 	const classes = useStyles();
-
 	const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         first_name: '',
@@ -48,23 +48,24 @@ const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
         email: '',
         password: '',
         re_password: '',
-        user_name: ''
-
+        user_name: '',
+		errorMessage: '',
     });
 
-
     const { email, user_name, first_name, last_name, password, re_password  } = formData;
-    const onChange = e =>  setFormData({ ...formData, [e.target.name]: e.target.value });
+    const onChange = e =>  {
+		clearerror()
+		setFormData({ ...formData, [e.target.name]: e.target.value, errorMessage:'' });}
 	const onSubmit = e => {
         e.preventDefault();
-
-        if (password === re_password) {
+		if(formData.first_name=='' || formData.last_name=='' || formData.email=='' || formData.password=='' || formData.re_password=='' || formData.user_name =='') {
+			setFormData({...formData, errorMessage:'noInput'})}
+        else if (password === re_password) {
             signup(first_name, last_name, email, password, re_password, user_name);
             setAccountCreated(true);
         }
+		else setFormData({ ...formData, errorMessage: 'noMatch' });
     };
-
-
 
     const continueWithGoogle = async () => {
         try {
@@ -72,30 +73,24 @@ const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
 
             window.location.replace(res.data.authorization_url);
         } catch (err) {
-
         }
     };
-
-    const continueWithFacebook = async () => {
+   const continueWithFacebook = async () => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/facebook/?redirect_uri=${process.env.REACT_APP_API_URL}/facebook`)
 
             window.location.replace(res.data.authorization_url);
         } catch (err) {
-
-        }
+   }
     };
-
     if (isAuthenticated) {
-        return <Navigate to='/' />
-    }
-  /*   if (accountCreated) {
-        return <Navigate to='/login' />
-    } */
-	return (
+        return <Navigate to='/' /> }
+		return (
 		<React.Fragment>
 			{ (errorMessage == 'new user with this email address already exists.') ? <ExistsAlert/>: null }
 			{ (errorMessage == 'This password is too short. It must contain at least 8 characters.') ? <TooShortAlert/>: null }
+			{ (formData.errorMessage == 'noInput') ? <NoInputAlert/>: null }
+			{ (formData.errorMessage == 'noMatch') ? <NoMatchAlert/>: null }
 
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
@@ -104,7 +99,7 @@ const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
 				<Typography component="h1" variant="h5">
 					Registrieren
 				</Typography>
-				<form className={classes.form} noValidate>
+				<FormControl className={classes.form}>
 					<TextField
 						variant="outlined"
 						margin="normal"
@@ -142,8 +137,7 @@ const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
 						autoComplete="first_name"
 						autoFocus
 						onChange={e => onChange(e)}
-
-					/>
+				/>
 						<TextField
 						variant="outlined"
 						margin="normal"
@@ -155,7 +149,6 @@ const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
 						autoComplete="last_name"
 						autoFocus
 						onChange={e => onChange(e)}
-
 					/>
 					<TextField
 						variant="outlined"
@@ -168,7 +161,6 @@ const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
 						id="password"
 						autoComplete="current-password"
 						onChange={e => onChange(e)}
-
 					/>
 						<TextField
 						variant="outlined"
@@ -199,17 +191,17 @@ const SignUp = ({ signup, isAuthenticated, errorMessage }) => {
 					</Button>
 					<Grid container>
 						<Grid item xs>
-							<Link href="#" variant="body2">
+							<Link to="/reset-password" variant="body2">
 								Passwort vergessen?
 							</Link>
 						</Grid>
 						<Grid item>
-							<Link href="#" variant="body2">
+							<Link to="/login" variant="body2">
 								{"Haben Sie einen Account? Log In"}
 							</Link>
 						</Grid>
 					</Grid>
-				</form>
+				</FormControl>
 				<button className='btn btn-danger mt-3' onClick={continueWithGoogle}>
                 Continue With Google
             </button>
@@ -227,4 +219,4 @@ const mapStateToProps = state => ({
 	errorMessage: state.auth.errorMessage
 });
 
-export default connect(mapStateToProps, { signup })(SignUp);
+export default connect(mapStateToProps, { signup, clearerror })(SignUp);

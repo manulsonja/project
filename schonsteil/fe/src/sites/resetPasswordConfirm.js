@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 import axios from 'axios';
 import { reset_password_confirm } from '../actions/auth';
+import { InvalidTokenAlert, SuccessChangeAlert } from '../components/alerts/SuAlert.tsx';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ResetPasswordConfirm = ({ reset_password_confirm }) => {
+const ResetPasswordConfirm = ({ reset_password_confirm, errorMessage }) => {
 	const params = useParams()
 	const classes = useStyles();
     const [requestSent, setRequestSent] = useState(false);
@@ -63,6 +64,10 @@ const ResetPasswordConfirm = ({ reset_password_confirm }) => {
 
 
 	return (
+		<React.Fragment>
+        {(errorMessage=='prcs'? <SuccessChangeAlert/>: null)}
+		{(errorMessage=='invalid'? <InvalidTokenAlert/>: null)}
+
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
@@ -123,8 +128,12 @@ const ResetPasswordConfirm = ({ reset_password_confirm }) => {
 				</form>
 			</div>
 		</Container>
+		</React.Fragment>
+
 	);
 }
 
-
-export default connect(null, { reset_password_confirm })(ResetPasswordConfirm);
+const mapStateToProps = state => ({
+	errorMessage: state.auth.errorMessage
+});
+export default connect(mapStateToProps, { reset_password_confirm })(ResetPasswordConfirm);

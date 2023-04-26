@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { useContext } from 'react';
 import { connect } from 'react-redux';
@@ -59,7 +59,6 @@ function Header({ logout, isAuthenticated, user }) {
 					>
 						Login
 					</Button>
-					<div style={{color:'white'}}>Bergrettung geh weg!</div>
 	   </React.Fragment>
     )};
 
@@ -77,7 +76,9 @@ function Header({ logout, isAuthenticated, user }) {
 					>
 						Logout
 					</Button>
-					<div style={{color:'white'}}>Hallo, {user.first_name}</div>
+					<Link to="/dashboard">
+							<div style={{color:'white'}}>Hallo, {user.first_name}</div>
+					</Link>
 			</React.Fragment>
 		)  
 	};

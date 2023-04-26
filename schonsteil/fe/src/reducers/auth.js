@@ -18,7 +18,9 @@ import {
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
     LOGOUT,
-    ERROR_MESSAGE, 
+    ERROR_MESSAGE,
+    SUCCESS_MESSAGE,
+    CLEAR_ERROR, 
 } from '../actions/types';
 
 const initialState = {
@@ -40,6 +42,7 @@ export default function(state = initialState, action) {
             }
         case ERROR_MESSAGE:
             return {
+                ...state,
                 errorMessage: payload,
             }
         case LOGIN_SUCCESS:
@@ -73,11 +76,19 @@ export default function(state = initialState, action) {
                 ...state,
                 user: null
             }
+        case LOGOUT:
+                return {
+                    ...state,
+                access: null,
+                refresh: null,
+                isAuthenticated: false,
+                user: null,
+                errorMessage: null,
+                }
         case GOOGLE_AUTH_FAIL:
         case FACEBOOK_AUTH_FAIL:
         case LOGIN_FAIL:
         case SIGNUP_FAIL:
-        case LOGOUT:
             localStorage.removeItem('access');
             localStorage.removeItem('refresh');
             return {
@@ -85,16 +96,40 @@ export default function(state = initialState, action) {
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
-                user: null
+                user: null,
+            }
+        case PASSWORD_RESET_FAIL:
+            return {
+                ...state,
+                errorMessage:payload,
+
             }
         case PASSWORD_RESET_SUCCESS:
-        case PASSWORD_RESET_FAIL:
+            return {
+                ...state,
+
+            }
+        case SUCCESS_MESSAGE:
+            return {
+                    ...state,
+                    errorMessage:'success',
+                }
         case PASSWORD_RESET_CONFIRM_SUCCESS:
+            return {
+                ...state,
+                errorMessage:'prcs',
+            }
         case PASSWORD_RESET_CONFIRM_FAIL:
+            return {
+                ...state,
+                errorMessage:'invalid',
+            }
         case ACTIVATION_SUCCESS:
         case ACTIVATION_FAIL:
+        case CLEAR_ERROR:
             return {
-                ...state
+                ...state,
+                errorMessage:null,
             }
         default:
             return state

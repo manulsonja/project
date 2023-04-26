@@ -22,13 +22,14 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/theme';
 import ResetPassword from './sites/resetPassword';
 import ResetPasswordConfirm from './sites/resetPasswordConfirm';
-import Activate from './sites/activate';
+import Activate from './sites/activate.tsx';
 import Layout from './hocs/Layout';
 import { Provider } from 'react-redux';
 import store from './store';
 import Facebook from './sites/Facebook';
 import Google from './sites/Google';
 import SingleArticle from './sites/singleArticle';
+import Dashboard from './dashboard/Dashboard.tsx';
 
 const App = () => {
   return (
@@ -60,6 +61,8 @@ const App = () => {
 					{/* ------------------  Authentication----------------------- */}
 	
 					<Route path="/register" element={<Register/>} />
+					<Route path="/dashboard" element={<Dashboard/>} />
+
 					<Route path="/login" element={<Login/>} />
 					<Route path="/logout" element={<Logout/>} />
 					<Route path="/reset-password" element={<ResetPassword/>} />
