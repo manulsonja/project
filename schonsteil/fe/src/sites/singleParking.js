@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Typography from '@mui/material/Typography';
-import axiosInstance from '../axios';
+import axiosInstance from '../utils/axios';
 import { useState, useEffect } from 'react';
 import { API_URL } from '../SETTINGS';
 import Container from '@material-ui/core/Container';

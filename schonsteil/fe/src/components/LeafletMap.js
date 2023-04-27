@@ -4,7 +4,6 @@ import { useMap } from 'react-leaflet/hooks'
 import { useMapEvent } from 'react-leaflet/hooks'
 import L from "leaflet";
 import { Link } from '@material-ui/core';
-import { MEDIA_URL } from "../SETTINGS";
 
 
 const icon = L.icon({
@@ -14,12 +13,10 @@ const icon = L.icon({
 });
 
 export default function Leaflet(props) {
-
     const position = [47.259659,11.400375]
-    const { data } = props;
-    console.log(data)
-    const screen = data[1];
-    const tours = data[0];
+    const screen = props.data.screen;
+    const tours = props.data.state;
+    const height_offset = props.data.offset
     const generate_markers = (tours) => {
       if ((!tours.posts || tours.posts.length === 0) ) return;
       return(tours.posts.map((datapoint) => {
@@ -28,7 +25,7 @@ export default function Leaflet(props) {
              <Popup><Link 
 									href={'tour/'+datapoint.tourtype+'/'+datapoint.slug}>    
                     <div className="markerLink" key={datapoint.id+"markerLink"}>{datapoint.title} </div>       
-              <img src={MEDIA_URL + datapoint.image.ratios['16/9'].sources['image/jpeg']['200']} className="markerImage"/>             
+              <img src={process.env.REACT_APP_API_URL + datapoint.image.ratios['16/9'].sources['image/jpeg']['200']} className="markerImage"/>             
             </Link>
             </Popup>
           </Marker>)
@@ -36,7 +33,7 @@ export default function Leaflet(props) {
     }
     const resize = (screen) => {
       if ((!screen || screen.length === 0) ) return;
-      return (screen.height-120)
+      return (screen.height-height_offset)
     }
     
     function MyComponent() {

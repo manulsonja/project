@@ -165,14 +165,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
 ]
-
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:8000",
-    "http://localhost:3000",
+DEBUG=True
+CORS_ORIGIN_ALLOW_ALL = DEBUG
+""" CORS_ALLOWED_ORIGINS = [
+    "http://0.0.0.0:80",
 
 
 ]
+ """
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=100),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),

@@ -8,7 +8,7 @@ html, body {
 
 .outerMap {
   margin: 0 auto;
-  min-width: 700px; }
+  }
 
 
   .outerBox {
@@ -18,9 +18,7 @@ html, body {
 
     background-color: "black";
   }
-  .outerMap {
-    height: 80vh;
-  }
+  
   .markerImage {
     width: 150px;
   }

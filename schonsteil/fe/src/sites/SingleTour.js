@@ -31,7 +31,7 @@ export default function SingleTour(values) {
 
 	const [data, setData] = useState({ posts: [] });
 	useEffect(() => {
-		const apiUrl = `http://127.0.0.1:8000/touren/${category.toLowerCase()}/${slug}/`;
+		const apiUrl = `${process.env.REACT_APP_API_URL}/touren/${category.toLowerCase()}/${slug}/`;
 		fetch(apiUrl)
 			.then((data) => data.json())
 			.then((posts) => {

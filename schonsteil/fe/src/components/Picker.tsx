@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
-import { MEDIA_URL } from '../SETTINGS';
 import { makeStyles } from '@material-ui/core';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -12,7 +11,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HeightIcon from '@mui/icons-material/Height';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import MuiToggleButton from "@mui/material/ToggleButton";
-import Button from '@mui/material/Button';
 import { useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 
@@ -232,7 +230,7 @@ return (
       <Stack spacing={0}>    
         <Item>
          {cat_arr.map((item, i) => {
-            let bgurl = `url("${MEDIA_URL}/media/${buttons[i]}")`
+            let bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
                return(ToggleImage({'selected':selected, 'setSelected':setSelected, 'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
 
          })}
@@ -278,7 +276,7 @@ return (
           
           </div>
           <div className={classes.divRowTwo}>
-            <img className={classes.mapButton} src={`${MEDIA_URL}/media/mapmap.jpeg`}></img>
+            <img className={classes.mapButton} src={`${process.env.REACT_APP_API_URL}/media/mapmap.jpeg`}></img>
           </div>
         </Item>
 

@@ -2,7 +2,6 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
-import { MEDIA_URL } from '../SETTINGS';
 
 const useStyles = makeStyles((theme) => ({
   profileImage: {
@@ -32,7 +31,7 @@ export default function AuthorCard(props) {
     
     >
     <Grid item lg={2}>
-          <img className={classes.profileImage} src={MEDIA_URL +profileimage}/>
+          <img className={classes.profileImage} src={process.env.REACT_APP_API_URL +profileimage}/>
     </Grid>
     <Grid item lg={3}>
     <Typography gutterBottom variant="h1" component="div">

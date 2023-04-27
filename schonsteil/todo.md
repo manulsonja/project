@@ -2,6 +2,8 @@ REMOVE NULL TRUE FIELDS WHEN READY
 CHECK IF order_by('?') in landing page views raises performance issues. 
 REMOVE PASSWORD FOR GOOGLE FROM SETTINGS COMMENT
 remove arial from picker.tsx for cr reasons
+I REMOVED SERVICE WORKER AND WEBVITALS ADD THEM BACK IN
+REMOVE GOOGLE IMPORTED FRONTS IN PUBLIC INDEX
 0  sonjas Bilder!!!
 make categories global var
 

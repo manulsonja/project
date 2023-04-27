@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.css';
 import {
   BrowserRouter,
   Routes, // instead of "Switch"
@@ -19,7 +18,6 @@ import SingleParking from './sites/singleParking';
 import Landing from './sites/LandingPage.tsx';
 import PrivateRoute from './utils/PrivateRoute';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './components/theme';
 import ResetPassword from './sites/resetPassword';
 import ResetPasswordConfirm from './sites/resetPasswordConfirm';
 import Activate from './sites/activate.tsx';
@@ -30,6 +28,7 @@ import Facebook from './sites/Facebook';
 import Google from './sites/Google';
 import SingleArticle from './sites/singleArticle';
 import Dashboard from './dashboard/Dashboard.tsx';
+import theme from './theme';
 
 const App = () => {
   return (

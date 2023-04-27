@@ -1,13 +1,10 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import axiosInstance from '../axios';
+import axiosInstance from '../utils/axios';
 import { useState, useEffect } from 'react';
-import { API_URL, MEDIA_URL } from '../SETTINGS';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import Rating from '@mui/material/Rating';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Gallery from '../components/gallery';
 import { useParams } from 'react-router-dom';
 import AuthorCard from '../components/authorCard.tsx';
 
@@ -81,7 +78,7 @@ return (
 						gutterBottom>
 						{appState.article.title}
 					</Typography>
-					<img src={MEDIA_URL + appState.article.author.profile.profilepic.ratios['16/9'].sources['image/jpeg']['800']}
+					<img src={process.env.REACT_APP_API_URL + appState.article.author.profile.profilepic.ratios['16/9'].sources['image/jpeg']['800']}
 					className={classes.articleImage}/>
 					<div className="rating"> 
 {/* 							<Rating name="read-only" value={appState.article.rating} readOnly />			

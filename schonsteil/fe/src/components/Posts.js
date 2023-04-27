@@ -15,25 +15,24 @@ import HeightIcon from '@mui/icons-material/Height';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import { roundToDeciKMs, format_duration } from '../utils/formatting';
 import { hiking_diff } from './cardDifficulty';
-import { MEDIA_URL } from '../SETTINGS';
 
 var color = "white";
 const  setcolor = (tourtype) => {
     let grade=tourtype;
     switch (true) { // change to true 
-        case (grade=="Wandern"):
+        case (grade==="Wandern"):
             color = "#4BDE7C";
             break;
-        case (grade=="Klettern"):
+        case (grade==="Klettern"):
             color = "#FAC13B";
             break;
-        case (grade=="Hochtour"):
+        case (grade==="Hochtour"):
             color = "#2D7BFA";
             break;
-        case (grade=="Schitour"):
+        case (grade==="Schitour"):
             color = "#B3D3FF";
             break;
-        case (grade=="Hike and Fly"):
+        case (grade==="Hike and Fly"):
             color = "#F05FB4";
             break;   
     }
@@ -101,7 +100,7 @@ const Posts = (props) => {
 									<CardMedia
 										style={{ borderBottom: `10px solid ${color}` }}
 										className={classes.cardMedia}
-										image={`${MEDIA_URL + post.image.ratios['16/9'].sources['image/jpeg']['500']}`}
+										image={`${process.env.REACT_APP_API_URL + post.image.ratios['16/9'].sources['image/jpeg']['500']}`}
 										title="Image title"
 									/>
 									</Link>

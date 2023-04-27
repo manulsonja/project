@@ -1,6 +1,5 @@
 import ImageGallery from 'react-image-gallery';
 import { makeStyles } from '@material-ui/core/styles';
-import { MEDIA_URL } from '../SETTINGS';
 
 const img = (props) => {
   if ((!props || props.length === 0) ) return [];
@@ -10,8 +9,8 @@ const img = (props) => {
     console.log(image.image.ratios['16/9'].sources['image/jpeg']['1200'])
     image_array.push(
       {
-          original: MEDIA_URL+image.image.ratios['16/9'].sources['image/jpeg']['1200'],
-          thumbnail: MEDIA_URL+image.image.ratios['16/9'].sources['image/jpeg']['200']
+          original: process.env.REACT_APP_API_URL+image.image.ratios['16/9'].sources['image/jpeg']['1200'],
+          thumbnail: process.env.REACT_APP_API_URL+image.image.ratios['16/9'].sources['image/jpeg']['200']
       }
     )
 
