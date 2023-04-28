@@ -21,7 +21,18 @@ export const ERROR_MESSAGE = 'ERROR_MESSAGE'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const SUCCESS_MESSAGE = 'SUCCESS_MESSAGE'
 
+
+
+
+/* MAP */
 export const DURATION_SLIDER_VALUE = '';
 export const ELEVATION_SLIDER_VALUE = '';
 export const DISTANCE_SLIDER_VALUE = '';
+
+
+export const DIFFICULTY_SELECTION = 'DIFFICULTY_SELECTION'
+export const TOUR_SELECTION = 'TOUR_SELECTION'
+export const MAP_SEARCHSTRING = 'MAP_SEARCHSTRING'
+
+
 

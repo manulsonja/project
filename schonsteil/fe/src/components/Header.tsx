@@ -22,9 +22,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-
-
 
 function Header({ logout, isAuthenticated, user }) {
 	const [state, setState] = React.useState({
@@ -168,8 +165,7 @@ function Header({ logout, isAuthenticated, user }) {
 	function MobileAppbar() {
 		return (
 			<React.Fragment>
-			<div>
-				
+			<div>				
 				<SwipeableDrawer
 				  anchor={"bottom"}
 				  open={state["bottom"]}
@@ -310,6 +306,6 @@ function Header({ logout, isAuthenticated, user }) {
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
 	user: state.auth.user,
-
 });
+
 export default connect(mapStateToProps, { logout })(Header);

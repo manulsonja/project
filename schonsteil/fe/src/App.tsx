@@ -4,11 +4,10 @@ import {
   Routes, // instead of "Switch"
   Route,
 } from "react-router-dom";
-import Map from './sites/Map';
+import Map from './sites/Map.tsx';
 import Footer from './components/Footer';
 import SingleTour from './sites/SingleTour';
 import Register from './sites/register';
-import Logout from './components/logout';
 import Login from './sites/login';
 import HutList from './sites/huts.tsx';
 import ParkingList from './sites/parking.tsx';
@@ -63,7 +62,6 @@ const App = () => {
 					<Route path="/dashboard" element={<Dashboard/>} />
 
 					<Route path="/login" element={<Login/>} />
-					<Route path="/logout" element={<Logout/>} />
 					<Route path="/reset-password" element={<ResetPassword/>} />
 					<Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordConfirm/>} />
 					<Route path="/activate/:uid/:token" element={<Activate/>} />

@@ -22,6 +22,7 @@ import {
     ERROR_MESSAGE,
     CLEAR_ERROR,
     SUCCESS_MESSAGE,
+    MAP_SEARCHSTRING,
 } from './types';
 
 export const load_user = () => async dispatch => {
@@ -310,6 +311,5 @@ export const successmessage = () => dispatch => {
         type: SUCCESS_MESSAGE
     });
 };
-
 
 

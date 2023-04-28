@@ -4,10 +4,10 @@ import { useMap } from 'react-leaflet/hooks'
 import { useMapEvent } from 'react-leaflet/hooks'
 import L from "leaflet";
 import { Link } from '@material-ui/core';
-
+import { MEDIA_URL } from "../SETTINGS";
 
 const icon = L.icon({
-  iconUrl:'hiking.png',
+  iconUrl: MEDIA_URL + '/media/marker.png',
   iconSize: [25,41],
   iconAnchor: [13,41]
 });
