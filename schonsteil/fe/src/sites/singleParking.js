@@ -3,10 +3,8 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import axiosInstance from '../utils/axios';
 import { useState, useEffect } from 'react';
-import { API_URL } from '../SETTINGS';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import Rating from '@mui/material/Rating';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Gallery from '../components/gallery.js';
 import { useParams } from 'react-router-dom';
@@ -42,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
         float: 'left',
     }
 }));
-
 
 export default function SingleParking(props) {
 	const { slug } = useParams();

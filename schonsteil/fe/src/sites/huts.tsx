@@ -2,9 +2,20 @@ import * as React from 'react';
 import axiosInstance from '../utils/axios';
 import { useState, useEffect } from 'react';
 import Huts from '../components/Huts.tsx';
-import CssBaseline from '@mui/material/CssBaseline';
+import { makeStyles } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({	
+	huttenliste: {	
+			marginTop: '15px',
+			[theme.breakpoints.up('md')]: {
+				marginTop: '30px',
+			  },
+	},
+}));
 
 export default function HutList(props) {
+	const classes = useStyles()
 	const [appState, setAppState] = useState({
 		loading: false,
 		posts: null,
@@ -20,10 +31,9 @@ export default function HutList(props) {
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
   return (
-    <React.Fragment>
-            <CssBaseline /> 
+    <Box className={classes.huttenliste}>
             <Huts props={appState}/>
-    </React.Fragment>
+    </Box>
 );
 
 

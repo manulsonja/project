@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {  DIFFICULTY_SELECTION,
           MAP_SEARCHSTRING,
+          RESET_SELECTION,
           TOUR_SELECTION } from "./types";
 
 export const mapsearch = (searchstring) => dispatch => {
@@ -21,4 +22,14 @@ export const tourselection = (tourtypes) => dispatch => {
         payload: tourtypes,
     });
 };
+
+export const resetselection = (blabla) => dispatch => {
+    dispatch({
+        type: RESET_SELECTION,
+        payload: blabla,
+
+    });
+};
+
+
 

@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Huts(props) {
 	const classes = useStyles();
     const appState=props.props;
-    console.log(appState);
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
   return (

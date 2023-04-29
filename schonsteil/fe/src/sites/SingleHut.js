@@ -5,47 +5,28 @@ import { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@mui/material/Rating';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import AuthorCard from '../components/authorCard.tsx';
 import Gallery from '../components/gallery.js';
 import { useParams } from 'react-router-dom';
 
+const useStyles = makeStyles((theme) => ({	
+	rating: {
+		margin: '-10px auto 10px',
+		width: "120px",
+	
+	},
+	tourArticle: {	
+			marginTop: '20px',
+			[theme.breakpoints.up('md')]: {
+				marginTop: '50px',
+			  },
 
-const useStyles = makeStyles((theme) => ({
-	cardMedia: {
-		paddingTop: '56.25%', // 16:9
 	},
-	link: {
-		margin: theme.spacing(1, 1.5),
-	},
-	cardHeader: {
-		backgroundColor:
-			theme.palette.type === 'light'
-				? theme.palette.grey[200]
-				: theme.palette.grey[700],
-	},
-	postTitle: {
-		fontSize: '16px',
-		textAlign: 'left',
-	},
-	postText: {
-		display: 'flex',
-		justifyContent: 'left',
-		alignItems: 'baseline',
-		fontSize: '12px',
-		textAlign: 'left',
-		marginBottom: theme.spacing(2),
-	},
-    firstRow: {
-        width: "100%",
-        float: 'left',
-    }
 }));
 
 export default function SingleHut(props) {
 	const { slug } = useParams();
 	const classes = useStyles();
-
 	const [appState, setAppState] = useState({
 		loading: false,
 		posts: null,
@@ -59,41 +40,32 @@ export default function SingleHut(props) {
 		});
 	}, []);
 
-
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 	return (
-		console.log(appState),
-		<Container component="main" maxWidth="xl" className='tourArticle'>
-				<CssBaseline />
-					<Container maxWidth="sm">				
-				</Container>
-				<Container maxWidth="lg">
+		<Container component="main" maxWidth="xl" className={classes.tourArticle}>
+				<Container maxWidth="lg" xs={12}>
 					<Typography
 						component="h1"
-						variant="h2"
+						variant="h1"
 						align="center"
 						color="textPrimary"
 						gutterBottom>
 						{appState.posts.name}
 					</Typography>
-					<div className="rating"> 
+						<div className={classes.rating}> 
 							<Rating name="read-only" value={appState.posts.rating} readOnly />			
         				</div>
-					<Gallery props={appState.posts.gallery}/>			
 				</Container>
-			<div className={classes.heroContent}>
+				<Gallery props={appState.posts.gallery}/>			
+
 				<Container maxWidth="lg">		
 					<Typography
-						variant="h5"
 						align="left"
-						color="textSecondary"
-						paragraph >
-						<div dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}} />	
+						paragraph 
+						dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}}>
 					</Typography>
 				</Container>
-			</div>
 			<AuthorCard data={appState.posts.author}/>
-
 		</Container>
 );
 }

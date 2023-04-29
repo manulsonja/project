@@ -1,9 +1,9 @@
-import { DIFFICULTY_SELECTION, MAP_SEARCHSTRING, TOUR_SELECTION } from "../actions/types";
+import { DIFFICULTY_SELECTION, MAP_SEARCHSTRING, RESET_SELECTION, TOUR_SELECTION } from "../actions/types";
 
 const initialState = {
-    difficulty: "",
-    tourtype: null,
-    searchstring: null,
+    difficulty: [],
+    tourtype: [],
+    searchstring: '',
 };
 
 
@@ -23,6 +23,11 @@ export default function(state = initialState, action) {
             ...state,
             searchstring: payload,        
     }
+    case RESET_SELECTION: return {
+        difficulty: [],
+        tourtype:[],
+        searchstring: '',        
+}
         default:
             return state
     }

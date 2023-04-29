@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import AuthorCard from '../components/authorCard.tsx';
 import InfoBox from '../components/box.tsx';
 import Gallery from '../components/gallery.js';
 import DetailMap from '../components/detailMap.js';
-import './css/singleTour.css'
 
 
 const useStyles = makeStyles((theme) => ({
+	rating: {
+		margin: '-10px auto 10px',
+		width: "120px",
+	
+	},
+	tourArticle: {	
+			marginTop: '20px',
+			[theme.breakpoints.up('md')]: {
+				marginTop: '50px',
+			  },
+
+	},
 	paper: {
 		marginTop: theme.spacing(8),
 		display: 'flex',
@@ -47,23 +57,23 @@ export default function SingleTour(values) {
 	const tour_rating = parseInt(data.posts.rating)
 	if(!data.posts.author) return null;
 	return (
-		<Container component="main" maxWidth="xl" className='tourArticle'>
-				<CssBaseline />
-					<Container maxWidth="sm">				
-				</Container>
+		<Container component="main" maxWidth="xl" className={classes.tourArticle}>
 				<Container maxWidth="lg">
 					<Typography
 						component="h1"
-						variant="h2"
+						variant="h1"
 						align="center"
 						color="textPrimary"
 						gutterBottom>
 						{data.posts.title}
 					</Typography>
-					<div className="rating"> 
+						<div className={classes.rating}> 
 							<Rating name="read-only" value={tour_rating} readOnly />			
         				</div>
+					</Container>
+
 					<Gallery props={data.posts.photoalbum}/>
+				<Container maxWidth="lg">
 					<InfoBox data={data}/>
 					<DetailMap data={data}/>			
 				</Container>
@@ -71,11 +81,10 @@ export default function SingleTour(values) {
 			<div className={classes.heroContent}>
 				<Container maxWidth="lg">		
 					<Typography
-						variant="h5"
 						align="left"
 						color="textSecondary"
+						dangerouslySetInnerHTML={{__html: `${data.posts.text}`}} 	
 						paragraph >
-						<div dangerouslySetInnerHTML={{__html: `${data.posts.text}`}} />	
 					</Typography>
 				</Container>
 			</div>

@@ -17,14 +17,13 @@ import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import TuneIcon from '@mui/icons-material/Tune';
 import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import MultipleSelectNative from './Map/nativeSelect.tsx';
 import { connect } from 'react-redux';
 import { mapsearch, diffselection, tourselection } from '../actions/map';
+import { CATEGORIES, GRADING } from '../SETTINGS';
+import  MobileMap  from './Map/mobileMap.tsx';
 
 function getCurrentDimension(){
     return { width: window.innerWidth, height: window.innerHeight }}
@@ -42,16 +41,8 @@ const MenuProps = {
     },
   },
 };
-const names = [
-  'Wandern',
-  'Hochtour',
-  'Klettertour',
-  'Hike and Fly',
-  'Skitour', ];
-  const diff_array = [
-	'leicht',
-	'mittel',
-	'schwierig' ];
+const names = CATEGORIES
+const diff_array = GRADING
 
 function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, searchphrase }) {
 	const [state, setState] = React.useState({
@@ -60,10 +51,8 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 		bottom: false,
 		right: false,
 	  });
-	const [personName, setPersonName] = React.useState([]);
 	const [screenSize, setScreenSize] = useState(getCurrentDimension());
 	const [SearchString, setSearchString] = React.useState('');
-	const [difficulty, setDifficulty] = React.useState([]);
 	const theme = useTheme();
 
 	const matches = useMediaQuery(theme.breakpoints.up('lg'));
@@ -88,26 +77,19 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 		});
 	}, [tourtype, SearchString, hardness]);
 
-	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+	const handleChange = (event: SelectChangeEvent<typeof tourtype>) => {
 	  const {
 		target: { value },
 	  } = event;
-	  setPersonName(
-		// On autofill we get a stringified value.
-		typeof value === 'string' ? value.split(',') : value
-	  );
 	  tourselection(typeof value === 'string' ? value.split(',') : value)
 
 	};
 
-	const handleChangeDiff = (event: SelectChangeEvent<typeof difficulty>) => {
+	const handleChangeDiff = (event: SelectChangeEvent<typeof hardness>) => {
 		const {
 		  target: { value },
 		} = event;
-		setDifficulty(
-		  // On autofill we get a stringified value.
-		  typeof value === 'string' ? value.split(',') : value
-		);
+	
 		diffselection(typeof value === 'string' ? value.split(',') : value)
 	  };
 	const handleResize = () => {
@@ -120,7 +102,6 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 				window.addEventListener('resize', handleResize);
 			};
 		  }, []);
-
 
 	const DeskTopMap =() => {
 		return(
@@ -141,7 +122,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 							size="small"
 							id="demo-multiple-checkbox"
 							multiple
-							value={personName}
+							value={tourtype}
 							onChange={handleChange}
 							input={<OutlinedInput label="Tag" />}
 							renderValue={(selected) => selected.join(', ')}
@@ -149,7 +130,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 							>
 							{names.map((name) => (
 								<MenuItem key={name} value={name}>
-								<Checkbox checked={personName.indexOf(name) > -1} />
+								<Checkbox checked={tourtype.indexOf(name) > -1} />
 								<ListItemText primary={name} />
 								</MenuItem>
 							))}
@@ -163,9 +144,9 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 					<FormControl sx={{ m: 0.5, width: 200, paddingTop:1}}>
 						<Select 
 						size="small"
-						id="difficulty-checkbox"
+						id="hardness-checkbox"
 						multiple
-						value={difficulty}
+						value={hardness}
 						onChange={handleChangeDiff}
 						input={<OutlinedInput label="Tag" />}
 						renderValue={(selected) => selected.join(', ')}
@@ -173,7 +154,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 						>
 						{diff_array.map((diff) => (
 							<MenuItem key={diff} value={diff}>
-							<Checkbox checked={difficulty.indexOf(diff) > -1} />
+							<Checkbox checked={hardness.indexOf(diff) > -1} />
 							<ListItemText primary={diff} />
 							</MenuItem>
 						))}
@@ -198,8 +179,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 			<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
-				
-			
+					
 			<SearchIcon/>
 			<TextField id="standard-basic" label="Sucheingabe" variant="standard" 
 			onKeyUp={(ev)=>{setSearchString(ev.target.value); console.log(ev.target.value) }}/>
@@ -213,7 +193,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 					size="small"
 					id="demo-multiple-checkbox"
 					multiple
-					value={personName}
+					value={tourtype}
 					onChange={handleChange}
 					input={<OutlinedInput label="Tag" />}
 					renderValue={(selected) => selected.join(', ')}
@@ -221,7 +201,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 					>
 					{names.map((name) => (
 						<MenuItem key={name} value={name}>
-						<Checkbox checked={personName.indexOf(name) > -1} />
+						<Checkbox checked={tourtype.indexOf(name) > -1} />
 						<ListItemText primary={name} />
 						</MenuItem>
 					))}
@@ -235,9 +215,9 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 			<FormControl sx={{ m: 0.5, width: 200, paddingTop:1}}>
 				<Select 
 				size="small"
-				id="difficulty-checkbox"
+				id="hardness-checkbox"
 				multiple
-				value={difficulty}
+				value={hardness}
 				onChange={handleChangeDiff}
 				input={<OutlinedInput label="Tag" />}
 				renderValue={(selected) => selected.join(', ')}
@@ -245,7 +225,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 				>
 				{diff_array.map((diff) => (
 					<MenuItem key={diff} value={diff}>
-					<Checkbox checked={difficulty.indexOf(diff) > -1} />
+					<Checkbox checked={hardness.indexOf(diff) > -1} />
 					<ListItemText primary={diff} />
 					</MenuItem>
 				))}
@@ -260,37 +240,6 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 			</React.Fragment>
 	)
 	}
-
-	const MobileMap =() => {
-		return(
-			<React.Fragment>			
-				<Box sx={{ flexGrow: 1 }}>	
-				</Box>
-			<div className='outerBox'>
-					<div className='leftColumn' style={{width:'100%'}}><Leaflet data={{'state' : appState, 'screen': screenSize, 'offset':112}}/></div>
-			</div>
-			<AppBar position="static">
-				<Toolbar>
-				<IconButton
-				  size="large"
-				  edge="start"
-				  color="inherit"
-				  aria-label="menu"
-				  sx={{ mr: 2 }}
-				  onClick={toggleDrawer("bottom", true)}
-				>
-				  <MenuIcon />
-				</IconButton>
-				<TuneIcon/>	
-				<Typography variant='h2'>
-					Filter waehlen
-				</Typography>
-				</Toolbar>
-			</AppBar>
-</React.Fragment>
-	)
-	}
-
 
 	const toggleDrawer =
 	(anchor: Anchor, open: boolean) =>
@@ -317,7 +266,6 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 		</Box>
 	  );
 
-
 	return (
 		<React.Fragment>
 		<div>		
@@ -330,7 +278,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 			{list("bottom")}
 		</SwipeableDrawer>
   		</div>
-{		(matches ? DeskTopMap():(matchespad ? PadMap(): MobileMap()))
+{		(matches ? DeskTopMap():(matchespad ? PadMap():<MobileMap props={{toggleDrawer, screenSize, appState}}/> ))
 }		</React.Fragment>
 	);
 }
