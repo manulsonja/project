@@ -1,28 +1,20 @@
-from gc import get_objects
-from urllib import request, response
-from rest_framework import generics
 from touren.models import *
 from .serializers import *
 from rest_framework import viewsets
 from rest_framework import filters
 from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions
-from ast import literal_eval
-from itertools import chain
 from rest_framework import filters
-from mountain_huts.models import MountainHut
-from parking.models import Parking
-from blog.models import BlogArticle
-from django.utils import timezone
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from layout_config.models import LandingPageLayout  
+from rest_framework import pagination
 
+class CustomPagination(pagination.CursorPagination):
+    page_size = 12
+    cursor_query_param = 'c'
+    ordering = '-created'
 
 
 class ViewTouren(viewsets.ModelViewSet):
+    pagination_class = CustomPagination
     filter_backends = [filters.SearchFilter]
     serializer_class = TourSerializer
     search_fields = ["^title"]

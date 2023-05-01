@@ -25,6 +25,8 @@ ALLOWED_HOSTS = ['*']
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 REST_FRAMEWORK = {
+  
+
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
@@ -66,6 +68,7 @@ INSTALLED_APPS = [
 
     'layout_config',
     'users',
+    'geography',
     'touren',
     'pictures',
     'mountain_huts',
@@ -243,3 +246,4 @@ DJOSER = {
         'user_delete': 'users.serializers.UserCreateSerializer',
     }
 }
+

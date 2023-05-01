@@ -23,10 +23,10 @@ class Parking(models.Model):
     fees = models.FloatField(null=True)
     name = models.CharField(max_length=30)   
     position = models.PointField(null=True)
-    published = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(default=timezone.now)
    
     parkingtype = models.CharField(max_length=20, choices=parkingtype, default='parkplatz')
-    slug = models.SlugField(max_length=250, unique_for_date='published', editable=False, null=True)
+    slug = models.SlugField(max_length=250, unique_for_date='created', editable=False, null=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):

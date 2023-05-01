@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../../App.css';
 import Leaflet from '../../components/LeafletMap';
 import Typography from '@mui/material/Typography';
@@ -6,49 +6,103 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import TuneIcon from '@mui/icons-material/Tune';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import { resetselection } from '../../actions/map';
+import { resetselection, tourselection, diffselection, mapsearch } from '../../actions/map';
 import { connect } from 'react-redux';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { makeStyles } from '@material-ui/core/styles';
+import Chip from '@mui/material/Chip';
+import { TextField } from "@material-ui/core";
+const useStyles = makeStyles((theme) => ({
+    search: {
+        backgroundColor: 'white',
+        maxWidth: 120,
+        borderRadius: "10px",
+        border: '0',
 
-function MobileMap({resetselection, props}) {
+    },
+    toolbarTitle: {
+        flexGrow: 1,
+        color: 'white',
+        fontWeight: 700,
+    },
+    filterChips: {
+        width: '100%',
+        backgroundColor: 'white',
+    },
+    buttons: {
+        margin: theme.spacing(1, 1.5), 
+        color: 'white',
+        borderColor: 'white',
+
+    },
+}));
+const handleDelete = () => {
+    console.info('ssdss');
+  };
+function MobileMap({resetselection, props, difficulty, tourtype, sstring, diffselection, tourselection, searchstring}) {
+   const classes = useStyles()
    const appState = props.appState
    const screenSize = props.screenSize 
    const toggle = props.toggleDrawer
-    return(
+
+   useEffect(() => {   
+    console.log(difficulty)
+        console.log((difficulty.length===0))
+    },[difficulty, tourtype, sstring]);
+
+
+   return(
         <React.Fragment>			
-            <Box sx={{ flexGrow: 1 }}>	
-            </Box>
             <div className='outerBox'>
-                <div className='leftColumn' style={{width:'100%'}}><Leaflet data={{'state' : appState, 'screen': screenSize, 'offset':112}}/></div>
+                <div className='leftColumn' style={{width:'100%'}}><Leaflet data={{'state' : appState, 'screen': screenSize, 'offset':140}}/></div>
             </div>
+
+    
+        <Box className={classes.filterChips}>
+     {(difficulty.length===0)? null :  <Chip label="Anspruch" onDelete={() => {diffselection([])}} />  }
+     {(tourtype.length===0)? null : <Chip label="Tourtyp" onDelete={() => {tourselection([])}}/>  }
+     {(sstring==="")? null :       <Chip label="Suche" onDelete={() => {searchstring('')}} />
+  }  
+        </Box>
         <AppBar position="static">
-            <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={toggle("bottom", true)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <TuneIcon/>	
+        <Toolbar>
             <Typography variant='h2'>
-            <Button variant="contained"
-                    onClick={() => { resetselection()}}
-                    endIcon={<SendIcon />}>
-                Send
+            <Button 
+                    variant="contained"
+                    onClick={toggle("bottom", true)}
+                    style={{backgroundColor:'#EE0E79'}}
+                    startIcon={<TuneIcon />}>
+                FILTER
             </Button>
+            </Typography>
+            <Typography variant='h2'>
+            <Button 
+                    variant="contained"
+                    style={{backgroundColor:'#EE0E79'}}
+                    onClick={() => { resetselection()}}
+                    endIcon={<RestartAltIcon />}>
+                Reset
+            </Button>
+       {/*      <TextField
+            className="inputRounded"
+            placeholder="Search"
+            variant="outlined"
+            size="small"
+            className={classes.search}
+        /> */}
             </Typography>
             </Toolbar>
         </AppBar>
+
 </React.Fragment>
 )
 };
 
-export default connect(null, { resetselection })(MobileMap);
+const mapStateToProps = state => ({
+    difficulty: state.map.difficulty,
+    tourtype: state.map.tourtype,
+    sstring: state.map.searchstring,
+});
+export default connect(mapStateToProps, { resetselection, tourselection, diffselection, mapsearch })(MobileMap);
 

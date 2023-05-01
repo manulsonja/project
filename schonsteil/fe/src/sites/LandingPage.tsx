@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import axiosInstance from '../utils/axios';
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import Tours from '../components/Tours.tsx';
+import Tours from './ListViews/Tiles/Tours.tsx';
 import Picker from '../components/Picker.tsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { MEDIA_URL } from '../SETTINGS';

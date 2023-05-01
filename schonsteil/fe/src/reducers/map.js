@@ -1,8 +1,10 @@
-import { DIFFICULTY_SELECTION, MAP_SEARCHSTRING, RESET_SELECTION, TOUR_SELECTION } from "../actions/types";
+import { DIFFICULTY_SELECTION, HUTTYPE_SELECTION, LOCATION_SELECTION, MAP_SEARCHSTRING, RESET_SELECTION, TOUR_SELECTION } from "../actions/types";
 
 const initialState = {
     difficulty: [],
     tourtype: [],
+    huttype: [],
+    locationtype: [],
     searchstring: '',
 };
 
@@ -19,15 +21,24 @@ export default function(state = initialState, action) {
             ...state,
             tourtype: payload,        
     }
+    case HUTTYPE_SELECTION: return {
+        ...state,
+        huttype: payload,        
+}
+    case LOCATION_SELECTION: return {
+        ...state,
+        locationtype: payload,        
+    }
         case MAP_SEARCHSTRING: return {
             ...state,
             searchstring: payload,        
     }
-    case RESET_SELECTION: return {
-        difficulty: [],
-        tourtype:[],
-        searchstring: '',        
-}
+        case RESET_SELECTION: return {
+            difficulty: [],
+            tourtype:[],
+            huttype:[],
+            searchstring: '',        
+    }
         default:
             return state
     }

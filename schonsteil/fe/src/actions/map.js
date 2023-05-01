@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {  DIFFICULTY_SELECTION,
+          HUTTYPE_SELECTION,
+          LOCATION_SELECTION,
           MAP_SEARCHSTRING,
           RESET_SELECTION,
           TOUR_SELECTION } from "./types";
@@ -20,6 +22,18 @@ export const tourselection = (tourtypes) => dispatch => {
     dispatch({
         type: TOUR_SELECTION,
         payload: tourtypes,
+    });
+};
+export const huttypeselection = (huttypes) => dispatch => {
+    dispatch({
+        type: HUTTYPE_SELECTION,
+        payload: huttypes,
+    });
+};
+export const locationselection = (locationtypes) => dispatch => {
+    dispatch({
+        type: LOCATION_SELECTION,
+        payload: locationtypes,
     });
 };
 

@@ -17,20 +17,14 @@ import shapely
 import PIL.Image
 from pictures.models import PictureField
 from multiselectfield import MultiSelectField
+from geography.models import Region
 
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
 
 
-class Region(models.Model):
-    name = models.CharField(max_length=50, null=True)
-    image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"]) 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-    def __str__(self):
-        return self.name
 
-
+    
 class Tour(models.Model):
     tour_duration = models.DurationField(null=True)
     gpxfile = models.FileField(upload_to='files', null=True)
@@ -70,7 +64,7 @@ class Tour(models.Model):
     distance = models.FloatField(null=True)
     season = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"])
-    published = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
         NewUser, on_delete=models.CASCADE, related_name='tour_posts',) 
     status = models.CharField(
@@ -83,12 +77,12 @@ class Tour(models.Model):
         max_length=10,
         choices=diff_choices,
         default='schwierig',)
-    slug = models.SlugField(max_length=250, unique_for_date='published', editable=False)
+    slug = models.SlugField(max_length=250, unique_for_date='created', editable=False)
     objects = models.Manager()  # default manager
     tourobjects = TourObjects()  # custom manager
 
     class Meta:
-        ordering = ('-published',)
+        ordering = ('-created',)
     def __str__(self):
         return self.title
     def save(self, *args, **kwargs):

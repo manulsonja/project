@@ -43,6 +43,8 @@ erledigt
 2  andere filter implementieren
 4  thumbnails!!!!!!
 
+leaflet swipe tilt ///
+
 
 
 

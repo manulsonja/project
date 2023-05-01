@@ -38,7 +38,6 @@ admin.site.register(Wandern, WandernAdmin)
 admin.site.register(HikeAndFly, HikeAndFlyAdmin)
 admin.site.register(Hochtour, HochtourAdmin)
 admin.site.register(Image)
-admin.site.register(Region)
 
 
 

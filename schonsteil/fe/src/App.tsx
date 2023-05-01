@@ -7,28 +7,27 @@ import {
 import Map from './sites/Map.tsx';
 import Footer from './components/Footer';
 import SingleTour from './sites/SingleTour';
-import Register from './sites/register';
-import Login from './sites/login';
-import HutList from './sites/huts.tsx';
-import ParkingList from './sites/parking.tsx';
-import TourList from './sites/tours.tsx';
+import Register from './sites/Auth/register.js';
+import Login from './sites/Auth/login.js';
 import SingleHut from './sites/SingleHut';
 import SingleParking from './sites/singleParking';
 import Landing from './sites/LandingPage.tsx';
 import PrivateRoute from './utils/PrivateRoute';
 import { ThemeProvider } from '@mui/material/styles';
-import ResetPassword from './sites/resetPassword';
-import ResetPasswordConfirm from './sites/resetPasswordConfirm';
-import Activate from './sites/activate.tsx';
+import ResetPassword from './sites/Auth/resetPassword.js';
+import ResetPasswordConfirm from './sites/Auth/resetPasswordConfirm.js';
+import Activate from './sites/Auth/activate.tsx';
 import Layout from './hocs/Layout';
 import { Provider } from 'react-redux';
 import store from './store';
-import Facebook from './sites/Facebook';
-import Google from './sites/Google';
+import Facebook from './sites/Auth/Facebook.js';
+import Google from './sites/Auth/Google.js';
 import SingleArticle from './sites/singleArticle';
 import Dashboard from './dashboard/Dashboard.tsx';
 import theme from './theme';
-
+import Tours from './sites/ListViews/Tours.tsx';
+import Huts from './sites/ListViews/Huts.tsx';
+import Locations from './sites/ListViews/Locations.tsx';
 const App = () => {
   return (
 	<Provider store={store}>
@@ -45,15 +44,15 @@ const App = () => {
 					<Route path="/article/:slug" element={<SingleArticle/>} />
 					
 					{/* --------------------------------------------------------- */}
-					<Route exact path="tours" element={<TourList/>} />
+					<Route exact path="tours" element={<Tours/>} />
         			<Route path="/tour/:category/:slug" element={<SingleTour/>} />
 					
 					{/* --------------------------------------------------------- */}
-					<Route exact path="huts" element={<HutList/>} />
+					<Route exact path="huts" element={<Huts/>} />
 					<Route path="/hut/:slug" element={<SingleHut/>} />
 					
 					{/* --------------------------------------------------------- */}
-					<Route exact path="parking" element={<ParkingList/>} />
+					<Route exact path="parking" element={<Locations/>} />
 					<Route path="/parking/:slug" element={<SingleParking/>} />
 					
 					{/* ------------------  Authentication----------------------- */}

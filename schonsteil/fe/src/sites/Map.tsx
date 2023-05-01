@@ -72,7 +72,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 		else name_array=tourtype;
 		const url = "touren/touren/"+query_string+name_array+search_querystring+SearchString+diff_querystring+hardness
 		axiosInstance.get(url).then((res) => {
-			const allPosts = res.data;
+			const allPosts = res.data.results;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
 	}, [tourtype, SearchString, hardness]);

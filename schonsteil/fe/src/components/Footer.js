@@ -7,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import { useLocation } from "react-router-dom";
 
+
 const useStyles = makeStyles((theme) => ({
 	footer: {
 		borderTop: `1px solid ${theme.palette.divider}`,

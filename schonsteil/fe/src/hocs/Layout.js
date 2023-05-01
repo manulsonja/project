@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { checkAuthenticated, load_user } from '../actions/auth';
-import Header from '../components/Header.tsx';
 import CssBaseline from '@mui/material/CssBaseline';
+import HeaderWrapper from '../components/header/HeaderWrapper.tsx';
 
 const Layout = ({ checkAuthenticated, load_user, children }) => {
     useEffect(() => {
@@ -12,9 +12,8 @@ const Layout = ({ checkAuthenticated, load_user, children }) => {
 
     return (
         <div>
-            <Header />
+            <HeaderWrapper />
             <CssBaseline /> 
-
             {children}
         </div>
     );

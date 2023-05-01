@@ -210,15 +210,7 @@ const diff_colors = ['blue', 'red', 'black']
 const [selected, setSelected] = React.useState(cat_obj);
 const classes = useStyles();
 
-const handleChange = () => {
-  console.log('changed')
-}
-const handleSubmit = () => {
-  console.log(selected) 
-}
-
 useEffect(() => {   
-      handleChange()
 
  },[selected]);
 

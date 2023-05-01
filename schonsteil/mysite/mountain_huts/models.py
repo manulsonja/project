@@ -4,7 +4,7 @@ from django.utils import timezone
 from users.models import NewUser 
 from pictures.models import PictureField
 from django.utils.text import slugify
-
+from geography.models import Zone, Gebirge, Region
 
 def upload_to(instance, filename):
     return 'huts/{filename}'.format(filename=filename)
@@ -26,20 +26,20 @@ class MountainHut(models.Model):
         ("3","3"),
         ("4","4"),
         ("5","5"),]
-
-    subtitle = models.CharField(max_length=150, null=True)
-    telephone = models.CharField(max_length=20, null=True)
-    email = models.CharField(max_length=50,null=True)  
-    website = models.CharField(max_length=50, null=True)
-    # Oeffnungszeiten
-    name = models.CharField(max_length=30)   
-    position = models.PointField(null=True)   
+    
+    name = models.CharField(max_length=30)
+    subtitle = models.CharField(max_length=150, blank=True, null=True)
+    text =  tinymce_models.HTMLField(blank=True, null=True)
    
-    text =  tinymce_models.HTMLField()
+    telephone = models.CharField(max_length=20, blank=True, null=True)
+    email = models.CharField(max_length=50,blank=True, null=True)  
+    website = models.CharField(max_length=50, blank=True, null=True)
+    # Oeffnungszeiten
+    position = models.PointField(blank=True, null=True)   
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg', aspect_ratios=["16/9"])
-    published = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
-        NewUser, on_delete=models.CASCADE, related_name='hut_posts',) 
+        NewUser, on_delete=models.CASCADE, related_name='hut_posts') 
     status = models.CharField(
         max_length=10, choices=options, default='published')
     
@@ -48,10 +48,17 @@ class MountainHut(models.Model):
     rating = models.CharField(
         max_length=1,
         choices=rating_choices,
-        default='1',)
-    slug = models.SlugField(max_length=250, unique_for_date='published', editable=False, null=True)
+        default='1',
+        blank=True)
+    
+    zone = models.ForeignKey(Zone,on_delete=models.CASCADE,related_name="huts", null=True)
+    region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name="huts", null=True)
+    gebirge = models.ForeignKey(Gebirge,on_delete=models.CASCADE,related_name="huts", null=True)
+
+
+    slug = models.SlugField(max_length=250, unique_for_date='created', editable=False, null=True)
     class Meta:
-        ordering = ('-published',)
+        ordering = ('-created',)
     def __str__(self):
         return self.name
 
