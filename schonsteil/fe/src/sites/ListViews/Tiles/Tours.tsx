@@ -10,6 +10,7 @@ import Rating from '@mui/material/Rating';
 import { Box } from '@material-ui/core';
 import { Typography } from '@mui/material';
 
+
 const useStyles = makeStyles((theme) => ({
     card: {
         border: "5px solid #EE0E79"
@@ -24,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Tours(props) {
+
+
 	const classes = useStyles();
     const appState=props.props;
-    console.log(appState);
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
   return (

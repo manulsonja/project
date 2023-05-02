@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import Tours from './Tiles/Tours.tsx';
 import { makeStyles } from '@material-ui/core';
 import { Box } from '@material-ui/core';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Huts from './Tiles/Huts.tsx';
 import Parking from './Tiles/Parking.tsx';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const drawerWidth = 150;
 const useStyles = makeStyles((theme) => ({	
@@ -25,10 +25,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ListPage({props}) {
-	const url = props.url
+	const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
 	const type = props.type
-	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('md'));
 	const classes = useStyles()
 	const [appState, setAppState] = useState({
 		loading: false,
@@ -79,7 +78,7 @@ export default function ListPage({props}) {
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 return (
 	<React.Fragment>  
-	<Box className={classes.huttenliste} style={{marginLeft:'150px'}}>
+	<Box className={classes.huttenliste} style={{marginLeft:(matches? '150px': null)}}>
  	{ Loading()}
 	 </Box>
 	</React.Fragment>

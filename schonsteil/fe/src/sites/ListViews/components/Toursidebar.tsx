@@ -6,7 +6,6 @@ import MuiToggleButton from "@mui/material/ToggleButton";
 import { connect } from 'react-redux';
 import { tourselection, diffselection, mapsearch } from '../../../actions/map';
 
-
 const useStyles = makeStyles({
     
     buttonContainer: {

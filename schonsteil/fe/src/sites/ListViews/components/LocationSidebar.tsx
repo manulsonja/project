@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 
 
 const LocationSidebar = ({locationtype, locationselection}) => {
-console.log(locationtype)
+
 const cat_arr = ['Huette','Alm','Gasthof']
 const buttons = ['wd.jpeg','ht.jpeg','kl.jpeg']
 

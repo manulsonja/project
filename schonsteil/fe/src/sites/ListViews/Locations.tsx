@@ -4,6 +4,8 @@ import ListPage from './listView.tsx'
 import Drawer from '@mui/material/Drawer';
 import { makeStyles } from '@material-ui/core';
 import LocationSidebar from './components/LocationSidebar.tsx';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const drawerWidth = 150;
 const useStyles = makeStyles((theme) => ({	
@@ -13,28 +15,36 @@ const useStyles = makeStyles((theme) => ({
 
 	}
 }));
+const RenderSidebar = () => {
+  const classes = useStyles()
 
+  return(
+      <Drawer
+      className={classes.sideBar}
+      sx={{
+    width: drawerWidth,
+    flexShrink: 0,
+    '& .MuiDrawer-paper': {
+      width: drawerWidth,
+      boxSizing: 'border-box',
+      backgroundColor: '#272727',
+  
+    },
+  }}
+  variant="permanent"
+  anchor="left"
+  > 
+  <LocationSidebar/> 
+  </Drawer>
+  )
+}
 const Locations = () => {
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
    const classes = useStyles()
   return (
     <React.Fragment>
-    <Drawer
-    className={classes.sideBar}
-    sx={{
-  width: drawerWidth,
-  flexShrink: 0,
-  '& .MuiDrawer-paper': {
-    width: drawerWidth,
-    boxSizing: 'border-box',
-    backgroundColor: '#272727',
-
-  },
-}}
-variant="permanent"
-anchor="left"
->  
-<LocationSidebar/> 
-</Drawer>
+        {(matches? <RenderSidebar/> : null)}
 <ListPage props={{'url':'parking/', 'type':'parking'}}/>
     </React.Fragment>
   )

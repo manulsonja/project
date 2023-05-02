@@ -11,123 +11,9 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HeightIcon from '@mui/icons-material/Height';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import MuiToggleButton from "@mui/material/ToggleButton";
-import { useEffect } from 'react';
 import Slider from '@mui/material/Slider';
-
-
-function RangeSlider() {
-    const [value, setValue] = React.useState<number[]>([20, 37]); 
-    const handleSliderChange = (event: Event, newValue: number | number[]) => {
-      setValue(newValue as number[]);
-      console.log(value)
-    };
-    function valuetext(value: number) {
-        return `${value}°C`;
-      }
-          return (
-            
-      <Box  sx={{ flexGrow: 1 }}>
-        <Slider
-          getAriaLabel={() => 'Temperature range'}
-          value={value}
-          onChange={handleSliderChange}
-          valueLabelDisplay="auto"
-          getAriaValueText={valuetext}
-        />
-      </Box>
-    );
-  }
-  
-const ToggleButton = styled(MuiToggleButton)({
-   width: 'calc(20% - 4px)',
-   float: 'left',
-   aspectRatio : '1 / 1',
-   backgroundSize: '100%',
-   margin: '2px',
-
-  "&.Mui-selected, &.Mui-selected:hover": {
-    color: "white",
-    border: '5px solid #EE0E79',
-   }
-});
-const DiffToggleButton = styled(MuiToggleButton)({
-   width: 'calc(33.33% - 4px)',
-   float: 'left',
-   aspectRatio : '4 / 1',
-   color:'white',
-   fontFamily:'arial',
-   fontWeight: '700',
-   margin: '2px',
-      "&.Mui-selected, &.Mui-selected:hover": {
-    color: "white",
-    border: '5px solid #EE0E79',
-    outline: "3px solid white",
-    outlineOffset: "-6px",
-   }
-});
-
-function ToggleImage(data) {
-const  props  = data 
-let style={...{[props.bgtype]:props.bg}}
-  return (
-    <ToggleButton
-      style={style}
-      value="check"
-      selected={props.selected[props.selectorItem]}
-      onChange={() => {
-        props.setSelected({...props.selected, [props.selectorItem] : !props.selected[props.selectorItem]});
-      }}
-    >
-    </ToggleButton>
-  );
-}
-function ToggleDiff(data) {
-   const  props  = data 
-   let style={...{[props.bgtype]:props.bg}}
-     return (
-       <DiffToggleButton
-         style={style}
-         value="check"
-         selected={props.selected[props.selectorItem]}
-         onChange={() => {
-           props.setSelected({...props.selected, [props.selectorItem] : !props.selected[props.selectorItem]});
-         }}
-       >
-         {props.selectorItem}
-       </DiffToggleButton>
-     );
-   }
-function Selector() {
-  return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel variant="standard" htmlFor="uncontrolled-native">
-          Region
-        </InputLabel>
-        <NativeSelect
-          defaultValue={30}
-          inputProps={{
-            name: 'age',
-            id: 'uncontrolled-native',
-          }}
-        >
-
-
-         <option value={1}>Alle</option>
-          <option value={10}>Oberland</option>
-          <option value={20}>Tirol Mitte</option>
-          <option value={30}>Unterland</option>
-          <option value={30}>Osttirol</option>
-          <option value={30}>Suedtirol</option>
-          <option value={30}>Trentino</option>
-
-
-
-        </NativeSelect>
-      </FormControl>
-    </Box>
-  );
-}
+import { connect } from 'react-redux';
+import { diffselection, tourselection, durationselection, distanceselection, elevationselection } from '../actions/map';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -146,7 +32,7 @@ const useStyles = makeStyles({
    },
    mapButton:
    {
-      width: '100%',
+      width: '50%',
       float: 'left',
    },
    sliderBox:
@@ -196,26 +82,144 @@ const useStyles = makeStyles({
    },
 
 })
+  
+const ToggleButton = styled(MuiToggleButton)({
+   width: 'calc(20% - 4px)',
+   float: 'left',
+   aspectRatio : '1 / 1',
+   backgroundSize: '100%',
+   margin: '2px',
+  "&.Mui-selected, &.Mui-selected:hover": {
+    color: "white",
+    border: '5px solid #EE0E79',
+   }
+});
+const DiffToggleButton = styled(MuiToggleButton)({
+   width: 'calc(33.33% - 4px)',
+   float: 'left',
+   aspectRatio : '4 / 1',
+   color:'white',
+   fontFamily:'arial',
+   fontWeight: '700',
+   margin: '2px',
+      "&.Mui-selected, &.Mui-selected:hover": {
+    color: "white",
+    border: '5px solid #EE0E79',
+    outline: "3px solid white",
+    outlineOffset: "-6px",
+   }
+});
 
-export default function Picker() {
+
+
+function Selector() {
+  return (
+    <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          Region
+        </InputLabel>
+        <NativeSelect
+          defaultValue={30}
+          inputProps={{
+            name: 'age',
+            id: 'uncontrolled-native',
+          }}
+        >
+
+
+         <option value={1}>Alle</option>
+          <option value={10}>Oberland</option>
+          <option value={20}>Tirol Mitte</option>
+          <option value={30}>Unterland</option>
+          <option value={30}>Osttirol</option>
+          <option value={30}>Suedtirol</option>
+          <option value={30}>Trentino</option>
+
+
+
+        </NativeSelect>
+      </FormControl>
+    </Box>
+  );
+}
+
+
+const Picker = ({tourtype, hardness, tourselection, diffselection, distance, duration, elevation, distanceselection, elevationselection, durationselection}) => {
+  
+  function ToggleDiff(data) {
+    const  props  = data 
+    let style={...{[props.bgtype]:props.bg}}
+    const isIncluded = hardness.includes(props.selectorItem)
+      return (
+        <DiffToggleButton
+          style={style}
+          value="check"
+          selected={isIncluded}
+          onChange={() => {
+           if(isIncluded){
+             const array = hardness              
+             diffselection(array.filter(a => a !== props.selectorItem))
+           }
+           else {
+             diffselection(hardness.concat(props.selectorItem));
+           }
+ 
+         }}
+        >
+          {props.selectorItem}
+        </DiffToggleButton>
+      );
+    }
+    function RangeSlider(valuearray, change) {
+      const handleSliderChange = (event: Event, newValue: number | number[]) => {
+        change(newValue as number[])
+      };
+      function valuetext(value: number) {
+          return `${value}°C`;
+        }
+            return (         
+        <Box  sx={{ flexGrow: 1 }}>
+          <Slider
+            getAriaLabel={() => 'Temperature range'}
+            value={valuearray}
+            onChange={handleSliderChange}
+            valueLabelDisplay="auto"
+            getAriaValueText={valuetext}
+          />
+        </Box>
+      );
+    }
+  function ToggleImage(data) {
+    const  props  = data 
+    const isIncluded = tourtype.includes(props.selectorItem)
+    let style={...{[props.bgtype]:props.bg}}
+      return (
+        <ToggleButton
+          style={style}
+          value="check"
+          selected={isIncluded}
+          onChange={() => {
+            if(isIncluded){
+              const array = tourtype              
+              tourselection(array.filter(a => a !== props.selectorItem))
+            }
+            else {
+              tourselection(tourtype.concat(props.selectorItem));
+            }
+          }}
+        >
+        </ToggleButton>
+      );
+    }
 
 const cat_arr = ['Wandern','Hochtour','Klettertour','Hike and Fly','Skitour']
 const buttons = ['wd.jpeg','ht.jpeg','kl.jpeg','hikeandfly1.jpeg','st.jpeg']
-const cat_obj = {'Wandern': false,'Hochtour':false,'Klettertour':false,'Hike and Fly':false,'Skitour':false}
 
-const diff_arr = ['leicht', 'mittel', 'schwer']
-const diff_obj = {'leicht':false,'mittel':false,'schwer':false}
+const diff_arr = ['leicht', 'mittel', 'schwierig']
 const diff_colors = ['blue', 'red', 'black']
 
-const [selected, setSelected] = React.useState(cat_obj);
 const classes = useStyles();
-
-useEffect(() => {   
-
- },[selected]);
-
-
-
 
 return (
     <Box sx={{ width: '100%' }}>
@@ -223,8 +227,7 @@ return (
         <Item>
          {cat_arr.map((item, i) => {
             let bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
-               return(ToggleImage({'selected':selected, 'setSelected':setSelected, 'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
-
+               return(ToggleImage({'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
          })}
   
    </Item>
@@ -238,34 +241,31 @@ return (
                <div className={classes.sliderIcon}>
                   <AccessTimeIcon/>
                </div>
-               <div className={classes.Slider}>{RangeSlider()}
+               <div className={classes.Slider}>{RangeSlider(distance, distanceselection)}
                </div>
                <div className={classes.sliderIcon}>
                   <HeightIcon/>
                </div>
-               <div className={classes.Slider}>{RangeSlider()}
+               <div className={classes.Slider}>{RangeSlider(elevation, elevationselection)}
                </div>
                <div className={classes.sliderIcon}>
                   <SettingsEthernetIcon/>
                </div>
-               <div className={classes.Slider}>{RangeSlider()}
+               <div className={classes.Slider}>{RangeSlider(duration, durationselection)}
                </div>
             </div>
 
             <div className={classes.DiffPicker}>
             {diff_arr.map((item,i) => {
             let color = diff_colors[i]
-               return(ToggleDiff({'selected':selected, 
-                                   'setSelected':setSelected, 
+               return(ToggleDiff({
                                    'selectorItem':item, 
                                    'bg':color, 
                                    'bgtype':"backgroundColor",
                                    'styleOverrides': `width:'200px'`,
                                  }))
-
          })}
-            </div>
-          
+            </div>     
           </div>
           <div className={classes.divRowTwo}>
             <img className={classes.mapButton} src={`${process.env.REACT_APP_API_URL}/media/mapmap.jpeg`}></img>
@@ -276,3 +276,13 @@ return (
     </Box>
   );
 }
+const mapStateToProps = (state) => ({
+  tourtype: state.map.tourtype,
+  hardness: state.map.difficulty,
+  distance: state.map.distance,
+  elevation: state.map.elevation,
+  duration: state.map.duration,
+
+  
+})
+export default connect(mapStateToProps, {tourselection, diffselection, durationselection, elevationselection, distanceselection})(Picker)

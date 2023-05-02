@@ -17,7 +17,7 @@ class TourSerializer(serializers.ModelSerializer):
         image = PictureField()
         starting_pnt = serializers.SerializerMethodField()
         author = serializers.SerializerMethodField()
-
+     
         def get_author(self,obj):
                 author = obj.author
                 return AuthorSerializer(author).data

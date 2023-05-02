@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 const HutSidebar = ({huttype, huttypeselection}) => {
 
 const cat_arr = ['Huette','Alm','Gasthof']
-const buttons = ['wd.jpeg','ht.jpeg','kl.jpeg']
+const buttons = ['huette.jpeg','alm.jpeg','gh.jpeg']
 
 const classes = useStyles();
 

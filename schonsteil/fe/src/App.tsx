@@ -4,7 +4,7 @@ import {
   Routes, // instead of "Switch"
   Route,
 } from "react-router-dom";
-import Map from './sites/Map.tsx';
+import Map from './sites/Map/Map.tsx';
 import Footer from './components/Footer';
 import SingleTour from './sites/SingleTour';
 import Register from './sites/Auth/register.js';
