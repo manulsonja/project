@@ -1,12 +1,16 @@
 import * as React from 'react';
-import axiosInstance from '../utils/axios';
+import axiosInstance from '../../utils/axios';
 import { useState, useEffect } from 'react';
-import Tours from '../components/Tours.tsx';
+import Tours from './Tiles/Tours.tsx';
 import { makeStyles } from '@material-ui/core';
 import { Box } from '@material-ui/core';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Huts from './Tiles/Huts.tsx';
+import Parking from './Tiles/Parking.tsx';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import InfiniteScroll from 'react-infinite-scroll-component';
+
+const drawerWidth = 150;
 
 const useStyles = makeStyles((theme) => ({	
 	huttenliste: {	
@@ -15,12 +19,16 @@ const useStyles = makeStyles((theme) => ({
 				marginTop: '30px',
 			  },
 	},
+	sideBar: {
+		backgroundColor: '#272727',
+
+	}
 }));
 
-export default function HutList(props) {
-	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('md'));
-
+export default function ListPage({props}) {
+	const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
+	const type = props.type
 	const classes = useStyles()
 	const [appState, setAppState] = useState({
 		loading: false,
@@ -30,10 +38,10 @@ export default function HutList(props) {
 	});
 
 	useEffect(() => {
-		axiosInstance.get('touren/touren/').then((res) => {
+		axiosInstance.get(props.url).then((res) => {
 			setAppState({ ...appState,loading: false, posts: res.data.results, next:res.data.next, previous:res.data.previous });
 		});
-	}, []); 
+	}, [props.url]); 
 
 	const hasMore = () => { 
 		if(appState.next===null)
@@ -47,7 +55,6 @@ export default function HutList(props) {
 	}
 
 	const Loading = () => {
-		console.log(appState)
 		return (
 			<InfiniteScroll
 			dataLength={appState.posts.length} //This is important field to render the next data
@@ -60,18 +67,23 @@ export default function HutList(props) {
 			  </p>
 			}
 		  >
-			<Tours props={appState}/>
+			{(type==='tour'? <Tours props={appState}/>: null)}
+			{(type==='hut'? <Huts props={appState}/>: null)}
+			{(type==='parking'? <Parking props={appState}/>: null)}
+
+			
 		  </InfiniteScroll>
 		)
 	}
 	
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 return (
-	<Box className={classes.huttenliste}>
+	<React.Fragment>  
+	<Box className={classes.huttenliste} style={{marginLeft:(matches? '150px': null)}}>
  	{ Loading()}
 	 </Box>
+	</React.Fragment>
 );
-
 }
 
 

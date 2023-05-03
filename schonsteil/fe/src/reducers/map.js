@@ -50,9 +50,13 @@ export default function(state = initialState, action) {
         }
         case RESET_SELECTION: return {
             difficulty: [],
-            tourtype:[],
-            huttype:[],
-            searchstring: '',        
+            tourtype: [],
+            huttype: [],
+            locationtype: [],
+            searchstring: '',
+            distance: [0,20],
+            elevation: [0,20],
+            duration: [0,20],     
     }
         default:
             return state

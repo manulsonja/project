@@ -1,11 +1,12 @@
 
 import React from 'react'
-import ListPage from './listView.tsx'
+import ListPage from './ListPage.tsx'
 import Drawer from '@mui/material/Drawer';
 import { makeStyles } from '@material-ui/core';
 import LocationSidebar from './components/LocationSidebar.tsx';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import MobileMenuWrapper from '../Map/components/MobileMenuWrapper.tsx';
 
 const drawerWidth = 150;
 const useStyles = makeStyles((theme) => ({	
@@ -45,7 +46,8 @@ const Locations = () => {
   return (
     <React.Fragment>
         {(matches? <RenderSidebar/> : null)}
-<ListPage props={{'url':'parking/', 'type':'parking'}}/>
+      <ListPage props={{'url':'parking/', 'type':'parking'}}/>
+      <MobileMenuWrapper props={{'touroption': false, 'hutoption': false, 'locationoption': true}}/>     
     </React.Fragment>
   )
 }

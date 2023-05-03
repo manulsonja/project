@@ -4,11 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
-import AuthorCard from '../components/authorCard.tsx';
-import InfoBox from '../components/box.tsx';
-import Gallery from '../components/gallery.js';
-import DetailMap from '../components/detailMap.js';
-
+import AuthorCard from '../../components/authorCard.tsx';
+import InfoBox from '../../components/box.tsx';
+import Gallery from '../../components/gallery.js';
+import DetailMap from '../../components/detailMap.js';
 
 const useStyles = makeStyles((theme) => ({
 	rating: {

@@ -18,8 +18,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import ListItemText from '@mui/material/ListItemText';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import MultipleSelectNative from './nativeSelect.tsx';
 import { connect } from 'react-redux';
 import { mapsearch, diffselection, tourselection } from '../../actions/map';
 import { CATEGORIES, GRADING } from '../../SETTINGS';
@@ -44,13 +42,8 @@ const MenuProps = {
 const names = CATEGORIES
 const diff_array = GRADING
 
-function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, searchphrase, huttype }) {
-	const [state, setState] = React.useState({
-		top: false,
-		left: false,
-		bottom: false,
-		right: false,
-	  });
+function Map({  diffselection, tourselection, hardness, tourtype, huttype }) {
+
 	const [screenSize, setScreenSize] = useState(getCurrentDimension());
 	const [SearchString, setSearchString] = React.useState('');
 	const theme = useTheme();
@@ -77,7 +70,7 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 	useEffect(() => {
 		let name_array;
 		if ((!tourtype || tourtype.length === 0) ) {
-			 name_array=names
+			name_array=names
 		}
 		else name_array=tourtype;
 		const url = "touren/touren/"+query_string+name_array+search_querystring+SearchString+diff_querystring+hardness
@@ -112,20 +105,21 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 
 
 	const handleChange = (event: SelectChangeEvent<typeof tourtype>) => {
-	  const {
+	const {
 		target: { value },
-	  } = event;
-	  tourselection(typeof value === 'string' ? value.split(',') : value)
+		} = event;
+	tourselection(typeof value === 'string' ? value.split(',') : value)
 
 	};
 
 	const handleChangeDiff = (event: SelectChangeEvent<typeof hardness>) => {
 		const {
-		  target: { value },
+			target: { value },
 		} = event;
-	
+
 		diffselection(typeof value === 'string' ? value.split(',') : value)
-	  };
+	};
+
 	const handleResize = () => {
 		setScreenSize(getCurrentDimension());}
 
@@ -135,15 +129,14 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 			return () => {
 				window.addEventListener('resize', handleResize);
 			};
-		  }, []);
+		}, []);
 
 	const DeskTopMap =() => {
 		return(
-			<React.Fragment>
-				
-				    <Box sx={{ flexGrow: 1 }}>
-					<AppBar position="static">
-						<Toolbar>		
+			<React.Fragment>		
+				<Box sx={{ flexGrow: 1 }}>
+				<AppBar position="static">
+					<Toolbar>		
 					<SearchIcon/>
 					<TextField id="standard-basic" label="Sucheingabe" variant="standard" 
 					onKeyUp={(ev)=>{setSearchString(ev.target.value); console.log(ev.target.value) }}/>
@@ -276,45 +269,10 @@ function Map({ mapsearch, diffselection, tourselection, hardness, tourtype, sear
 	)
 	}
 
-	const toggleDrawer =
-	(anchor: Anchor, open: boolean) =>
-	(event: React.KeyboardEvent | React.MouseEvent) => {
-	  if (
-		event &&
-		event.type === 'keydown' &&
-		((event as React.KeyboardEvent).key === 'Tab' ||
-		  (event as React.KeyboardEvent).key === 'Shift')
-	  ) {
-		return;
-	  }
-
-	  setState({ ...state, [anchor]: open });
-	};
-
-	const list = (anchor: Anchor) => (
-		<Box
-		  sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-		  role="presentation"
-		  onKeyDown={toggleDrawer(anchor, false)}
-		>
-		  <MultipleSelectNative />		  
-		</Box>
-	  );
-
 	return (
 		<React.Fragment>
-		<div>		
-		<SwipeableDrawer
-		  anchor={"bottom"}
-		  open={state["bottom"]}
-		  onClose={toggleDrawer('bottom', false)}
-		  onOpen={toggleDrawer('bottom', true)}
-		>			
-			{list("bottom")}
-		</SwipeableDrawer>
-  		</div>
-{		(matches ? DeskTopMap():(matchespad ? PadMap():<MobileMap props={{toggleDrawer, screenSize, appState, hutState, locationState}}/> ))
-}		</React.Fragment>
+			{(matches ? DeskTopMap():(matchespad ? PadMap():<MobileMap props={{screenSize, appState, hutState, locationState}}/> ))}
+	</React.Fragment>
 	);
 }
 const mapStateToProps = state => ({

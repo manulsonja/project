@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import axiosInstance from '../utils/axios';
+import axiosInstance from '../../utils/axios';
 import { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@mui/material/Rating';
-import AuthorCard from '../components/authorCard.tsx';
-import Gallery from '../components/gallery.js';
+import AuthorCard from '../../components/authorCard.tsx';
+import Gallery from '../../components/gallery.js';
 import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({	

@@ -1,14 +1,12 @@
 import * as React from 'react';
-
 import Typography from '@mui/material/Typography';
-import axiosInstance from '../utils/axios';
+import axiosInstance from '../../utils/axios';
 import { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Gallery from '../components/gallery.js';
 import { useParams } from 'react-router-dom';
-
+import AuthorCard from '../../components/authorCard.tsx';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -38,54 +36,66 @@ const useStyles = makeStyles((theme) => ({
     firstRow: {
         width: "100%",
         float: 'left',
+    },
+	articleImage: {
+        width: "100%",
     }
 }));
 
-export default function SingleParking(props) {
+
+export default function SingleArticle(props) {
 	const { slug } = useParams();
 	const classes = useStyles();
 	const [appState, setAppState] = useState({
 		loading: false,
-		posts: null,
+		article: null,
 	});
 
 	useEffect(() => {
-        const url = 'parking/' + slug + '/'
+        const url = '/blog/articles/' + slug + '/'
 		axiosInstance.get(url).then((res) => {
-			const allPosts = res.data;
-			setAppState({ ...appState,loading: false, posts: allPosts });
+			const article = res.data;
+			setAppState({ ...appState,loading: false, article: article });
 		});
 	},[]);
 
-if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
-	return (
+ 	
+
+
+if ((!appState.article || appState.article.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
+return (
 		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
 					<Container maxWidth="sm">				
 				</Container>
-				<Container maxWidth="md">
+				<Container>
 					<Typography
 						component="h1"
 						variant="h2"
 						align="center"
 						color="textPrimary"
 						gutterBottom>
-						{appState.posts.name}
+						{appState.article.title}
 					</Typography>
-					
-					<Gallery props={appState.posts.gallery}/> 			
+					<img src={process.env.REACT_APP_API_URL + appState.article.author.profile.profilepic.ratios['16/9'].sources['image/jpeg']['800']}
+					className={classes.articleImage}/>
+					<div className="rating"> 
+{/* 							<Rating name="read-only" value={appState.article.rating} readOnly />			
+ */}        				</div>
+					{/* <Gallery props={appState.article.gallery}/> */}			
 				</Container>
 			<div className={classes.heroContent}>
-				<Container maxWidth="md">		
+				<Container >		
 					<Typography
 						variant="h5"
 						align="left"
 						color="textSecondary"
 						paragraph >
-						<div dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}} />	
+						<div dangerouslySetInnerHTML={{__html: `${appState.article.text}`}} />	
 					</Typography>
 				</Container>
 			</div>
+		   <AuthorCard data={appState.article.author}/>
 		</Container>
 	);
 }

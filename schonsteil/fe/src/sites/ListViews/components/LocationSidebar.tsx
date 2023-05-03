@@ -31,19 +31,16 @@ const useStyles = makeStyles({
     }
  });
 
-
-
 const LocationSidebar = ({locationtype, locationselection}) => {
 
 const cat_arr = ['Huette','Alm','Gasthof']
 const buttons = ['wd.jpeg','ht.jpeg','kl.jpeg']
-
 const classes = useStyles();
 
 function ToggleImage(data) {
     const  props  = data 
-    let style={...{[props.bgtype]:props.bg}}
-    let isIncluded = locationtype.includes(props.selectorItem)
+    const style={...{[props.bgtype]:props.bg}}
+    const isIncluded = locationtype.includes(props.selectorItem)
 
     return (
         <Box className={classes.ButtonBox}>
@@ -55,12 +52,10 @@ function ToggleImage(data) {
             if(isIncluded){
               const array = locationtype              
               locationselection(array.filter(a => a !== props.selectorItem))
-
             }
             else {
               locationselection(locationtype.concat(props.selectorItem));
             }
-
           }}
         >
         </ToggleButton>
@@ -68,23 +63,20 @@ function ToggleImage(data) {
       );
     }
 
-
   return (
     <React.Fragment>
     <div className={classes.buttonContainer}>  </div>
-
-   { 
-   cat_arr.map((item, i) => {
-            let bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
+  
+  { cat_arr.map((item, i) => {
+            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
            return(ToggleImage({'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
-     } 
-  )}</React.Fragment>
+    })  }
+     </React.Fragment>
   )
-    }
+  }
 
     const mapStateToProps = state => ({
     locationtype: state.map.locationtype,
    
-  
   });
   export default connect(mapStateToProps, { locationselection })(LocationSidebar);

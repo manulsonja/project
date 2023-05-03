@@ -1,5 +1,5 @@
 import React from 'react'
-import ListPage from './listView.tsx'
+import ListPage from './ListPage.tsx'
 import Drawer from '@mui/material/Drawer';
 import { makeStyles } from '@material-ui/core';
 import HutSidebar from './components/HutSidebar.tsx';
@@ -7,6 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
+import MobileMenuWrapper from '../Map/components/MobileMenuWrapper.tsx';
 
 const drawerWidth = 150;
 const useStyles = makeStyles((theme) => ({	
@@ -52,11 +53,11 @@ const Huts = ({huttype}) => {
       } 
     },[huttype]);
 
-   const classes = useStyles()
   return (
     <React.Fragment>
       {(matches? <RenderSidebar/> : null)}
     <ListPage props={{'url':url, 'type':'hut'}}/>
+    <MobileMenuWrapper props={{'touroption': false, 'hutoption': true, 'locationoption': false}}/>     
     </React.Fragment>
   )
 }
