@@ -149,7 +149,7 @@ const Picker = ({tourtype, hardness, tourselection, diffselection, distance, dur
   
   function ToggleDiff(data) {
     const  props  = data 
-    let style={...{[props.bgtype]:props.bg}}
+    const style={...{[props.bgtype]:props.bg}}
     const isIncluded = hardness.includes(props.selectorItem)
       return (
         <DiffToggleButton
@@ -184,6 +184,7 @@ const Picker = ({tourtype, hardness, tourselection, diffselection, distance, dur
             getAriaLabel={() => 'Temperature range'}
             value={valuearray}
             onChange={handleSliderChange}
+            onChangeCommitted={() => console.log('database query now')}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
           />
@@ -193,7 +194,7 @@ const Picker = ({tourtype, hardness, tourselection, diffselection, distance, dur
   function ToggleImage(data) {
     const  props  = data 
     const isIncluded = tourtype.includes(props.selectorItem)
-    let style={...{[props.bgtype]:props.bg}}
+    const style={...{[props.bgtype]:props.bg}}
       return (
         <ToggleButton
           style={style}
@@ -226,7 +227,7 @@ return (
       <Stack spacing={0}>    
         <Item>
          {cat_arr.map((item, i) => {
-            let bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
+            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
                return(ToggleImage({'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
          })}
   
@@ -257,7 +258,7 @@ return (
 
             <div className={classes.DiffPicker}>
             {diff_arr.map((item,i) => {
-            let color = diff_colors[i]
+            const color = diff_colors[i]
                return(ToggleDiff({
                                    'selectorItem':item, 
                                    'bg':color, 

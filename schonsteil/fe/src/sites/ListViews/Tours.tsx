@@ -40,29 +40,30 @@ const RenderSidebar = () => {
     </Drawer>
     )
 }
-const Tours = ({tourtype}) => {
+const Tours = ({tourtype, hardness}) => {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
     const [url, setUrl] = React.useState('touren/touren/')
     useEffect(() => {   
-        if(tourtype.length==0) setUrl('touren/touren/');
+        if(tourtype.length==0 && hardness.length==0) setUrl('touren/touren/');
         else {
-            const qs = '/touren/touren/?tourtypes='+tourtype+'&search=&diff=';           
+            const qs = '/touren/touren/?tourtypes='+tourtype+'&search=&diff='+hardness;           
             setUrl(qs);
         } 
-      },[tourtype]);
+      },[tourtype,hardness]);
   return (
     <React.Fragment>
         {(matches? <RenderSidebar/> : null)}
         <ListPage props={{'url':url, 'type':'tour'}}/>
-        <MobileMenuWrapper props={{'touroption': true, 'hutoption': false, 'locationoption': false}}/>     
+        {(!matches?  <MobileMenuWrapper props={{'touroption': true, 'hutoption': false, 'locationoption': false, 'static': true}}/> : null)}
     </React.Fragment>
   )
 }
 
 const mapStateToProps = state => ({
     tourtype: state.map.tourtype,
+    hardness: state.map.difficulty
   
   
   });

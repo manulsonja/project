@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions
 from rest_framework import filters
 from rest_framework import pagination
+from django.db.models import Max
 
 class CustomPagination(pagination.CursorPagination):
     page_size = 12
@@ -19,6 +20,13 @@ class ViewTouren(viewsets.ModelViewSet):
     serializer_class = TourSerializer
     search_fields = ["^title"]
 
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data['duration_slider'] = self.duration_slider
+        response.data['distance_slider'] = self.distance_slider
+
+        return response
+    
     def get_object(self, queryset=None, **kwargs):
         item = self.kwargs.get('pk')
         return get_object_or_404(Tour, slug=item)
@@ -26,22 +34,34 @@ class ViewTouren(viewsets.ModelViewSet):
     # Define Custom Queryset
     def get_queryset(self):
         try:
+            qs = Tour.tourobjects.all()
+
             diff = self.request.query_params.get('diff', None)
-            diff = diff.split(',')
             tourtype = self.request.query_params.get('tourtypes', None)  
-            tourtype = tourtype.split(',')
-            if tourtype==[""] and diff == [""]:
-                return
-            if tourtype!=[""]:  
-                qs = Tour.tourobjects.filter(tourtype__in=tourtype)
-            if diff!=[""]:
+
+            if diff:
+                diff = diff.split(',')
+            if tourtype:
+                tourtype = tourtype.split(',')
+          
+            if tourtype and diff:  
+                qs = qs.filter(tourtype__in=tourtype)
                 qs = qs.filter(difficulty__in=diff)
+    
+            if diff:
+                qs = qs.filter(difficulty__in=diff)
+            if tourtype:
+                qs = qs.filter(tourtype__in=tourtype)
 
         except:
-            qs = Tour.tourobjects.all()
-            print('exception api/views.py line 54 Probably insufficient or no query params provided but required for filtering in django')
-        return qs
+            print('exception api/views.py line 45 Probably insufficient or no query params provided but required for filtering in django')
+            pass 
+        self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
+        #self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
+        self.duration_slider = qs.aggregate(Max('tour_duration')).get('tour_duration__max')
 
+        return qs
+    
 class ViewHochtouren(viewsets.ModelViewSet):
     queryset = Hochtour.tourobjects.all()
     serializer_class = HochtourSerializer

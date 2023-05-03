@@ -12,11 +12,13 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Chip from '@mui/material/Chip';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import MobileMenu from './MobileMenu/MobileMenu.tsx';
 import { makeStyles } from '@material-ui/core/styles';
 import TourMenu from './MobileMenu/TourMenu.tsx';
+import TourMenuStatic from './MobileMenu/TourMenuStatic.tsx';
 import HutMenu from './MobileMenu/HutMenu.tsx';
 import LocationMenu from './MobileMenu/LocationMenu.tsx';
+import LocationMenuStatic from './MobileMenu/LocationMenuStatic.tsx';
+import HutMenuStatic from './MobileMenu/HutMenuStatic.tsx';
 
 const useStyles = makeStyles((theme) => ({
     search: {
@@ -45,6 +47,7 @@ function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring
     const touroption = props.touroption
     const locationoption = props.locationoption
     const hutoption = props.hutoption 
+    const staticoptions = props.static
 
     const list = (anchor: Anchor) => (
         <Box
@@ -52,11 +55,9 @@ function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring
           role="presentation"
           onKeyDown={toggleDrawer(anchor, false)}
         >  
-       
-       {(locationoption ? <LocationMenu/> : null)} 
-       {(hutoption ? <HutMenu/> : null)}
-       {(touroption ? <TourMenu/> : null)}
- 
+       {   (locationoption ? (staticoptions? <LocationMenuStatic/>: <LocationMenu /> )   :      null)  }
+       {   (hutoption ? (staticoptions? <HutMenuStatic/>: <HutMenu /> )      :      null)  }
+       {   (touroption ? (staticoptions? <TourMenuStatic/>: <TourMenu /> )   :      null)  }
        
         </Box>
     );
@@ -102,21 +103,22 @@ function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring
    }}}
 >
   <AppBar position="static">
- <Toolbar>   
+ <Toolbar sx={{ justifyContent: "space-between" }}>   
      <Button 
-             variant="contained"
-             onClick={toggleDrawer("bottom", true)}
-             style={{backgroundColor:'#EE0E79'}}
-             startIcon={<TuneIcon />}>
-                  <Typography variant='h6'> FILTER 
-                  </Typography>
-     </Button>
-     <Button 
+            
+            variant="contained"
+            onClick={toggleDrawer("bottom", true)}
+            style={{backgroundColor:'#EE0E79'}}
+            startIcon={<TuneIcon />}>
+                <Typography variant='h8'> FILTER 
+                </Typography>
+      </Button>
+      <Button 
              variant="contained"
              style={{backgroundColor:'#EE0E79'}}
              onClick={() => { resetselection()}}
              endIcon={<RestartAltIcon />}>
-     <Typography variant='h6'>
+     <Typography variant='h8'>
          Reset
      </Typography>
      </Button>

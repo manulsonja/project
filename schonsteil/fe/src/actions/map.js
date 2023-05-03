@@ -57,6 +57,7 @@ export const distanceselection = (distance) => dispatch => {
         payload: distance,
     });
 };
+
 export const resetselection = (blabla) => dispatch => {
     dispatch({
         type: RESET_SELECTION,
@@ -64,6 +65,7 @@ export const resetselection = (blabla) => dispatch => {
 
     });
 };
+
 
 
 

@@ -47,7 +47,7 @@ const Locations = () => {
     <React.Fragment>
         {(matches? <RenderSidebar/> : null)}
       <ListPage props={{'url':'parking/', 'type':'parking'}}/>
-      <MobileMenuWrapper props={{'touroption': false, 'hutoption': false, 'locationoption': true}}/>     
+      {(!matches?  <MobileMenuWrapper props={{'touroption': false, 'hutoption': false, 'locationoption': true, 'static':true}}/> : null)}
     </React.Fragment>
   )
 }

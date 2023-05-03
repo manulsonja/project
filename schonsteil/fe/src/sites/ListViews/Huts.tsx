@@ -57,7 +57,8 @@ const Huts = ({huttype}) => {
     <React.Fragment>
       {(matches? <RenderSidebar/> : null)}
     <ListPage props={{'url':url, 'type':'hut'}}/>
-    <MobileMenuWrapper props={{'touroption': false, 'hutoption': true, 'locationoption': false}}/>     
+    {(!matches?  <MobileMenuWrapper props={{'touroption': false, 'hutoption': true, 'locationoption': false, 'static': true}}/> : null)}
+
     </React.Fragment>
   )
 }

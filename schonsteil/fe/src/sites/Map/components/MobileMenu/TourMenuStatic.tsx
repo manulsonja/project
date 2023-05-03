@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core';
 import MuiToggleButton from "@mui/material/ToggleButton";
 import { ListItem, Typography } from '@mui/material';
-import { Collapse } from '@mui/material';
 import { List } from '@mui/material';
 import Slider from '@mui/material/Slider';
 
@@ -38,7 +37,7 @@ import Slider from '@mui/material/Slider';
   }
 });
 
-const Tourmenu = ({ diffselection, 
+const TourMenuStatic = ({ diffselection, 
                     tourselection,
                     durationselection,
                     distanceselection,
@@ -119,11 +118,10 @@ const Tourmenu = ({ diffselection,
   return (
     <React.Fragment>
       <List>
-        <ListItem onClick={() => {setCollapsed({...opened, tours: !opened.tours})}}>
+        <ListItem>
         <Typography variant="h6">Touren</Typography>
         {(!opened.tours?(tourtype.length==0? 'Alle ausgew.': tourtype.length+' ausgewaehlt'):null)}
         </ListItem>
-        <Collapse in={opened.tours}>
 
         {ToggleIconMenu(tour_arr, tourbuttons, tourtype, tourselection)}     
             {diff_arr.map((item,i) => {
@@ -165,7 +163,6 @@ const Tourmenu = ({ diffselection,
         }}
       /> 
        </div>
-        </Collapse>
       </List>
      
  
@@ -181,4 +178,4 @@ const mapStateToProps = state => ({
   distance: state.map.distance,
 });
 
-export default connect(mapStateToProps, { diffselection,  tourselection, distanceselection, elevationselection, durationselection})(Tourmenu);
+export default connect(mapStateToProps, { diffselection,  tourselection, distanceselection, elevationselection, durationselection})(TourMenuStatic);

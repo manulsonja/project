@@ -22,126 +22,131 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-
+import { lightBlue } from '@mui/material/colors'
 function Header({ logout, isAuthenticated, user }) {
 	const [state, setState] = React.useState({
 		top: false,
 		left: false,
 		bottom: false,
 		right: false,
-	  });
-	
+		});
+
 	const useStyles = makeStyles((theme) => ({
 		appBar: {
 			borderBottom: `1px solid ${theme.palette.divider}`,
 			height: "55px",
 			backgroundColor: 'white',
-			color: 'black',
 			paddingLeft: '150px',
-	 
+		
 		},
 		link: {
+			color: 'white',
 			margin: theme.spacing(1, 1.5), 
-			color: 'black',
-			borderColor: 'white',
-	
+
 		},
 		toolbarTitle: {
 			flexGrow: 1,
-			color: 'black',
 			fontWeight: 700,
 		},
-	}));
-	
+		mAppbar: {
+			backgroundColor: '#272727',
+		
+		},
+		fullLink: {
+			color: 'black',
+			margin: theme.spacing(1, 1.5), 
+		},	
+}));
+
 	const list = (anchor: Anchor) => (
 		<Box
-		  sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-		  role="presentation"
-		  onClick={toggleDrawer(anchor, false)}
-		  onKeyDown={toggleDrawer(anchor, false)}
+			sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+			role="presentation"
+			onClick={toggleDrawer(anchor, false)}
+			onKeyDown={toggleDrawer(anchor, false)}
 		>
-		  <List>
-		  <Link to="/">
-			  <ListItem key='Home' disablePadding>
+			<List>
+			<Link to="/">
+				<ListItem key='Home' disablePadding>
 				<ListItemButton>
-				  <ListItemIcon>
+					<ListItemIcon>
 					<InboxIcon /> 
-				  </ListItemIcon>
-				  <ListItemText primary="Home" />
+					</ListItemIcon>
+					<ListItemText primary="Home" />
 				</ListItemButton>
-			  </ListItem>
+				</ListItem>
 			</Link>
-		  <Link to="/map">
-			  <ListItem key='Karte' disablePadding>
+			<Link to="/map">
+				<ListItem key='Karte' disablePadding>
 				<ListItemButton>
-				  <ListItemIcon>
+					<ListItemIcon>
 					<InboxIcon /> 
-				  </ListItemIcon>
-				  <ListItemText primary="Karte" />
+					</ListItemIcon>
+					<ListItemText primary="Karte" />
 				</ListItemButton>
-			  </ListItem>
+				</ListItem>
 			</Link>
 			<Link to="/tours">
-		  <ListItem key='Touren' disablePadding>
+			<ListItem key='Touren' disablePadding>
 				<ListItemButton>
-				  <ListItemIcon>
+					<ListItemIcon>
 					<InboxIcon /> 
-				  </ListItemIcon>
-				  <ListItemText primary="Touren" />
+					</ListItemIcon>
+					<ListItemText primary="Touren" />
 				</ListItemButton>
-			  </ListItem>
-			  </Link>
+				</ListItem>
+				</Link>
 
-			  <Link to="/huts">
-			  <ListItem key='Huetten' disablePadding>
+				<Link to="/huts">
+				<ListItem key='Huetten' disablePadding>
 				<ListItemButton>
-				  <ListItemIcon>
+					<ListItemIcon>
 					<InboxIcon /> 
-				  </ListItemIcon>
-				  <ListItemText primary="Huetten" />
+					</ListItemIcon>
+					<ListItemText primary="Huetten" />
 				</ListItemButton>
-			  </ListItem>
-			  </Link>
+				</ListItem>
+				</Link>
 
-			  <Link to="/parking">
-			  <ListItem key='Locations' disablePadding>
+				<Link to="/parking">
+				<ListItem key='Locations' disablePadding>
 				<ListItemButton>
-				  <ListItemIcon>
+					<ListItemIcon>
 					<InboxIcon /> 
-				  </ListItemIcon>
-				  <ListItemText primary="Locations" />
+					</ListItemIcon>
+					<ListItemText primary="Locations" />
 				</ListItemButton>
-			  </ListItem>
-			  </Link>
+				</ListItem>
+				</Link>
 
-		  <Divider />
-		  </List>
+			<Divider />
+			</List>
 
 		</Box>
-	  );
-	  const toggleDrawer =
-	  (anchor: Anchor, open: boolean) =>
-	  (event: React.KeyboardEvent | React.MouseEvent) => {
+		);
+		const toggleDrawer =
+		(anchor: Anchor, open: boolean) =>
+		(event: React.KeyboardEvent | React.MouseEvent) => {
 		if (
-		  event &&
-		  event.type === 'keydown' &&
-		  ((event as React.KeyboardEvent).key === 'Tab' ||
+			event &&
+			event.type === 'keydown' &&
+			((event as React.KeyboardEvent).key === 'Tab' ||
 			(event as React.KeyboardEvent).key === 'Shift')
 		) {
-		  return;
+			return;
 		}
-  
+
 		setState({ ...state, [anchor]: open });
-	  };
+		};
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('sm'));
 	const classes = useStyles();
-	
+
 	const guestLinks = () => {
 		return(
 		<React.Fragment>
-       	<nav 
->
+		<nav 
+	>
 						<Link
 							color="textPrimary"
 							href="#"
@@ -162,35 +167,35 @@ function Header({ logout, isAuthenticated, user }) {
 					>
 						Login
 					</Button>
-	   </React.Fragment>
-    )};
+		</React.Fragment>
+	)};
 
 	function MobileAppbar() {
 		return (
 			<React.Fragment>
 			<div>				
 				<SwipeableDrawer
-				  anchor={"bottom"}
-				  open={state["bottom"]}
-				  onClose={toggleDrawer('bottom', false)}
-				  onOpen={toggleDrawer('bottom', true)}
+					anchor={"bottom"}
+					open={state["bottom"]}
+					onClose={toggleDrawer('bottom', false)}
+					onOpen={toggleDrawer('bottom', true)}
 				>
 					{list("bottom")}
 				</SwipeableDrawer>
-		  </div>
-		  <Box sx={{ flexGrow: 1 }}>
-			<AppBar position="static"
+			</div>
+			<Box sx={{ flexGrow: 1 }}>
+			<AppBar position="static" 
 			>
-			  <Toolbar>
+				<Toolbar className={classes.mAppbar} >
 				<IconButton
-				  size="large"
-				  edge="start"
-				  color="inherit"
-				  aria-label="menu"
-				  sx={{ mr: 2 }}
-				  onClick={toggleDrawer("bottom", true)}
+					size="large"
+					edge="start"
+					color="inherit"
+					aria-label="menu"
+					sx={{ mr: 2 }}
+					onClick={toggleDrawer("bottom", true)}
 				>
-				  <MenuIcon />
+					<MenuIcon />
 				</IconButton>
 				<Link
 							color="textPrimary"
@@ -201,35 +206,53 @@ function Header({ logout, isAuthenticated, user }) {
 						>
 							Home
 						</Link>
-				{(isAuthenticated && user)? authLinks() :  guestLinks()}
+				{(isAuthenticated && user)? authLinksMobile() :  guestLinks()}
 
-			  </Toolbar>
+				</Toolbar>
 			</AppBar>
-		  </Box>
-		  </React.Fragment>
+			</Box>
+			</React.Fragment>
 		);
-	  }
-	  
-    const authLinks = () => {
+		}
+		
+	const authLinks = () => {
 		return(
 			<React.Fragment>
 					<Button
 						href="#"
-						color="primary"
 						variant="outlined"
-						className={classes.link}
 						component={NavLink}
 						to="login"
 						onClick={logout}
 					>
 						Logout
 					</Button>
-					<Link to="/dashboard">
-							<div>Hallo, {user.first_name}</div>
+					<Link to="/dashboard" className={classes.fullLink}>
+					<div>Hallo, {user.first_name}</div>
 					</Link>
 			</React.Fragment>
 		)  
 	};
+	const authLinksMobile = () => {
+		return(
+			<React.Fragment>
+					<Button
+						href="#"
+						color="secondary"
+						variant="outlined"
+						component={NavLink}
+						to="login"
+						onClick={logout}
+					>
+						Logout
+					</Button>
+					<Link to="/dashboard" className={classes.link}>
+					<div>Hallo, {user.first_name}</div>
+					</Link>
+			</React.Fragment>
+		)  
+	};
+
 
 
 	const FullSizeAppBar = () => {
@@ -238,40 +261,40 @@ function Header({ logout, isAuthenticated, user }) {
 			<CssBaseline />
 			<AppBar
 				position="relative"
-				color="default"
+				color="black"
 				elevation={0}
 				className={classes.appBar}
 				xs={{ display: { xs: "none" }}}
 			>
 				<Toolbar className={classes.toolbar}>
-				 	<Typography
+					<Typography
 						variant="button"
 						noWrap
 						className={classes.toolbarTitle}
 					> 
 						<Link
-							className={classes.link}
+							className={classes.fullLink}
 							component={NavLink}
 							to="/"
 							underline="none"
 						>
 							Schon steil.com 
 						</Link>
- 					</Typography>
+					</Typography>
 					
-					 <Link
+						<Link
 							color="textPrimary"
 							href="#"
-							className={classes.link}
+							className={classes.fullLink}
 							component={NavLink}
 							to="/map"
 						>
 							Karte
 						</Link>
-					 <Link
+						<Link
 							color="textPrimary"
 							href="#"
-							className={classes.link}
+							className={classes.fullLink}
 							component={NavLink}
 							to="/tours"
 						>
@@ -280,7 +303,7 @@ function Header({ logout, isAuthenticated, user }) {
 						<Link
 							color="textPrimary"
 							href="#"
-							className={classes.link}
+							className={classes.fullLink}
 							component={NavLink}
 							to="/huts"
 						>
@@ -289,14 +312,14 @@ function Header({ logout, isAuthenticated, user }) {
 						<Link
 							color="textPrimary"
 							href="#"
-							className={classes.link}
+							className={classes.fullLink}
 							component={NavLink}
 							to="/parking/"
 						>
 							Locations
 						</Link>
-					 
-					 {(isAuthenticated && user)? authLinks() :  guestLinks()}
+						
+						{(isAuthenticated && user)? authLinks() :  guestLinks()}
 
 				</Toolbar>
 			</AppBar>
@@ -305,11 +328,11 @@ function Header({ logout, isAuthenticated, user }) {
 	return (
 		(matches ? FullSizeAppBar(): MobileAppbar())
 	);
-}
+	}
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+	const mapStateToProps = state => ({
+	isAuthenticated: state.auth.isAuthenticated,
 	user: state.auth.user,
-});
+	});
 
-export default connect(mapStateToProps, { logout })(Header);
+	export default connect(mapStateToProps, { logout })(Header);
