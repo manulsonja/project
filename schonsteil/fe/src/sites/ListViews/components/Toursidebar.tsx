@@ -38,9 +38,9 @@ const buttons = ['wd.jpeg','ht.jpeg','kl.jpeg','hikeandfly1.jpeg','st.jpeg']
 const classes = useStyles();
 
 function ToggleImage(data) {
-    const  props  = data 
-    let style={...{[props.bgtype]:props.bg}}
-    let isIncluded = tourtype.includes(props.selectorItem)
+    const   props  = data 
+    const   style={...{[props.bgtype]:props.bg}}
+    const   isIncluded = tourtype.includes(props.selectorItem)
 
     return (
         <Box className={classes.ButtonBox}>
@@ -52,7 +52,6 @@ function ToggleImage(data) {
             if(isIncluded){
               const array = tourtype              
               tourselection(array.filter(a => a !== props.selectorItem))
-
             }
             else {
               tourselection(tourtype.concat(props.selectorItem));
@@ -72,7 +71,7 @@ function ToggleImage(data) {
 
    { 
    cat_arr.map((item, i) => {
-            let bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
+            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
            return(ToggleImage({'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
 
      }

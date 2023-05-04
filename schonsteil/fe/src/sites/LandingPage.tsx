@@ -8,14 +8,9 @@ import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import Tours from './ListViews/Tiles/Tours.tsx';
 import Picker from '../components/Picker.tsx';
-import { makeStyles } from '@material-ui/core/styles';
 import { MEDIA_URL } from '../SETTINGS';
 
-const useStyles = makeStyles((theme) => ({
-}));
-
 export default function Landing() {
-  const classes = useStyles()
 
   const [appState, setAppState] = useState({
 		posts: null,
@@ -28,17 +23,17 @@ export default function Landing() {
 	});
  
 	useEffect(() => {
-		let url = "/layout-widgets/manual-content/";
+		const url = "/layout-widgets/manual-content/";
 		axiosInstance.get(url).then((res) => {
 			const allPosts  = res.data ? res.data : null;
 			setAppState({ ...appState,loading: false, posts: allPosts });
 		});
-    let urltwo = "/layout-widgets/newest-tours/"
+    const urltwo = "/layout-widgets/newest-tours/"
     axiosInstance.get(urltwo).then((res) => {
 			const allPosts = res.data;
 			setNewestTours({ ...newestTours,loading: false, posts: allPosts });
 		});
-    let urlthree = "/layout-widgets/current-tours/"
+    const urlthree = "/layout-widgets/current-tours/"
     axiosInstance.get(urlthree).then((res) => {
 			const allPosts = res.data;
 			setCurrentTours({ ...currentTours,loading: false, posts: allPosts });
@@ -47,7 +42,7 @@ export default function Landing() {
 	}, []);
 
   if (!appState.posts || !appState.posts[0].primary_feature_article_pk) return;
-  let featureArticle = appState.posts[0].primary_feature_article_pk
+  const featureArticle = appState.posts[0].primary_feature_article_pk
   
   return (
     <React.Fragment>

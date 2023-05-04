@@ -21,10 +21,7 @@ from geography.models import Region
 
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
-
-
-
-    
+  
 class Tour(models.Model):
     tour_duration = models.DurationField(null=True)
     gpxfile = models.FileField(upload_to='files', null=True)
@@ -61,7 +58,7 @@ class Tour(models.Model):
     title = models.CharField(max_length=30)
     subtitle = models.CharField(max_length=100)
     text =  tinymce_models.HTMLField()
-    distance = models.FloatField(null=True)
+    distance = models.IntegerField(null=True)
     season = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"])
     created = models.DateTimeField(default=timezone.now)
@@ -96,7 +93,7 @@ class Tour(models.Model):
             pyproj.Proj('EPSG:4326'),
             pyproj.Proj('EPSG:32633'))
         line2 = transform(project, shapely_ls)
-        self.distance = line2.length
+        self.distance = int(line2.length)
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 

@@ -1,14 +1,30 @@
-import { DIFFICULTY_SELECTION, DISTANCE_SLIDER_VALUE, DURATION_SLIDER_VALUE, ELEVATION_SLIDER_VALUE, HUTTYPE_SELECTION, LOCATION_SELECTION, MAP_SEARCHSTRING, RESET_SELECTION, TOUR_SELECTION } from "../actions/types";
+import { 
+    DIFFICULTY_SELECTION, 
+    DISTANCE_MAX,
+    DURATION_MAX, 
+    DISTANCE_SLIDER_VALUE, 
+    DURATION_SLIDER_VALUE, 
+    ELEVATION_SLIDER_VALUE, 
+    HUTTYPE_SELECTION, 
+    LOCATION_SELECTION, 
+    MAP_OFFSET, 
+    MAP_SEARCHSTRING, 
+    RESET_SELECTION, 
+    TOUR_SELECTION } from "../actions/types";
 
 const initialState = {
+    offset: 0,
     difficulty: [],
     tourtype: [],
     huttype: [],
     locationtype: [],
     searchstring: '',
-    distance: [0,20],
-    elevation: [0,20],
-    duration: [0,20],
+    distance: [0,30000],
+    elevation: [0,3000],
+    duration: [0,600],
+    distance_max: 30000,
+    duration_max: 600,
+
 };
 
 
@@ -48,15 +64,28 @@ export default function(state = initialState, action) {
             ...state,
             duration: payload,        
         }
+        case MAP_OFFSET: return {
+            ...state,
+            offset: payload,        
+        }
+        case DISTANCE_MAX: return {
+            ...state,
+            distance_max: payload,        
+        }
+        case DURATION_MAX: return {
+            ...state,
+            duration_max: payload,        
+        }
         case RESET_SELECTION: return {
+            ...state,
             difficulty: [],
             tourtype: [],
             huttype: [],
             locationtype: [],
             searchstring: '',
-            distance: [0,20],
-            elevation: [0,20],
-            duration: [0,20],     
+            distance: [0,30000],
+            elevation: [0,3000],
+            duration: [0,600],     
     }
         default:
             return state

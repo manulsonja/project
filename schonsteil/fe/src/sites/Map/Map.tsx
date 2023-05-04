@@ -193,7 +193,7 @@ function Map({  diffselection, tourselection, hardness, tourtype, huttype }) {
 
 					<div className='outerBox'>
 					<div className='leftColumn'>
-						<Leaflet data={{'state' : appState,'huts':hutState.huts, 'locations': locationState.locations, 'screen': screenSize, 'offset':119}}/>
+						<Leaflet props={{'state' : appState,'huts':hutState.huts, 'locations': locationState.locations, 'screen': screenSize, 'offset':119}}/>
 					</div>
 					<div className='rightColumn' style={{height:screenSize.height-119}}><PostLoading isLoading={appState.loading} posts={appState.posts} /></div>
 					</div>

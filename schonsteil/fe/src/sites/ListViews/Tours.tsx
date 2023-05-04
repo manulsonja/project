@@ -40,18 +40,22 @@ const RenderSidebar = () => {
     </Drawer>
     )
 }
-const Tours = ({tourtype, hardness}) => {
+const Tours = ({tourtype, hardness, distance}) => {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
     const [url, setUrl] = React.useState('touren/touren/')
     useEffect(() => {   
-        if(tourtype.length==0 && hardness.length==0) setUrl('touren/touren/');
+      console.log(tourtype)
+
+        if(tourtype.length==0 && hardness.length==0 && !distance) setUrl('touren/touren/');
         else {
-            const qs = '/touren/touren/?tourtypes='+tourtype+'&search=&diff='+hardness;           
+            const qs = '/touren/touren/?tourtypes='+tourtype+'&search=&diff='+hardness+'&dist='+distance;           
             setUrl(qs);
         } 
-      },[tourtype,hardness]);
+
+      },[tourtype, hardness, distance]);
+  
   return (
     <React.Fragment>
         {(matches? <RenderSidebar/> : null)}
@@ -63,8 +67,7 @@ const Tours = ({tourtype, hardness}) => {
 
 const mapStateToProps = state => ({
     tourtype: state.map.tourtype,
-    hardness: state.map.difficulty
-  
-  
+    hardness: state.map.difficulty,
+    distance: state.map.distance,  
   });
 export default connect(mapStateToProps)(Tours);

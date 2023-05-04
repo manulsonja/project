@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core';
 import MuiToggleButton from "@mui/material/ToggleButton";
 import { ListItem, Typography } from '@mui/material';
 import { List } from '@mui/material';
-import Slider from '@mui/material/Slider';
+import TourSlider from './TourSlider.tsx';
 
  const ToggleButton = styled(MuiToggleButton)({
     width: 'calc(23%)',
@@ -46,13 +46,14 @@ const TourMenuStatic = ({ diffselection,
                     hardness, 
                     elevation, 
                     duration, 
-                    distance}) => {
+                    distance,
+                    distance_max,
+                    duration_max,}) => {
 
   const tour_arr = ['Wandern','Hochtour','Klettertour','Hike and Fly','Skitour']
   const tourbuttons = ['wd.jpeg','ht.jpeg','kl.jpeg','hikeandfly1.jpeg','st.jpeg']
   const diff_arr = ['leicht', 'mittel', 'schwierig']
   const diff_colors = ['blue', 'red', 'black']
-  const [opened, setCollapsed] = React.useState({'locations': false, 'tours': true, 'huts': false})
   const useStyles = makeStyles({
       buttonRow: {
         width: '100%',
@@ -68,7 +69,6 @@ const TourMenuStatic = ({ diffselection,
         const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${icons[i]}")`
         const style={...{["backgroundImage"]:bgurl}}
         const isIncluded = state.includes(item)
-        console.log(bgurl)
         return(
           <ToggleButton
             style={style}
@@ -120,7 +120,6 @@ const TourMenuStatic = ({ diffselection,
       <List>
         <ListItem>
         <Typography variant="h6">Touren</Typography>
-        {(!opened.tours?(tourtype.length==0? 'Alle ausgew.': tourtype.length+' ausgewaehlt'):null)}
         </ListItem>
 
         {ToggleIconMenu(tour_arr, tourbuttons, tourtype, tourselection)}     
@@ -133,35 +132,8 @@ const TourMenuStatic = ({ diffselection,
                                     'styleOverrides': `width:'200px'`,
                                   }))
             })}
-      <div style={{width: '96%', marginLeft: '2%'}}>
-      <Slider
-        size="small"
-        value={duration}
-
-        aria-label="Small"
-        valueLabelDisplay="auto"
-        onChange={(event: Event, newValue: number | number[]) => {
-          durationselection(newValue as number[])
-        }}
-      /> 
-      <Slider
-        size="small"
-        value={distance}
-        aria-label="Small"
-        valueLabelDisplay="auto"
-        onChange={(event: Event, newValue: number | number[]) => {
-          distanceselection(newValue as number[])
-        }}
-      /> 
-         <Slider
-        size="small"
-        value={elevation}
-        aria-label="Small"
-        valueLabelDisplay="auto"
-        onChange={(event: Event, newValue: number | number[]) => {
-          elevationselection(newValue as number[])
-        }}
-      /> 
+      <div style={{width: '85%', marginLeft: '6%'}}>
+            <TourSlider/>
        </div>
       </List>
      
@@ -176,6 +148,8 @@ const mapStateToProps = state => ({
   duration: state.map.duration,
   elevation: state.map.elevation,
   distance: state.map.distance,
+  duration_max: state.map.duration_max,
+  distance_max: state.map.distance_max,
 });
 
 export default connect(mapStateToProps, { diffselection,  tourselection, distanceselection, elevationselection, durationselection})(TourMenuStatic);

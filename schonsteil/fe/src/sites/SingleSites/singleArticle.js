@@ -1,14 +1,14 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import axiosInstance from '../../utils/axios';
-import { useState, useEffect } from 'react';
-import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { useParams } from 'react-router-dom';
-import AuthorCard from '../../components/authorCard.tsx';
+	import * as React from 'react';
+	import Typography from '@mui/material/Typography';
+	import axiosInstance from '../../utils/axios';
+	import { useState, useEffect } from 'react';
+	import Container from '@material-ui/core/Container';
+	import { makeStyles } from '@material-ui/core/styles';
+	import CssBaseline from '@material-ui/core/CssBaseline';
+	import { useParams } from 'react-router-dom';
+	import AuthorCard from '../../components/authorCard.tsx';
 
-const useStyles = makeStyles((theme) => ({
+	const useStyles = makeStyles((theme) => ({
 	cardMedia: {
 		paddingTop: '56.25%', // 16:9
 	},
@@ -33,17 +33,17 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'left',
 		marginBottom: theme.spacing(2),
 	},
-    firstRow: {
-        width: "100%",
-        float: 'left',
-    },
+	firstRow: {
+		width: "100%",
+		float: 'left',
+	},
 	articleImage: {
-        width: "100%",
-    }
-}));
+		width: "100%",
+	}
+	}));
 
 
-export default function SingleArticle(props) {
+	export default function SingleArticle(props) {
 	const { slug } = useParams();
 	const classes = useStyles();
 	const [appState, setAppState] = useState({
@@ -52,18 +52,18 @@ export default function SingleArticle(props) {
 	});
 
 	useEffect(() => {
-        const url = '/blog/articles/' + slug + '/'
+		const url = '/blog/articles/' + slug + '/'
 		axiosInstance.get(url).then((res) => {
 			const article = res.data;
 			setAppState({ ...appState,loading: false, article: article });
 		});
 	},[]);
 
- 	
 
 
-if ((!appState.article || appState.article.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
-return (
+
+	if ((!appState.article || appState.article.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
+	return (
 		<Container component="main" maxWidth="xl" className='tourArticle'>
 				<CssBaseline />
 					<Container maxWidth="sm">				
@@ -80,8 +80,8 @@ return (
 					<img src={process.env.REACT_APP_API_URL + appState.article.author.profile.profilepic.ratios['16/9'].sources['image/jpeg']['800']}
 					className={classes.articleImage}/>
 					<div className="rating"> 
-{/* 							<Rating name="read-only" value={appState.article.rating} readOnly />			
- */}        				</div>
+	{/* 							<Rating name="read-only" value={appState.article.rating} readOnly />			
+	*/}        				</div>
 					{/* <Gallery props={appState.article.gallery}/> */}			
 				</Container>
 			<div className={classes.heroContent}>
@@ -95,7 +95,7 @@ return (
 					</Typography>
 				</Container>
 			</div>
-		   <AuthorCard data={appState.article.author}/>
+			<AuthorCard data={appState.article.author}/>
 		</Container>
 	);
-}
+	}

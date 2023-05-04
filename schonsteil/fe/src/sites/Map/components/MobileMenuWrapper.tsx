@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import TuneIcon from '@mui/icons-material/Tune';
 import Button from '@mui/material/Button';
-import { resetselection, tourselection, diffselection, mapsearch } from '../../../actions/map';
+import { resetselection, tourselection, diffselection, mapsearch, mapoffset } from '../../../actions/map';
 import { connect } from 'react-redux';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Chip from '@mui/material/Chip';
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         borderColor: 'white',
     },
 }));
-function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring, diffselection, tourselection, searchstring}) {
+function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring, diffselection, tourselection, searchstring, mapoffset}) {
     const classes = useStyles()
     const touroption = props.touroption
     const locationoption = props.locationoption
@@ -93,8 +93,9 @@ function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring
      <Box className={classes.filterChips}>
      {(difficulty.length===0)? null :  <Chip label="Anspruch" onDelete={() => {diffselection([])}} />  }
      {(tourtype.length===0)? null : <Chip label="Tourtyp" onDelete={() => {tourselection([])}}/>  }
-     {(sstring==="")? null :       <Chip label="Suche" onDelete={() => {searchstring('')}} />
-}  
+     {(sstring==="")? null :       <Chip label="Suche" onDelete={() => {searchstring('')}} />  }  
+     {((sstring==='' && tourtype.length==0 && difficulty.length==0)? mapoffset(0) : mapoffset(35))}
+
  </Box>
  <BottomNavigation
  sx={{width:'100%', position:'fixed', bottom: 0, backgroundColor:'#EE0E79',
@@ -134,5 +135,5 @@ const mapStateToProps = state => ({
     tourtype: state.map.tourtype,
     sstring: state.map.searchstring,
 });
-export default connect(mapStateToProps, { resetselection, tourselection, diffselection, mapsearch })(MobileMenuWrapper);
+export default connect(mapStateToProps, { resetselection, tourselection, diffselection, mapsearch, mapoffset })(MobileMenuWrapper);
 

@@ -8,7 +8,7 @@ function isAuth() {
 }
 function PrivateRoute({ children }) {
   
-    return true ? <>{children}</> : <Navigate to="/login" />;
+    return isAuth ? <>{children}</> : <Navigate to="/login" />;
   }
   
   const mapStateToProps = state => ({

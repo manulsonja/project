@@ -8,11 +8,11 @@ from rest_framework import filters
 from rest_framework import pagination
 from django.db.models import Max
 
+
 class CustomPagination(pagination.CursorPagination):
     page_size = 12
     cursor_query_param = 'c'
     ordering = '-created'
-
 
 class ViewTouren(viewsets.ModelViewSet):
     pagination_class = CustomPagination
@@ -34,31 +34,34 @@ class ViewTouren(viewsets.ModelViewSet):
     # Define Custom Queryset
     def get_queryset(self):
         try:
-            qs = Tour.tourobjects.all()
-
             diff = self.request.query_params.get('diff', None)
-            tourtype = self.request.query_params.get('tourtypes', None)  
+            tourtype = self.request.query_params.get('tourtypes', None) 
+            distance_touple =  self.request.query_params.get('dist', None)
 
             if diff:
                 diff = diff.split(',')
             if tourtype:
                 tourtype = tourtype.split(',')
-          
-            if tourtype and diff:  
-                qs = qs.filter(tourtype__in=tourtype)
-                qs = qs.filter(difficulty__in=diff)
-    
+            
+            qs = Tour.tourobjects.all()
             if diff:
                 qs = qs.filter(difficulty__in=diff)
             if tourtype:
                 qs = qs.filter(tourtype__in=tourtype)
+            self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
+            #self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
+            self.duration_slider = qs.aggregate(Max('tour_duration')).get('tour_duration__max')
+            if distance_touple:
+                distance_array = distance_touple.split(',')
+                lower = distance_array[0]
+                upper = distance_array[1]  
+                       
+                qs = qs.filter(distance__gte=lower, distance__lte=upper)
 
         except:
             print('exception api/views.py line 45 Probably insufficient or no query params provided but required for filtering in django')
             pass 
-        self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
-        #self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
-        self.duration_slider = qs.aggregate(Max('tour_duration')).get('tour_duration__max')
+        
 
         return qs
     

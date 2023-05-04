@@ -1,7 +1,7 @@
-import ImageGallery from 'react-image-gallery';
-import { makeStyles } from '@material-ui/core/styles';
+  import ImageGallery from 'react-image-gallery';
+  import { makeStyles } from '@material-ui/core/styles';
 
-const img = (props) => {
+  const img = (props) => {
   if ((!props || props.length === 0) ) return [];
 
   const image_array = []
@@ -15,25 +15,25 @@ const img = (props) => {
     )
 
   })
- return image_array;
-}
+  return image_array;
+  }
 
-const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles((theme) => ({
 
-	gallerybox: {
+  gallerybox: {
     marginRight: 'auto',
     marginBottom: 0,
     marginLeft: 'auto',
-	},
-}));
+  },
+  }));
 
-function Gallery(props) {
-	const classes = useStyles();
-		return (
+  function Gallery(props) {
+  const classes = useStyles();
+    return (
             <div className={classes.gallerybox}>  
-            	<ImageGallery items={img(props.props)} />
+              <ImageGallery items={img(props.props)} />
         </div>
-		);
-	};
+    );
+  }
 
-export default Gallery;
+  export default Gallery;

@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
-//MaterialUI
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { connect } from 'react-redux';
-import { login, clearerror } from '../../actions/auth';
-import axios from 'axios';
-import AuthAlerts from '../../components/alerts/loginAlerts.tsx';
-import { Link } from 'react-router-dom';
-import { NoInputAlert, ResetSuccessAlert } from '../../components/alerts/SuAlert.tsx';
+	import React, { useState } from 'react';
+	import { useNavigate, Navigate } from 'react-router-dom';
+	//MaterialUI
+	import Avatar from '@material-ui/core/Avatar';
+	import Button from '@material-ui/core/Button';
+	import CssBaseline from '@material-ui/core/CssBaseline';
+	import TextField from '@material-ui/core/TextField';
+	import FormControlLabel from '@material-ui/core/FormControlLabel';
+	import Checkbox from '@material-ui/core/Checkbox';
+	import Grid from '@material-ui/core/Grid';
+	import Typography from '@material-ui/core/Typography';
+	import { makeStyles } from '@material-ui/core/styles';
+	import Container from '@material-ui/core/Container';
+	import { connect } from 'react-redux';
+	import { login, clearerror } from '../../actions/auth';
+	import axios from 'axios';
+	import AuthAlerts from '../../components/alerts/loginAlerts.tsx';
+	import { Link } from 'react-router-dom';
+	import { NoInputAlert, ResetSuccessAlert } from '../../components/alerts/SuAlert.tsx';
 
-const useStyles = makeStyles((theme) => ({
+	const useStyles = makeStyles((theme) => ({
 	paper: {
 		marginTop: theme.spacing(8),
 		display: 'flex',
@@ -36,53 +36,53 @@ const useStyles = makeStyles((theme) => ({
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 	},
-}));
+	}));
 
 
-const SignIn = ({ login, clearerror, isAuthenticated, errorMessage }) => {
+	const SignIn = ({ login, clearerror, isAuthenticated, errorMessage }) => {
 	const classes = useStyles();
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
+	const [formData, setFormData] = useState({
+		email: '',
+		password: '',
 		errormsg: '',
-    });
+	});
 
-    const { email, password } = formData;
-    const onChange = e =>  {
+	const { email, password } = formData;
+	const onChange = e =>  {
 		setFormData({ ...formData, [e.target.name]: e.target.value, errormsg:'' }); 
 		clearerror()
 		}
-    const onSubmit = e => {
+	const onSubmit = e => {
 		if(formData.email =='' || formData.password=='') setFormData({...formData, errormsg: 'noInput'});
 			e.preventDefault();
-        	login(email, password);
+			login(email, password);
 		
 			
-    };
+	};
 
-    const continueWithGoogle = async () => {
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`)
+	const continueWithGoogle = async () => {
+		try {
+			const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`)
 
-            window.location.replace(res.data.authorization_url);
-        } catch (err) {
+			window.location.replace(res.data.authorization_url);
+		} catch (err) {
+			console.log(err)
+		}
+	};
 
-        }
-    };
+	const continueWithFacebook = async () => {
+		try {
+			const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/facebook/?redirect_uri=${process.env.REACT_APP_API_URL}/facebook`)
 
-    const continueWithFacebook = async () => {
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/facebook/?redirect_uri=${process.env.REACT_APP_API_URL}/facebook`)
+			window.location.replace(res.data.authorization_url);
+		} catch (err) {
+			console.log(err)
+		}
+	};
 
-            window.location.replace(res.data.authorization_url);
-        } catch (err) {
-
-        }
-    };
-
-    if (isAuthenticated) {
-        return <Navigate to='/' />
-    }
+	if (isAuthenticated) {
+		return <Navigate to='/' />
+	}
 
 	return (			
 
@@ -156,21 +156,21 @@ const SignIn = ({ login, clearerror, isAuthenticated, errorMessage }) => {
 		
 				</form>
 				<button className='btn btn-danger mt-3' onClick={continueWithGoogle}>
-                Continue With Google
-            </button>
-            <br />
-            <button className='btn btn-primary mt-3' onClick={continueWithFacebook}>
-                Continue With Facebook
-            </button>
+				Continue With Google
+			</button>
+			<br />
+			<button className='btn btn-primary mt-3' onClick={continueWithFacebook}>
+				Continue With Facebook
+			</button>
 			</div>
 		</Container>
 		</React.Fragment>
 	);
-}
+	}
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+	const mapStateToProps = state => ({
+	isAuthenticated: state.auth.isAuthenticated,
 	errorMessage: state.auth.errorMessage
-});
+	});
 
-export default connect(mapStateToProps, { login, clearerror })(SignIn);
+	export default connect(mapStateToProps, { login, clearerror })(SignIn);

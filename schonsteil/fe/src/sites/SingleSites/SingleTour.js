@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Typography from '@mui/material/Typography';
-import Rating from '@mui/material/Rating';
-import AuthorCard from '../../components/authorCard.tsx';
-import InfoBox from '../../components/box.tsx';
-import Gallery from '../../components/gallery.js';
-import DetailMap from '../../components/detailMap.js';
+	import React, { useState, useEffect } from 'react';
+	import { useParams } from 'react-router-dom';
+	import { makeStyles } from '@material-ui/core/styles';
+	import Container from '@material-ui/core/Container';
+	import Typography from '@mui/material/Typography';
+	import Rating from '@mui/material/Rating';
+	import AuthorCard from '../../components/authorCard.tsx';
+	import InfoBox from '../../components/box.tsx';
+	import Gallery from '../../components/gallery.js';
+	import DetailMap from '../../components/detailMap.js';
 
-const useStyles = makeStyles((theme) => ({
+	const useStyles = makeStyles((theme) => ({
 	rating: {
 		margin: '-10px auto 10px',
 		width: "120px",
-	
+
 	},
 	tourArticle: {	
 			marginTop: '20px',
 			[theme.breakpoints.up('md')]: {
 				marginTop: '50px',
-			  },
+				},
 
 	},
 	paper: {
@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
 	image: {
 		width:'100%'	
 	},
-}));
+	}));
 
-export default function SingleTour(values) {
+	export default function SingleTour(values) {
 
 	const { category, slug } = useParams();
 	const classes = useStyles();
@@ -47,11 +47,6 @@ export default function SingleTour(values) {
 				setData({  posts: posts });
 			});
 	}, [setData]);
-
-	const [value, setValue] = useState({ value: 3 });
-	useEffect(() => {
-	
-	}, [setValue]);
 
 	const tour_rating = parseInt(data.posts.rating)
 	if(!data.posts.author) return null;
@@ -68,7 +63,7 @@ export default function SingleTour(values) {
 					</Typography>
 						<div className={classes.rating}> 
 							<Rating name="read-only" value={tour_rating} readOnly />			
-        				</div>
+						</div>
 					</Container>
 
 					<Gallery props={data.posts.photoalbum}/>
@@ -92,4 +87,4 @@ export default function SingleTour(values) {
 		</Container>
 
 	);
-}
+	}

@@ -74,11 +74,9 @@ const useStyles = makeStyles({
    sliderIcon: {
       float: 'left',
       marginRight: '10px',
-
    },
    Slider: {
       float: 'none',
-      overflow: 'hidden',
    },
 
 })
@@ -136,16 +134,24 @@ function Selector() {
           <option value={30}>Suedtirol</option>
           <option value={30}>Trentino</option>
 
-
-
         </NativeSelect>
       </FormControl>
     </Box>
   );
 }
 
-
-const Picker = ({tourtype, hardness, tourselection, diffselection, distance, duration, elevation, distanceselection, elevationselection, durationselection}) => {
+const Picker = ({tourtype, 
+                  hardness, 
+                  tourselection, 
+                  diffselection, 
+                  distance, 
+                  duration, 
+                  elevation, 
+                  distanceselection, 
+                  elevationselection, 
+                  durationselection,
+                  distance_max,
+                  duration_max}) => {
   
   function ToggleDiff(data) {
     const  props  = data 
@@ -171,7 +177,7 @@ const Picker = ({tourtype, hardness, tourselection, diffselection, distance, dur
         </DiffToggleButton>
       );
     }
-    function RangeSlider(valuearray, change) {
+    function RangeSlider(valuearray, change, maxrange) {
       const handleSliderChange = (event: Event, newValue: number | number[]) => {
         change(newValue as number[])
       };
@@ -187,6 +193,7 @@ const Picker = ({tourtype, hardness, tourselection, diffselection, distance, dur
             onChangeCommitted={() => console.log('database query now')}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
+            max={maxrange}
           />
         </Box>
       );
@@ -238,21 +245,21 @@ return (
                {Selector()}
             </div>
 
-            <div className={classes.sliderBox} >
+              <div className={classes.sliderBox} >
                <div className={classes.sliderIcon}>
                   <AccessTimeIcon/>
                </div>
-               <div className={classes.Slider}>{RangeSlider(distance, distanceselection)}
+               <div className={classes.Slider}>{RangeSlider(distance, distanceselection, distance_max)}
                </div>
                <div className={classes.sliderIcon}>
                   <HeightIcon/>
                </div>
-               <div className={classes.Slider}>{RangeSlider(elevation, elevationselection)}
+               <div className={classes.Slider}>{RangeSlider(elevation, elevationselection, distance_max)}
                </div>
                <div className={classes.sliderIcon}>
                   <SettingsEthernetIcon/>
                </div>
-               <div className={classes.Slider}>{RangeSlider(duration, durationselection)}
+               <div className={classes.Slider}>{RangeSlider(duration, durationselection, duration_max)}
                </div>
             </div>
 
@@ -283,6 +290,9 @@ const mapStateToProps = (state) => ({
   distance: state.map.distance,
   elevation: state.map.elevation,
   duration: state.map.duration,
+  distance_max: state.map.distance_max,
+  duration_max: state.map.duration_max,
+
 
   
 })

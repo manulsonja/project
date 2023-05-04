@@ -5,6 +5,7 @@ import { useMapEvent } from 'react-leaflet/hooks'
 import L from "leaflet";
 import { Link } from '@material-ui/core';
 import { MEDIA_URL } from "../../../SETTINGS";
+import { connect } from "react-redux";
 
 const icon = L.icon({
   iconUrl: MEDIA_URL + '/media/marker.png',
@@ -101,18 +102,18 @@ const renderLocationMarker = (locations) => {
       })
   )
 }
-export default function Leaflet(props) {
+function Leaflet({ props, offset}) {
+    const height_offset = offset + 112
     const position = [47.259659,11.400375]
-    const screen = props.data.screen;
-    const tours = props.data.state.posts;
-    const huts = props.data.huts
-    const locations = props.data.locations
+    const screen = props.screen;
+    const tours = props.state.posts;
+    const huts = props.huts
+    const locations = props.locations
 
-    const height_offset = props.data.offset
 
     const resize = (screen) => {
       if ((!screen || screen.length === 0) ) return;
-      return (screen.height-height_offset)
+      return (screen.height- height_offset)
     }
     
     function MyComponent() {
@@ -121,13 +122,13 @@ export default function Leaflet(props) {
     }
     
     function MyComponentTwo() {
-      const map = useMapEvent('zoomanim', () => {
+      const map = useMapEvent('zoomanim', () => { console.log('zoom')
       })
       return null
     }
     
     function MyComponentThree() {
-      const map = useMapEvent('mouseup', () => {
+      const map = useMapEvent('mouseup', () => { console.log('mouseup')
       })
       return null
     }
@@ -149,7 +150,10 @@ return (
   </MapContainer>
 </div>  
 )}
-
+const mapStateToProps = state => ({
+	offset: state.map.offset,
+	});
+export default connect(mapStateToProps, null)(Leaflet)
 
 /*     https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png
 https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"

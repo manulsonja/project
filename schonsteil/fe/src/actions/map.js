@@ -1,10 +1,13 @@
 import axios from 'axios';
 import {  DIFFICULTY_SELECTION,
+          DISTANCE_MAX,
+          DURATION_MAX,
           DISTANCE_SLIDER_VALUE,
           DURATION_SLIDER_VALUE,
           ELEVATION_SLIDER_VALUE,
           HUTTYPE_SELECTION,
           LOCATION_SELECTION,
+          MAP_OFFSET,
           MAP_SEARCHSTRING,
           RESET_SELECTION,
           TOUR_SELECTION } from "./types";
@@ -51,6 +54,18 @@ export const elevationselection = (elevation) => dispatch => {
         payload: elevation,
     });
 };
+export const distancesetmax = (rmax) => dispatch => {
+    dispatch({
+        type: DISTANCE_MAX,
+        payload: rmax,
+    });
+};
+export const durationsetmax = (dmax) => dispatch => {
+    dispatch({
+        type: DURATION_MAX,
+        payload: dmax,
+    });
+};
 export const distanceselection = (distance) => dispatch => {
     dispatch({
         type: DISTANCE_SLIDER_VALUE,
@@ -62,10 +77,14 @@ export const resetselection = (blabla) => dispatch => {
     dispatch({
         type: RESET_SELECTION,
         payload: blabla,
-
     });
 };
 
-
+export const mapoffset = (offset) => dispatch => {
+    dispatch({
+        type: MAP_OFFSET,
+        payload: offset,
+    });
+};
 
 

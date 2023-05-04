@@ -13,6 +13,8 @@ class PictureSerializer(serializers.Serializer):
 GLOBAL_FIELDS = ('id', 'title', 'text', 'tourtype', 'rating','author', 'created',
         'profile_pk','image','slug','geojson_track','starting_pnt','photoalbum','tour_duration','distance',)
 
+
+
 class TourSerializer(serializers.ModelSerializer):
         image = PictureField()
         starting_pnt = serializers.SerializerMethodField()

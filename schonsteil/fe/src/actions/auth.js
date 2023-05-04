@@ -207,14 +207,14 @@ export const signup = (first_name, last_name, email, password, re_password, user
                     type: ERROR_MESSAGE,
                     payload: err.response.data.password[0]
                 })}
-        } catch (err) {}
+        } catch (err) { console.log(err)}
         try {
             if(err.response.data.email[0]==='new user with this email address already exists.'){
                 dispatch({
                     type: ERROR_MESSAGE,
                     payload: err.response.data.email[0]
                 })}
-        } catch (err) {}
+        } catch (err) { console.log(err)}
        
     
         dispatch({
@@ -264,7 +264,7 @@ export const reset_password = (email) => async dispatch => {
         try {
             resp = err.response.data.email[0];
         }
-        catch {}
+        catch { console.log(err)}
         dispatch({
             type: PASSWORD_RESET_FAIL,
             payload: resp

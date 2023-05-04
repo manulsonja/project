@@ -72,7 +72,7 @@ const SignUp = ({ signup, isAuthenticated, errorMessage, clearerror }) => {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`)
 
             window.location.replace(res.data.authorization_url);
-        } catch (err) {
+        } catch (err) { console.log(err)
         }
     };
    const continueWithFacebook = async () => {
@@ -80,7 +80,7 @@ const SignUp = ({ signup, isAuthenticated, errorMessage, clearerror }) => {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/facebook/?redirect_uri=${process.env.REACT_APP_API_URL}/facebook`)
 
             window.location.replace(res.data.authorization_url);
-        } catch (err) {
+        } catch (err) { console.log(err)
    }
     };
     if (isAuthenticated) {

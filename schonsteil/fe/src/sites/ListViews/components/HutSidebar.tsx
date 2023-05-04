@@ -42,8 +42,8 @@ const classes = useStyles();
 
 function ToggleImage(data) {
     const  props  = data 
-    let style={...{[props.bgtype]:props.bg}}
-    let isIncluded = huttype.includes(props.selectorItem)
+    const style={...{[props.bgtype]:props.bg}}
+    const isIncluded = huttype.includes(props.selectorItem)
 
     return (
         <Box className={classes.ButtonBox}>
@@ -75,7 +75,7 @@ function ToggleImage(data) {
 
    { 
    cat_arr.map((item, i) => {
-            let bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
+            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
            return(ToggleImage({'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
      }
     
