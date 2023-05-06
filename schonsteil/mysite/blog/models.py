@@ -21,7 +21,7 @@ class BlogArticle(models.Model):
         ('draft', 'Draft'),
         ('published', 'Published'),)
     title = models.CharField(max_length=30)   
-    subtitle = models.CharField(max_length=150, null=True)
+    subtitle = models.CharField(max_length=500, null=True)
     text =  tinymce_models.HTMLField()
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg', aspect_ratios=["16/9"])
     published = models.DateTimeField(default=timezone.now)

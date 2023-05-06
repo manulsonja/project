@@ -1,98 +1,128 @@
-	import * as React from 'react';
-	import axiosInstance from '../../utils/axios';
-	import { useState, useEffect } from 'react';
-	import Tours from './Tiles/Tours.tsx';
-	import { makeStyles } from '@material-ui/core';
-	import { Box } from '@material-ui/core';
-	import InfiniteScroll from 'react-infinite-scroll-component';
-	import Huts from './Tiles/Huts.tsx';
-	import Parking from './Tiles/Parking.tsx';
-	import useMediaQuery from '@mui/material/useMediaQuery';
-	import { useTheme } from '@mui/material/styles';
-	import { connect } from 'react-redux';
-	import { distancesetmax, durationsetmax } from '../../actions/map';
+import * as React from 'react';
+import axiosInstance from '../../utils/axios';
+import { useState, useEffect } from 'react';
+import Tours from './Tiles/Tours.tsx';
+import { makeStyles } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Huts from './Tiles/Huts.tsx';
+import Parking from './Tiles/Parking.tsx';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import { connect } from 'react-redux';
+import { distancesetmax, durationsetmax, durationselection, elevationsetmax} from '../../actions/map';
+import { Button, Collapse } from '@mui/material';
+import { Grid } from '@mui/material';
+import TourSlider from '../Map/components/MobileMenu/TourSlider.tsx';
 
-	const drawerWidth = 150;
+const drawerWidth = 150;
 
-	const useStyles = makeStyles((theme) => ({	
-	huttenliste: {	
-			marginTop: '15px',
-			[theme.breakpoints.up('md')]: {
-				marginTop: '30px',
-				},
-	},
-	sideBar: {
-		backgroundColor: '#272727',
-	}
-	}));
+const useStyles = makeStyles((theme) => ({	
+huttenliste: {	
+		marginTop: '15px',
+		[theme.breakpoints.up('md')]: {
+			marginTop: '5px',
+			},
+},
+sideBar: {
+	backgroundColor: '#272727',
+}
+}));
 
-	function ListPage({props, distancesetmax, durationsetmax}) {
-	const theme = useTheme()
-	const matches = useMediaQuery(theme.breakpoints.up('sm'));
-	const type = props.type
-	const classes = useStyles()
-	const [appState, setAppState] = useState({
-		loading: false,
-		posts: null,
-		next: null,
-		previous: null
+function ListPage({props, distancesetmax, durationsetmax, elevationsetmax}) {
+const [opened, setOpened] = React.useState(true)
+
+const theme = useTheme()
+const matches = useMediaQuery(theme.breakpoints.up('sm'));
+const type = props.type
+const classes = useStyles()
+const [appState, setAppState] = useState({
+	loading: false,
+	posts: null,
+	next: null,
+	previous: null
+});
+
+useEffect(() => {
+	axiosInstance.get(props.url).then((res) => {
+		setAppState({ ...appState,loading: false, posts: res.data.results, next:res.data.next, previous:res.data.previous });
+		const duration_max = res.data.duration_slider;
+		const distance_max = parseInt(res.data.distance_slider);
+		const elevation_max = res.data.elevation_slider
+		distancesetmax(distance_max);
+		durationsetmax(duration_max);
+		elevationsetmax(elevation_max);
+
 	});
+}, [props.url]); 
 
-	useEffect(() => {
-		axiosInstance.get(props.url).then((res) => {
-			setAppState({ ...appState,loading: false, posts: res.data.results, next:res.data.next, previous:res.data.previous });
-			const duration_max = res.data.duration_slider;
-			const distance_max = parseInt(res.data.distance_slider);
-			distancesetmax(distance_max);
-			durationsetmax(duration_max);	
-		});
-	}, [props.url]); 
+const hasMore = () => { 
+	if(appState.next===null)
+	{return( false)} 
+	else{ return(true)}}
 
-	const hasMore = () => { 
-		if(appState.next===null)
-		{return( false)} 
-		else{ return(true)}}
+const fetchData = () => {
+	axiosInstance.get(appState.next).then((res) => {
+		setAppState({ ...appState,loading: false, posts: appState.posts.concat(res.data.results), next: res.data.next, previous:res.data.previous });
+	})
+}
 
-	const fetchData = () => {
-		axiosInstance.get(appState.next).then((res) => {
-			setAppState({ ...appState,loading: false, posts: appState.posts.concat(res.data.results), next: res.data.next, previous:res.data.previous });
-		})
-	}
-
-	const Loading = () => {
-		return (
-			<InfiniteScroll
-			dataLength={appState.posts.length} //This is important field to render the next data
-			next={fetchData}
-			hasMore={hasMore()}
-			loader={<h4>Loading...</h4>}
-			endMessage={
-				<p style={{ textAlign: 'center' }}>
-				<b>Ende.</b>
-				</p>
-			}
-			>
-			{(type==='tour'? <Tours props={appState}/>: null)}
-			{(type==='hut'? <Huts props={appState}/>: null)}
-			{(type==='parking'? <Parking props={appState}/>: null)}
-
-			
-			</InfiniteScroll>
-		)
-	}
-
-	if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
+const Loading = () => {
 	return (
-	<React.Fragment>  
-	<Box className={classes.huttenliste} style={{marginLeft:(matches? '150px': null)}}>
-	{ Loading()}
-		</Box>
-	</React.Fragment>
-	);
-	}
+		<InfiniteScroll
+		dataLength={appState.posts.length} //This is important field to render the next data
+		next={fetchData}
+		hasMore={hasMore()}
+		loader={<h4>Loading...</h4>}
+		endMessage={
+			<p style={{ textAlign: 'center' }}>
+			<b>Ende.</b>
+			</p>
+		}
+		>
+		{(type==='tour'? <Tours props={appState}/>: null)}
+		{(type==='hut'? <Huts props={appState}/>: null)}
+		{(type==='parking'? <Parking props={appState}/>: null)}
+
+		
+		</InfiniteScroll>
+	)
+}
+const renderSlider = () => { return(
+	<React.Fragment>
+	<Button onClick={() => {setOpened(!opened)}} style={{marginLeft:'200px'}}>Sesam oeffne dich!</Button>
+	<Collapse in={opened}>
+	<Box sx={{backgroundColor:'white', marginLeft: '20px', marginRight: '20px', height: '200px'}}>
+	<Grid container>
+		<Grid item  md={6} lg={4} xs={12}>
+		<TourSlider/>
+		</Grid>
+		<Grid item xs={4}>
+		item 2
+		</Grid> 
+		<Grid item xs={4}>
+		item 3
+		</Grid>
+	</Grid>
+	</Box>
+	</Collapse>
+</React.Fragment>
+)}
+
+return (
+<React.Fragment>  
+<Box className={classes.huttenliste} style={{marginLeft:(matches? '150px': null)}}>
+{ renderSlider()}
+{(!appState.posts || appState.posts.length === 0)? 'Starker Stuhlgang behindert die Rettungsarbeiten': Loading()}
+</Box>
+</React.Fragment>
+);
+}
 
 const mapStateToProps = state => ({
-	tourtype: state.map.tourtype
+tourtype: state.map.tourtype,
+duration: state.map.duration,
+elevation: state.map.elevation,
 })
-export default connect(mapStateToProps,{distancesetmax, durationsetmax})(ListPage)
+export default connect(mapStateToProps,{distancesetmax, durationsetmax, durationselection, elevationsetmax})(ListPage)
 

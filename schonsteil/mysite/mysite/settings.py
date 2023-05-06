@@ -172,8 +172,6 @@ DEBUG=True
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 """ CORS_ALLOWED_ORIGINS = [
     "http://0.0.0.0:80",
-
-
 ]
  """
 SIMPLE_JWT = {

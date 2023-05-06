@@ -20,7 +20,22 @@ def parse_gpx(gpxfile):
     ls = LineString(storage_array)
     return(ls)
 
+def naive_elevation(linestring):
+    zarray = []
+    for point in linestring.coords:
+        zarray.append(point[2])
 
+        endpoint = len(zarray)
+
+    ele = 0
+    for z in range(endpoint-1):
+        z0= zarray[z]
+        z1 = zarray[z+1]
+        delta = z1-z0 
+        if delta > 0:
+            ele += delta
+
+    return ele
     # There are many more utility methods and functions:
     # You can manipulate/add/remove tracks, segments, points, waypoints and routes and
     # get the GPX XML file from the resulting object:

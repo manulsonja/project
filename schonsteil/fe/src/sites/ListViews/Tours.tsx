@@ -3,7 +3,7 @@ import React from 'react'
 import ListPage from './ListPage.tsx'
 import Drawer from '@mui/material/Drawer';
 import Sidebar from './components/Toursidebar.tsx';
-import { makeStyles } from '@material-ui/core';
+import { duration, makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -40,7 +40,7 @@ const RenderSidebar = () => {
     </Drawer>
     )
 }
-const Tours = ({tourtype, hardness, distance}) => {
+const Tours = ({tourtype, hardness, distance, duration, elevation}) => {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -50,11 +50,11 @@ const Tours = ({tourtype, hardness, distance}) => {
 
         if(tourtype.length==0 && hardness.length==0 && !distance) setUrl('touren/touren/');
         else {
-            const qs = '/touren/touren/?tourtypes='+tourtype+'&search=&diff='+hardness+'&dist='+distance;           
+            const qs = '/touren/touren/?tourtypes='+tourtype+'&search=&diff='+hardness+'&dist='+distance+'&dur='+duration+'&ele='+elevation;           
             setUrl(qs);
         } 
 
-      },[tourtype, hardness, distance]);
+      },[tourtype, hardness, distance, duration, elevation]);
   
   return (
     <React.Fragment>
@@ -68,6 +68,8 @@ const Tours = ({tourtype, hardness, distance}) => {
 const mapStateToProps = state => ({
     tourtype: state.map.tourtype,
     hardness: state.map.difficulty,
-    distance: state.map.distance,  
+    distance: state.map.distance,
+    duration: state.map.duration,
+    elevation: state.map.elevation, 
   });
 export default connect(mapStateToProps)(Tours);

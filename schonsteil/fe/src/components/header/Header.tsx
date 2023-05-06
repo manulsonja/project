@@ -291,7 +291,7 @@
 							href="#"
 							className={classes.link}
 							component={NavLink}
-							to="/parking/"
+							to="/parking"
 						>
 							Locations
 						</Link>

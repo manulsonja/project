@@ -10,6 +10,7 @@ import {
     MAP_OFFSET, 
     MAP_SEARCHSTRING, 
     RESET_SELECTION, 
+    ELEVATION_MAX,
     TOUR_SELECTION } from "../actions/types";
 
 const initialState = {
@@ -67,6 +68,10 @@ export default function(state = initialState, action) {
         case MAP_OFFSET: return {
             ...state,
             offset: payload,        
+        }
+        case ELEVATION_MAX: return {
+            ...state,
+            elevation_max: payload,        
         }
         case DISTANCE_MAX: return {
             ...state,

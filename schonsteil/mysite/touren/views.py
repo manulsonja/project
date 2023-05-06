@@ -24,7 +24,7 @@ class ViewTouren(viewsets.ModelViewSet):
         response = super().list(request, *args, **kwargs)
         response.data['duration_slider'] = self.duration_slider
         response.data['distance_slider'] = self.distance_slider
-
+        response.data['elevation_slider'] = self.elevation_slider
         return response
     
     def get_object(self, queryset=None, **kwargs):
@@ -37,6 +37,9 @@ class ViewTouren(viewsets.ModelViewSet):
             diff = self.request.query_params.get('diff', None)
             tourtype = self.request.query_params.get('tourtypes', None) 
             distance_touple =  self.request.query_params.get('dist', None)
+            duration_touple =  self.request.query_params.get('dur', None)
+            elevation_touple =  self.request.query_params.get('ele', None)
+  
 
             if diff:
                 diff = diff.split(',')
@@ -49,20 +52,32 @@ class ViewTouren(viewsets.ModelViewSet):
             if tourtype:
                 qs = qs.filter(tourtype__in=tourtype)
             self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
-            #self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
             self.duration_slider = qs.aggregate(Max('tour_duration')).get('tour_duration__max')
+            self.elevation_slider = qs.aggregate(Max('elevation_gain')).get('elevation_gain__max')
+          
             if distance_touple:
                 distance_array = distance_touple.split(',')
                 lower = distance_array[0]
-                upper = distance_array[1]  
-                       
+                upper = distance_array[1]              
                 qs = qs.filter(distance__gte=lower, distance__lte=upper)
+            
+            if duration_touple:
+                duration_array = duration_touple.split(',')
+                lower = duration_array[0]
+                upper = duration_array[1]  
+                qs = qs.filter(tour_duration__gte=lower, tour_duration__lte=upper)
+            if elevation_touple:
+                elevation_array = elevation_touple.split(',')
+                lower = elevation_array[0]
+                upper = elevation_array[1]  
+                print(lower)
+                print(upper)
+                qs = qs.filter(elevation_gain__gte=lower, elevation_gain__lte=upper)
 
         except:
-            print('exception api/views.py line 45 Probably insufficient or no query params provided but required for filtering in django')
+            print('exception api/views.py line 72 Probably insufficient or no query params provided but required for filtering in django')
             pass 
         
-
         return qs
     
 class ViewHochtouren(viewsets.ModelViewSet):

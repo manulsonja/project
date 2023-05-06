@@ -10,6 +10,7 @@ import {  DIFFICULTY_SELECTION,
           MAP_OFFSET,
           MAP_SEARCHSTRING,
           RESET_SELECTION,
+          ELEVATION_MAX,
           TOUR_SELECTION } from "./types";
 
 export const mapsearch = (searchstring) => dispatch => {
@@ -64,6 +65,12 @@ export const durationsetmax = (dmax) => dispatch => {
     dispatch({
         type: DURATION_MAX,
         payload: dmax,
+    });
+};
+export const elevationsetmax = (emax) => dispatch => {
+    dispatch({
+        type: ELEVATION_MAX,
+        payload: emax,
     });
 };
 export const distanceselection = (distance) => dispatch => {

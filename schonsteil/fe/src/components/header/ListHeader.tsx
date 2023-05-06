@@ -314,7 +314,7 @@ function Header({ logout, isAuthenticated, user }) {
 							href="#"
 							className={classes.fullLink}
 							component={NavLink}
-							to="/parking/"
+							to="/parking"
 						>
 							Locations
 						</Link>

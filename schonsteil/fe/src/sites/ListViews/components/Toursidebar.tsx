@@ -76,7 +76,10 @@ function ToggleImage(data) {
 
      }
     
-  )}</React.Fragment>
+  )}
+  
+  
+  </React.Fragment>
   )
     }
 

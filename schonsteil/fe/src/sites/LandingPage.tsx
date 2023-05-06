@@ -7,8 +7,8 @@ import axiosInstance from '../utils/axios';
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import Tours from './ListViews/Tiles/Tours.tsx';
-import Picker from '../components/Picker.tsx';
 import { MEDIA_URL } from '../SETTINGS';
+import NavButtons from '../components/NavButtons.tsx';
 
 export default function Landing() {
 
@@ -59,7 +59,7 @@ export default function Landing() {
             </Typography>
             </Grid>
               <Grid item xs={12} md={5}>
-                  <Picker/>
+                  <NavButtons/>
               </Grid> 
           </Grid>
         </Box>

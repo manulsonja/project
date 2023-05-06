@@ -263,7 +263,7 @@ function Map({  diffselection, tourselection, hardness, tourtype, huttype }) {
 			</AppBar>
 			</Box>
 			<div className='outerBox'>
-					<div className='leftColumn' style={{width:'100%'}}><Leaflet data={{'state' : appState, 'screen': screenSize, 'offset':119}}/></div>
+					<div className='leftColumn' style={{width:'100%'}}><Leaflet props={{'state' : appState, 'screen': screenSize, 'offset':119}}/></div>
 			</div>
 			</React.Fragment>
 	)

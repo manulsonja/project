@@ -5,7 +5,7 @@ from django.utils import timezone
 from users.models import NewUser 
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
-from utils.parser.parse import parse_gpx
+from utils.parser.parse import parse_gpx, naive_elevation
 from django.conf import settings
 from django.utils.text import slugify
 from shapely import wkt
@@ -23,6 +23,7 @@ def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
   
 class Tour(models.Model):
+
     tour_duration = models.DurationField(null=True)
     gpxfile = models.FileField(upload_to='files', null=True)
     track = models.LineStringField(null=True, dim=3, srid=4326)
@@ -54,7 +55,10 @@ class Tour(models.Model):
         ("mittel","MITTEL"),
         ("schwierig","SCHWIERIG"),
        ]
+    
+
     region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name="regionen", null=True)
+    elevation_gain = models.FloatField(null=True)
     title = models.CharField(max_length=30)
     subtitle = models.CharField(max_length=100)
     text =  tinymce_models.HTMLField()
@@ -88,12 +92,15 @@ class Tour(models.Model):
         self.track = ls
         shapely_ls = wkt.loads(ls.wkt)
         self.geojson_track = shapely.to_geojson(shapely_ls)
+        self.elevation_gain =  naive_elevation(ls)
+        
         project = partial(
             pyproj.transform,
             pyproj.Proj('EPSG:4326'),
             pyproj.Proj('EPSG:32633'))
         line2 = transform(project, shapely_ls)
         self.distance = int(line2.length)
+
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 

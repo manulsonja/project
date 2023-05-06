@@ -8,28 +8,28 @@ class PhotoAdmin(admin.StackedInline):
 class WandernAdmin(admin.ModelAdmin):
     model = Wandern
     exclude=('track',)
-    readonly_fields=('distance','geojson_track',)
+    readonly_fields=('distance','geojson_track','elevation_gain',)
     inlines = [PhotoAdmin]
 
 class SkitourAdmin(admin.ModelAdmin):
     model = Skitour
     exclude=('track',)
-    readonly_fields=('distance','geojson_track',)
+    readonly_fields=('distance','geojson_track','elevation_gain',)
     inlines = [PhotoAdmin]
 class HikeAndFlyAdmin(admin.ModelAdmin):
     model = HikeAndFly
     exclude=('track',)
-    readonly_fields=('distance','geojson_track',)
+    readonly_fields=('distance','geojson_track','elevation_gain',)
     inlines = [PhotoAdmin]
 class KlettertourAdmin(admin.ModelAdmin):
     model = Klettertour
     exclude=('track',)
-    readonly_fields=('distance','geojson_track',)
+    readonly_fields=('distance','geojson_track','elevation_gain',)
     inlines = [PhotoAdmin]
 class HochtourAdmin(admin.ModelAdmin):
     model = Hochtour
     exclude=('track',)
-    readonly_fields=('distance','geojson_track',)
+    readonly_fields=('distance','geojson_track','elevation_gain',)
     inlines = [PhotoAdmin]
 
 admin.site.register(Klettertour, KlettertourAdmin)

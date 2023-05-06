@@ -7,6 +7,7 @@ const TourSlider = ({duration,
                     distance, 
                     duration_max, 
                     distance_max, 
+                    elevation_max,
                     elevation,
                     distanceselection,
                     elevationselection,
@@ -16,10 +17,7 @@ const TourSlider = ({duration,
 useEffect(() => {  console.log('rerender')  },[tourtype]);          
   return (
     <React.Fragment>
-    
-    
-    
-    
+       
      {(!distance_max? <h2>KEINE TOUREN</h2>: 
      <div>
      <Slider
@@ -44,6 +42,8 @@ useEffect(() => {  console.log('rerender')  },[tourtype]);
       /> 
          <Slider
         value={elevation}
+        max={elevation_max}
+
         aria-label="Small"
         valueLabelDisplay="auto"
         onChange={(event: Event, newValue: number | number[]) => {
@@ -62,7 +62,7 @@ const mapStateToProps = state => ({
     distance: state.map.distance,
     duration_max: state.map.duration_max,
     distance_max: state.map.distance_max,
-    tourtype: state.map.tourtype,
+    elevation_max: state.map.elevation_max,
   });
   
   export default connect(mapStateToProps, { diffselection,  tourselection, distanceselection, elevationselection, durationselection})(TourSlider);
