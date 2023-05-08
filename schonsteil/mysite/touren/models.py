@@ -18,6 +18,7 @@ import PIL.Image
 from pictures.models import PictureField
 from multiselectfield import MultiSelectField
 from geography.models import Region
+from django.contrib.postgres.fields import ArrayField
 
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
@@ -59,6 +60,8 @@ class Tour(models.Model):
 
     region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name="regionen", null=True)
     elevation_gain = models.FloatField(null=True)
+    elevation_values = ArrayField(models.FloatField(max_length=10, blank=True),blank=True, null=True)
+    steps = ArrayField(models.FloatField(max_length=10, blank=True),blank=True, null=True)
     title = models.CharField(max_length=30)
     subtitle = models.CharField(max_length=100)
     text =  tinymce_models.HTMLField()
@@ -92,7 +95,7 @@ class Tour(models.Model):
         self.track = ls
         shapely_ls = wkt.loads(ls.wkt)
         self.geojson_track = shapely.to_geojson(shapely_ls)
-        self.elevation_gain =  naive_elevation(ls)
+        self.elevation_gain, self.elevation_values, self.steps =  naive_elevation(ls)
         
         project = partial(
             pyproj.transform,

@@ -11,7 +11,10 @@ import {  DIFFICULTY_SELECTION,
           MAP_SEARCHSTRING,
           RESET_SELECTION,
           ELEVATION_MAX,
-          TOUR_SELECTION } from "./types";
+          TOUR_SELECTION, 
+          SLIDER_RELOAD_VAR,
+          D3_SELECTION,
+          D3_INDEX} from "./types";
 
 export const mapsearch = (searchstring) => dispatch => {
     dispatch({
@@ -79,7 +82,24 @@ export const distanceselection = (distance) => dispatch => {
         payload: distance,
     });
 };
-
+export const sliderreload = (value) => dispatch => {
+    dispatch({
+        type: SLIDER_RELOAD_VAR,
+        payload: value,
+    });
+};
+export const setd3selection = (value) => dispatch => {
+    dispatch({
+        type: D3_SELECTION,
+        payload: value,
+    });
+};
+export const setd3index = (value) => dispatch => {
+    dispatch({
+        type: D3_INDEX,
+        payload: value,
+    });
+};
 export const resetselection = (blabla) => dispatch => {
     dispatch({
         type: RESET_SELECTION,

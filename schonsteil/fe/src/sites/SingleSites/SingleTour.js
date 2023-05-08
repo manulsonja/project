@@ -8,6 +8,8 @@
 	import InfoBox from '../../components/box.tsx';
 	import Gallery from '../../components/gallery.js';
 	import DetailMap from '../../components/detailMap.js';
+	import Chart from './Chart.tsx';
+	import { connect } from 'react-redux';
 
 	const useStyles = makeStyles((theme) => ({
 	rating: {
@@ -33,7 +35,7 @@
 	},
 	}));
 
-	export default function SingleTour(values) {
+function SingleTour({d3selection}) {
 
 	const { category, slug } = useParams();
 	const classes = useStyles();
@@ -48,11 +50,14 @@
 			});
 	}, [setData]);
 
+	useEffect(() =>{
+		console.log('data set')
+	},[setData])
 	const tour_rating = parseInt(data.posts.rating)
 	if(!data.posts.author) return null;
 	return (
-		<Container component="main" maxWidth="xl" className={classes.tourArticle}>
-				<Container maxWidth="lg">
+		<Container component="main" maxWidth="md" className={classes.tourArticle}>
+		{/* 		<Container maxWidth="lg">
 					<Typography
 						component="h1"
 						variant="h1"
@@ -66,13 +71,27 @@
 						</div>
 					</Container>
 
-					<Gallery props={data.posts.photoalbum}/>
+					<Gallery props={data.posts.photoalbum}/> */}
+
+
+
+
 				<Container maxWidth="lg">
-					<InfoBox data={data}/>
-					<DetailMap data={data}/>			
+{/* 					<InfoBox data={data}/>
+ */}					<DetailMap props={data}/>
+						<Chart props={data}/>
+						<h1>{d3selection}m</h1>
 				</Container>
 
-			<div className={classes.heroContent}>
+
+
+
+
+
+
+
+
+{/* 			<div className={classes.heroContent}>
 				<Container maxWidth="lg">		
 					<Typography
 						align="left"
@@ -82,9 +101,14 @@
 					</Typography>
 				</Container>
 			</div>
-			<AuthorCard data={data.posts.author}/>
+			<AuthorCard data={data.posts.author}/> */}
 
 		</Container>
 
 	);
 	}
+
+const mapStateToProps = state => ({
+	d3selection: state.map.d3selection
+})
+export default connect(mapStateToProps, null)(SingleTour)

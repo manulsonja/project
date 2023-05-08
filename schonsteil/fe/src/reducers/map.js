@@ -11,7 +11,10 @@ import {
     MAP_SEARCHSTRING, 
     RESET_SELECTION, 
     ELEVATION_MAX,
-    TOUR_SELECTION } from "../actions/types";
+    TOUR_SELECTION, 
+    SLIDER_RELOAD_VAR,
+    D3_SELECTION,
+    D3_INDEX} from "../actions/types";
 
 const initialState = {
     offset: 0,
@@ -25,6 +28,9 @@ const initialState = {
     duration: [0,600],
     distance_max: 30000,
     duration_max: 600,
+    reload_state: false,
+    d3selection: 0,
+    d3index:0,
 
 };
 
@@ -33,6 +39,18 @@ export default function(state = initialState, action) {
     const { type, payload } = action;
 
     switch(type){
+        case D3_SELECTION: return {
+            ...state,
+            d3selection: payload,        
+    }
+    case D3_INDEX: return {
+        ...state,
+        d3index: payload,        
+}
+        case SLIDER_RELOAD_VAR: return {
+            ...state,
+            reload_state: payload,        
+    }
         case DIFFICULTY_SELECTION: return {
                 ...state,
                 difficulty: payload,        
@@ -90,7 +108,9 @@ export default function(state = initialState, action) {
             searchstring: '',
             distance: [0,30000],
             elevation: [0,3000],
-            duration: [0,600],     
+            duration: [0,600], 
+            d3selection: 0,    
+            d3index:0,
     }
         default:
             return state

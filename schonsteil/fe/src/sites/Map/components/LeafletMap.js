@@ -110,7 +110,6 @@ function Leaflet({ props, offset}) {
     const huts = props.huts
     const locations = props.locations
 
-
     const resize = (screen) => {
       if ((!screen || screen.length === 0) ) return;
       return (screen.height- height_offset)

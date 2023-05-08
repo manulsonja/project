@@ -28,6 +28,7 @@
 	import Tours from './sites/ListViews/Tours.tsx';
 	import Huts from './sites/ListViews/Huts.tsx';
 	import Locations from './sites/ListViews/Locations.tsx';
+	
 	const App = () => {
 	return (
 	<Provider store={store}>
@@ -41,7 +42,6 @@
 					</PrivateRoute>
 				}/>	
 					<Route exact path="map" element={<Map/>} />
-					<Route path="/article/:slug" element={<SingleArticle/>} />
 					
 					{/* --------------------------------------------------------- */}
 					<Route exact path="tours" element={<Tours/>} />

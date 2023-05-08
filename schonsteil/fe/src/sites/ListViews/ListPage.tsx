@@ -92,7 +92,7 @@ const renderSlider = () => { return(
 	<React.Fragment>
 	<Button onClick={() => {setOpened(!opened)}} style={{marginLeft:'200px'}}>Sesam oeffne dich!</Button>
 	<Collapse in={opened}>
-	<Box sx={{backgroundColor:'white', marginLeft: '20px', marginRight: '20px', height: '200px'}}>
+	<Box sx={{ marginLeft: '20px', marginRight: '20px', height: '200px'}}>
 	<Grid container>
 		<Grid item  md={6} lg={4} xs={12}>
 		<TourSlider/>

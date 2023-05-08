@@ -1,10 +1,17 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { diffselection, tourselection, durationselection, distanceselection, elevationselection} from '../../../../actions/map';
+import {  diffselection, 
+          tourselection, 
+          durationselection, 
+          distanceselection, 
+          elevationselection, 
+          sliderreload } from '../../../../actions/map';
 import Slider from '@mui/material/Slider';
 import { useEffect } from 'react';
 const TourSlider = ({duration, 
                     distance, 
+                    reload_state, 
+                    sliderreload,
                     duration_max, 
                     distance_max, 
                     elevation_max,
@@ -26,8 +33,9 @@ useEffect(() => {  console.log('rerender')  },[tourtype]);
         aria-label="Small"
         valueLabelDisplay="auto"
         onChange={(event: Event, newValue: number | number[]) => {
-          durationselection(newValue as number[])
+        durationselection(newValue as number[])
         }}
+        onChangeCommitted={()=>{ sliderreload(!reload_state)}}
       /> 
        
       <Slider
@@ -39,6 +47,8 @@ useEffect(() => {  console.log('rerender')  },[tourtype]);
         onChange={(event: Event, newValue: number | number[]) => {
           distanceselection(newValue as number[])
         }}
+        onChangeCommitted={()=>{ sliderreload(!reload_state)}}
+
       /> 
          <Slider
         value={elevation}
@@ -49,6 +59,8 @@ useEffect(() => {  console.log('rerender')  },[tourtype]);
         onChange={(event: Event, newValue: number | number[]) => {
           elevationselection(newValue as number[])
         }}
+        onChangeCommitted={()=>{ sliderreload(!reload_state)}}
+
       />  </div>)} 
       </React.Fragment>
   )
@@ -63,6 +75,7 @@ const mapStateToProps = state => ({
     duration_max: state.map.duration_max,
     distance_max: state.map.distance_max,
     elevation_max: state.map.elevation_max,
+    reload_state: state.map.reload_state,
   });
   
-  export default connect(mapStateToProps, { diffselection,  tourselection, distanceselection, elevationselection, durationselection})(TourSlider);
+  export default connect(mapStateToProps, { diffselection, sliderreload, tourselection, distanceselection, elevationselection, durationselection})(TourSlider);
