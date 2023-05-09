@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import { useLocation } from "react-router-dom";
-
+import { MEDIA_URL } from '../SETTINGS';
 
 const useStyles = makeStyles((theme) => ({
 	footer: {
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 			paddingTop: theme.spacing(6),
 			paddingBottom: theme.spacing(6),
 		},
+
 	},
 }));
 
@@ -59,6 +60,7 @@ function Footer() {
 	if(pathname == "/map") return null;
 	return (
 		<React.Fragment>
+			<div style={{backgroundPosition: 'center top', backgroundSize: '100%', backgroundImage: `url(${MEDIA_URL}/media/footerbg.jpeg)`}}>
 			<Container maxWidth="md" component="footer" className={classes.footer}>
 				<Grid container spacing={4} justify="space-evenly">
 					{footers.map((footer) => (
@@ -82,6 +84,7 @@ function Footer() {
 					<Copyright />
 				</Box>
 			</Container>
+			</div>
 		</React.Fragment>
 	);
 }

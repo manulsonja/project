@@ -1,25 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useEffect, useRef } from 'react'
 import { select, line, curveCardinal, axisBottom, axisLeft, scaleLinear, event } from 'd3'
 import {bisect } from 'd3'
 import { connect } from 'react-redux'
-import { setd3selection, setd3index } from '../../actions/map'
+import { setd3selection, setd3index,d3setelevation} from '../../actions/map'
+import './chart.css';
 
-const Chart = ({props, d3selection, setd3selection, setd3index}) => {
+
+
+const useResizeObserver = ref => {
+
+    const [dimensions, setDimensions] = useState(null)
+    useEffect(() => {
+        const observeTarget = ref.current;
+        const resizeObserver = new ResizeObserver((entries) =>{
+            entries.forEach(entry => {
+                setDimensions(entry.contentRect);
+            })
+            
+        })
+    resizeObserver.observe(observeTarget);
+    return () => {
+        resizeObserver.unobserve(observeTarget);
+    }
+},[ref])
+    return dimensions
+
+}
+
+
+
+const Chart = ({props, d3selection, setd3selection, setd3index, d3setelevation}) => {
 
 const ele = props.posts.elevation_values
 const dist = props.posts.steps
 
 const svgRef = useRef()
-const [selected_point, setPoint] = React.useState(5000)
-useEffect(() => {
+const wrapperRef = useRef()
 
-    if(ele && dist){
+const dimensions = useResizeObserver(wrapperRef)
+
+useEffect(() => {
+    console.log(dimensions)
+    if(ele && dist && dimensions){
 
         const xmax = dist[dist.length -1]
         const valuecount = ele.length -1
-        const w = 600;
-        const h = 300;
+        const w = dimensions.width;
+        const h = dimensions.height;
         const margin = 40
         const innerwidth = w-margin*2
         const innerheight = h-margin*2
@@ -36,13 +64,13 @@ useEffect(() => {
             .range([h-margin,0+margin])
 
         const xAxis = axisBottom(xScale);
-        svg.select('.stuhlgang')
+        svg.select('.xAxis')
         .style('transform',`translateY(${h-margin}px)`)    
         .call(xAxis)
         
         const yAxis = axisLeft(yScale)
 
-        svg.select('.bergrettunghat')
+        svg.select('.yAxis')
         .style('transform',`translateX(${margin}px)`)    
         .call(yAxis)
         
@@ -52,11 +80,9 @@ useEffect(() => {
             .curve(curveCardinal);
             
         svg
-        .attr('width', w)
+        .attr('width', '100%')
         .attr('height',h)
-        .style('background', 'grey')
-        .style('margin-top', '10px')
-        .style('margin-left', '100px')
+        .style('background', 'LightGray')
         
             .selectAll('.line')
             .data([ele])
@@ -97,29 +123,29 @@ useEffect(() => {
             const bisected =  bisect(dist, needle)
 
             setd3index(bisected)
-
+            d3setelevation(ele[bisected])
             
           })
-   
-
-        
-        
-        
+       
 
     }
    
-},[d3selection]);
+},[d3selection, dimensions]);
  
 
   return (
-    <svg ref={svgRef}>
-        <g className='stuhlgang'></g>        
-        <g className='bergrettunghat'></g>
+    <div ref={wrapperRef} style={{marginTop:'20px', height: '200px'}}>
+        <svg ref={svgRef} style={{verticalAlign: 'middle'}}>
+        <g className='xAxis'></g>        
+        <g className='yAxis'></g>
     </svg>
+    </div>
+  
 )}
 
 const mapStateToProps = state => ({
     d3selection: state.map.d3selection,
     d3index: state.map.d3setindex,
+    d3elevation: state.map.d3elevation,
 })
-export default connect(mapStateToProps, {setd3selection, setd3index})(Chart)
+export default connect(mapStateToProps, {setd3selection, setd3index, d3setelevation})(Chart)

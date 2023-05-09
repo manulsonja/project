@@ -31,7 +31,16 @@ class HochtourAdmin(admin.ModelAdmin):
     exclude=('track',)
     readonly_fields=('distance','geojson_track','elevation_gain',)
     inlines = [PhotoAdmin]
-
+    fields = (
+        ('title','rating',),
+        'subtitle',
+        'gpxfile',
+        'image',
+        ('fitness_difficulty','tech_difficulty', 'region'),
+        ('season', 'offseason'),
+        'text',
+        'author',
+    )
 admin.site.register(Klettertour, KlettertourAdmin)
 admin.site.register(Skitour,SkitourAdmin)
 admin.site.register(Wandern, WandernAdmin)

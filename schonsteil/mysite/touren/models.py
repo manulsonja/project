@@ -20,6 +20,28 @@ from multiselectfield import MultiSelectField
 from geography.models import Region
 from django.contrib.postgres.fields import ArrayField
 
+diff_choices = [
+        ("leicht","LEICHT"),
+        ("mittel","MITTEL"),
+        ("schwierig","SCHWIERIG"),
+       ]
+season_multichoices = (
+        ('1','January'),
+        ('2','February'),('3','March'),('4','April'),
+        ('5','Mai'),('6','June'),('7','July'),
+        ('8','August'),('9','September'),('10','Octobre'),
+        ('11','November'),('12','Decembre'),
+    )
+options = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),)
+rating_choices = [
+        ("1","1"),
+        ("2","2"),
+        ("3","3"),
+        ("4","4"),
+        ("5","5"),]
+ 
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
   
@@ -34,39 +56,19 @@ class Tour(models.Model):
     class TourObjects(models.Manager):
         def get_queryset(self):
             return super().get_queryset() .filter(status='published')
-        
-    season_multichoices = (
-        ('1','January'),
-        ('2','February'),('3','March'),('4','April'),
-        ('5','Mai'),('6','June'),('7','July'),
-        ('8','August'),('9','September'),('10','Octobre'),
-        ('11','November'),('12','Decembre'),
-    )
-    options = (
-        ('draft', 'Draft'),
-        ('published', 'Published'),)
-    rating_choices = [
-        ("1","1"),
-        ("2","2"),
-        ("3","3"),
-        ("4","4"),
-        ("5","5"),]
-    diff_choices = [
-        ("leicht","LEICHT"),
-        ("mittel","MITTEL"),
-        ("schwierig","SCHWIERIG"),
-       ]
     
-
-    region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name="regionen", null=True)
+    distance = models.IntegerField(null=True)
     elevation_gain = models.FloatField(null=True)
     elevation_values = ArrayField(models.FloatField(max_length=10, blank=True),blank=True, null=True)
     steps = ArrayField(models.FloatField(max_length=10, blank=True),blank=True, null=True)
+    
+    region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name="regionen", null=True)
     title = models.CharField(max_length=30)
     subtitle = models.CharField(max_length=100)
     text =  tinymce_models.HTMLField()
-    distance = models.IntegerField(null=True)
     season = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
+    offseason = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
+
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg',  aspect_ratios=["16/9"])
     created = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
@@ -79,8 +81,9 @@ class Tour(models.Model):
         default='1',)
     difficulty = models.CharField(
         max_length=10,
-        choices=diff_choices,
-        default='schwierig',)
+        default='schwierig',
+        editable=False)
+
     slug = models.SlugField(max_length=250, unique_for_date='created', editable=False)
     objects = models.Manager()  # default manager
     tourobjects = TourObjects()  # custom manager
@@ -147,7 +150,26 @@ class Skitour(Tour):
         super().save(*args, **kwargs)
 
 class Hochtour(Tour):
+    fitness_difficulty = models.CharField(
+        max_length=10,
+        choices=diff_choices,
+        default='schwierig',)
+    tech_difficulty = models.CharField(
+        max_length=10,
+        choices=diff_choices,
+        default='schwierig',)
     def save(self, *args, **kwargs):
+        if self.tech_difficulty == 'schwierig' or self.fitness_difficulty == 'schwierig':
+            self.difficulty = 'schwierig' 
+        elif self.tech_difficulty =='mittel' or self.fitness_difficulty == 'mittel':
+            self.difficulty = 'mittel'
+        else:
+            self.difficulty = 'leicht'
+            print('heureeeka')
+
+        print(self.difficulty)
+        print(self.fitness_difficulty)
+        print(self.tech_difficulty)
         self.tourtype = "Hochtour"
         super().save(*args, **kwargs)
 

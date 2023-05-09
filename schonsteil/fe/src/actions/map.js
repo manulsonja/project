@@ -14,7 +14,8 @@ import {  DIFFICULTY_SELECTION,
           TOUR_SELECTION, 
           SLIDER_RELOAD_VAR,
           D3_SELECTION,
-          D3_INDEX} from "./types";
+          D3_INDEX,
+          D3_ELEVATION} from "./types";
 
 export const mapsearch = (searchstring) => dispatch => {
     dispatch({
@@ -104,6 +105,12 @@ export const resetselection = (blabla) => dispatch => {
     dispatch({
         type: RESET_SELECTION,
         payload: blabla,
+    });
+};
+export const d3setelevation = (ele) => dispatch => {
+    dispatch({
+        type: D3_ELEVATION,
+        payload: ele,
     });
 };
 

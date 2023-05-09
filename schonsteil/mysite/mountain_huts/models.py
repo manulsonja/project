@@ -6,27 +6,29 @@ from pictures.models import PictureField
 from django.utils.text import slugify
 from geography.models import Zone, Gebirge, Region
 
-def upload_to(instance, filename):
-    return 'huts/{filename}'.format(filename=filename)
-
-class MountainHut(models.Model): 
-    hut_type_options = (
+hut_type_options = (
         ('alm', 'Alm'),
         ('huette', 'Huette'),
         ('gasthof', 'Gasthof'),
         ('sonstige', 'Sonstige'),  
         )
 
-    options = (
+options = (
         ('draft', 'Draft'),
         ('published', 'Published'),)
-    rating_choices = [
+rating_choices = [
         ("1","1"),
         ("2","2"),
         ("3","3"),
         ("4","4"),
         ("5","5"),]
     
+
+def upload_to(instance, filename):
+    return 'huts/{filename}'.format(filename=filename)
+
+class MountainHut(models.Model): 
+
     name = models.CharField(max_length=30)
     subtitle = models.CharField(max_length=150, blank=True, null=True)
     text =  tinymce_models.HTMLField(blank=True, null=True)
@@ -34,8 +36,11 @@ class MountainHut(models.Model):
     telephone = models.CharField(max_length=20, blank=True, null=True)
     email = models.CharField(max_length=50,blank=True, null=True)  
     website = models.CharField(max_length=50, blank=True, null=True)
+    overnight = models.BooleanField(null=True, blank=True)
     # Oeffnungszeiten
-    position = models.PointField(blank=True, null=True)   
+    position = models.PointField(blank=True, null=True)  
+    altitude = models.IntegerField(blank=True, null=True)   
+ 
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg', aspect_ratios=["16/9"])
     created = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
@@ -51,7 +56,6 @@ class MountainHut(models.Model):
         default='1',
         blank=True)
     
-    zone = models.ForeignKey(Zone,on_delete=models.CASCADE,related_name="huts", null=True)
     region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name="huts", null=True)
     gebirge = models.ForeignKey(Gebirge,on_delete=models.CASCADE,related_name="huts", null=True)
 

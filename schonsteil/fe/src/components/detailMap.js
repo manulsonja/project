@@ -2,11 +2,11 @@ import {MapContainer, Map, Marker, Popup, TileLayer, Polyline  } from "react-lea
 import './map.css'
 import L from "leaflet";
 import { connect } from 'react-redux'
-
+import { MEDIA_URL } from "../SETTINGS";
 const icon = L.icon({
-  iconUrl:'hiking.png',
-  iconSize: [25,41],
-  iconAnchor: [13,41]
+  iconUrl: MEDIA_URL + '/media/cat.png',
+  iconSize: [32,32],
+  iconAnchor: [16,32]
 });
 
 const make_polyline = (track, index) => {
@@ -20,7 +20,7 @@ const make_polyline = (track, index) => {
     }));
     return (
       < MapContainer bounds={bounds} scrollWheelZoom={false}>
-            <Marker position={marker_pos}></Marker> 
+            <Marker position={marker_pos} icon={icon}></Marker> 
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

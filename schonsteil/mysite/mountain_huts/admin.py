@@ -38,6 +38,16 @@ class MountainHutAdmin(admin.ModelAdmin):
     formfield_overrides = {
         geomodels.PointField: {'widget': LatLongWidget},
     }
+    fields = (
+        ('name','rating'),
+        'subtitle',
+        'image',
+        ('telephone', 'email', "website",),
+        ('position', 'altitude','hut_type','overnight',),
+        ('region', 'gebirge'),
+        'text',
+        'author',
+    )
 
 
 admin.site.register(MountainHut, MountainHutAdmin)

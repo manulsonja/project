@@ -14,7 +14,8 @@ import {
     TOUR_SELECTION, 
     SLIDER_RELOAD_VAR,
     D3_SELECTION,
-    D3_INDEX} from "../actions/types";
+    D3_INDEX,
+    D3_ELEVATION} from "../actions/types";
 
 const initialState = {
     offset: 0,
@@ -31,6 +32,7 @@ const initialState = {
     reload_state: false,
     d3selection: 0,
     d3index:0,
+    d3elevation:0,
 
 };
 
@@ -43,6 +45,12 @@ export default function(state = initialState, action) {
             ...state,
             d3selection: payload,        
     }
+
+    case D3_ELEVATION: return {
+        ...state,
+        d3elevation: payload,        
+}
+    
     case D3_INDEX: return {
         ...state,
         d3index: payload,        
@@ -111,6 +119,7 @@ export default function(state = initialState, action) {
             duration: [0,600], 
             d3selection: 0,    
             d3index:0,
+            d3elevation: 0,
     }
         default:
             return state

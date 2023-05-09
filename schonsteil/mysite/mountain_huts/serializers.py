@@ -27,6 +27,6 @@ class HutSerializer(serializers.ModelSerializer):
                 return PictureSerializer(obj.gallery.all(), many=True).data 
         
         class Meta:
-                fields = ('id', 'name', 'position','image','text','hut_type','rating','slug','subtitle',
+                fields = ('id', 'name', 'position','image','text','overnight','altitude','hut_type','rating','slug','subtitle',
                 'telephone','website','email','slug','gallery','author')
                 model = MountainHut

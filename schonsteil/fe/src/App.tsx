@@ -9,7 +9,7 @@
 	import SingleTour from './sites/SingleSites/SingleTour.js';
 	import Register from './sites/Auth/register.js';
 	import Login from './sites/Auth/login.js';
-	import SingleHut from './sites/SingleSites/SingleHut.js';
+	import SingleHut from './sites/SingleSites/SingleHut/SingleHut.js';
 	import SingleParking from './sites/SingleSites/singleParking.js';
 	import Landing from './sites/LandingPage.tsx';
 	import PrivateRoute from './utils/PrivateRoute';

@@ -11,9 +11,8 @@ class PictureSerializer(serializers.Serializer):
 
 #FIELDS FOR DETAIL VIEW WITHOUT SPECIFICS -- BELONGS TO TOURDETAILSERIALIZER
 GLOBAL_FIELDS = ('id', 'title', 'text', 'tourtype', 'rating','author', 'created',
-        'profile_pk','image','slug','geojson_track','starting_pnt','photoalbum','tour_duration','distance','elevation_values','steps')
-
-
+        'profile_pk','image','slug','season','offseason','geojson_track','starting_pnt',
+        'photoalbum','tour_duration','distance','elevation_values','steps', 'elevation_gain','fitness_difficulty','tech_difficulty')
 
 class TourSerializer(serializers.ModelSerializer):
         image = PictureField()
