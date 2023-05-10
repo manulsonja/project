@@ -4,7 +4,6 @@ REMOVE PASSWORD FOR GOOGLE FROM SETTINGS COMMENT
 remove arial from picker.tsx for cr reasons
 I REMOVED SERVICE WORKER AND WEBVITALS ADD THEM BACK IN
 REMOVE GOOGLE IMPORTED FRONTS IN PUBLIC INDEX
-0  sonjas Bilder!!!
 make categories global var
 
 hohe prioritaet
@@ -12,15 +11,13 @@ hohe prioritaet
 1  geosearch implementieren
 2  pagination
 6  datenschutz erklaerung fuer cookies
-7  touren jahreszeiten oeffnungszeiten
 ----------------------------------
 
 2 mittlere prioritaet
 
-karte bei single huette hinzufuegen
+haversine ersetzen vincenty
 profile pages
 prerender templates
-hoehenprofil
 profil formatierung auf single tour seite 
 karte ausblenden wenn kein track vorhanden 
 profilseite
@@ -42,8 +39,10 @@ erledigt
 3  problem mit window.listener reload in react loesen 
 2  andere filter implementieren
 4  thumbnails!!!!!!
+karte bei single huette hinzufuegen
+hoehenprofil
+7  touren jahreszeiten oeffnungszeiten
 
-leaflet swipe tilt ///
 
 
 

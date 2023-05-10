@@ -7,7 +7,11 @@ from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, IsAuthenti
 from rest_framework import filters
 from rest_framework import pagination
 from django.db.models import Max
-
+from rest_framework.response import Response
+from pprint import pprint
+import json
+from django.contrib.gis.geos import Polygon
+from django.contrib.gis.geos import Point
 
 class CustomPagination(pagination.CursorPagination):
     page_size = 12
@@ -32,6 +36,36 @@ class ViewTouren(viewsets.ModelViewSet):
         return get_object_or_404(Tour, slug=item)
 
     # Define Custom Queryset
+        
+    def create(self, request):
+        qs = self.get_queryset()
+        try:
+            ne = request.data['mapbounds']['_northEast']
+            sw = request.data['mapbounds']['_southWest']
+
+            west = float(sw['lng'])
+            east = float(ne['lng'])
+
+            north = float(ne['lat'])
+            south = float(sw['lat'])
+  
+            geom = Polygon(( (north, west), (north, east), (south, east),(south, west),(north, west)))
+            print("geom")
+
+            qs = qs.filter(track__intersects=geom)
+            
+        except:
+            pass
+        results = []
+        
+        for q in qs:
+            entry = TourSerializer(q).data
+            results.append(entry)
+        resp = {
+            "results": results
+        }
+        return Response(resp)
+
     def get_queryset(self):
         try:
             diff = self.request.query_params.get('diff', None)
@@ -73,7 +107,6 @@ class ViewTouren(viewsets.ModelViewSet):
                 print(lower)
                 print(upper)
                 qs = qs.filter(elevation_gain__gte=lower, elevation_gain__lte=upper)
-
         except:
             print('exception api/views.py line 72 Probably insufficient or no query params provided but required for filtering in django')
             pass 

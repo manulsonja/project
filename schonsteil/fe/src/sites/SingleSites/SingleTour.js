@@ -23,7 +23,6 @@ tourArticle: {
 		[theme.breakpoints.up('md')]: {
 			marginTop: '50px',
 			},
-
 },
 paper: {
 	marginTop: theme.spacing(8),
@@ -93,6 +92,7 @@ return (
 			<Container maxWidth="lg">		
 				<Typography
 					align="left"
+					variant='h6'
 					color="textSecondary"
 					dangerouslySetInnerHTML={{__html: `${data.posts.text}`}} 	
 					paragraph >

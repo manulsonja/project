@@ -45,6 +45,7 @@ class MountainHutAdmin(admin.ModelAdmin):
         ('telephone', 'email', "website",),
         ('position', 'altitude','hut_type','overnight',),
         ('region', 'gebirge'),
+        ('season', 'offseason'),
         'text',
         'author',
     )

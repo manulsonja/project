@@ -30,7 +30,7 @@ sideBar: {
 }));
 
 function ListPage({props, distancesetmax, durationsetmax, elevationsetmax}) {
-const [opened, setOpened] = React.useState(true)
+const [opened, setOpened] = React.useState(false)
 
 const theme = useTheme()
 const matches = useMediaQuery(theme.breakpoints.up('sm'));

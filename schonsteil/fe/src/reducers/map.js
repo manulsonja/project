@@ -15,11 +15,13 @@ import {
     SLIDER_RELOAD_VAR,
     D3_SELECTION,
     D3_INDEX,
-    D3_ELEVATION} from "../actions/types";
+    D3_ELEVATION,
+    MAP_BOUNDS} from "../actions/types";
 
 const initialState = {
     offset: 0,
     difficulty: [],
+    mapbounds: [],
     tourtype: [],
     huttype: [],
     locationtype: [],
@@ -95,6 +97,10 @@ export default function(state = initialState, action) {
             ...state,
             offset: payload,        
         }
+        case MAP_BOUNDS: return {
+            ...state,
+            mapbounds: payload,        
+        }
         case ELEVATION_MAX: return {
             ...state,
             elevation_max: payload,        
@@ -120,6 +126,7 @@ export default function(state = initialState, action) {
             d3selection: 0,    
             d3index:0,
             d3elevation: 0,
+            mapbounds: [],
     }
         default:
             return state

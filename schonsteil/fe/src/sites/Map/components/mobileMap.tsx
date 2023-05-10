@@ -20,7 +20,7 @@ function MobileMap({ props, difficulty, tourtype, sstring}) {
         <React.Fragment>   	
             <div className='outerBox'>
                 <div className='leftColumn' style={{width:'100%'}}>
-                <Leaflet props={{'state' : appState,'huts':hutState.huts, 'locations': locationState.locations, 'screen': screenSize, 'offset':200}}/>
+                <Leaflet props={{'state' : appState,'huts':hutState.huts, 'locations': locationState.locations, 'screen': screenSize, 'offset':0}}/>
             </div>
             </div>     
       <MobileMenuWrapper props={{'touroption': true, 'hutoption': true, 'locationoption': true}}/>     

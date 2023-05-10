@@ -10,6 +10,9 @@
 	import { useParams } from 'react-router-dom';
 	import InfoBox from './InfoBox.tsx';
 	import DetailMap from './DetailMap.js';
+	import Season from '../Season.tsx';
+import OpenedWidget from './OpenedWidget';
+
 	const useStyles = makeStyles((theme) => ({	
 	rating: {
 		margin: '-10px auto 10px',
@@ -18,10 +21,10 @@
 	},
 	tourArticle: {	
 			marginTop: '20px',
+			marginBottom: '15px',
 			[theme.breakpoints.up('md')]: {
 				marginTop: '50px',
 				},
-
 	},
 	}));
 
@@ -45,6 +48,8 @@
 	return (
 		<Container component="main" maxWidth="lg" className={classes.tourArticle}>
 				<Container maxWidth="lg" xs={12}>
+				<OpenedWidget open={appState.posts.open}/>
+
 					<Typography
 						component="h1"
 						variant="h1"
@@ -56,15 +61,18 @@
 						<div className={classes.rating}> 
 							<Rating name="read-only" value={appState.posts.rating} readOnly />			
 						</div>
+					<Gallery props={appState.posts.gallery}/>			
 				</Container>
-				<Gallery props={appState.posts.gallery}/>			
-
+				
 				<Container maxWidth="lg">
+				<Season season={appState.posts.season} offseason={appState.posts.offseason}/>
 					<InfoBox data={appState.posts}/>
 					<DetailMap position={appState.posts.position}/>		
 					<Typography
 						align="left"
 						paragraph 
+						variant='h6'
+						color="textSecondary"
 						dangerouslySetInnerHTML={{__html: `${appState.posts.text}`}}>
 					</Typography>
 				</Container>

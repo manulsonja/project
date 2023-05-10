@@ -37,6 +37,15 @@ class GalleryAdmin(admin.StackedInline):
     model = ParkingGallery
 
 class ParkingAdmin(admin.ModelAdmin):
+    fields = (
+        'name',
+        'image',
+        'position',
+        ('parkingtype','capacity'), 
+        ('fees', 'estate', 'ground_type','toilet'),
+        'short_text',
+        'text',
+    )
     model = Parking
     inlines = [GalleryAdmin]
     formfield_overrides = {

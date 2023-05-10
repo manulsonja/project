@@ -3,6 +3,8 @@ from pictures.contrib.rest_framework import PictureField
 from mountain_huts.models import MountainHut
 from users.serializers import AuthorSerializer
 from touren.serializers import PictureSerializer
+from django.utils import timezone
+from pprint import pprint
 
 class HutSerializer(serializers.ModelSerializer):
         
@@ -10,6 +12,19 @@ class HutSerializer(serializers.ModelSerializer):
         image = PictureField()
         author = serializers.SerializerMethodField()
         position = serializers.SerializerMethodField()
+        open = serializers.SerializerMethodField()
+
+
+        def get_open(self, obj):
+                time = timezone.now()
+                month = str(time.month)
+
+                if month in obj.season:
+                        return 2
+                elif month in obj.offseason:
+                        return 1
+                else:
+                        return 0
 
         def get_position(self, obj):
                 pos = obj.position 
@@ -28,5 +43,5 @@ class HutSerializer(serializers.ModelSerializer):
         
         class Meta:
                 fields = ('id', 'name', 'position','image','text','overnight','altitude','hut_type','rating','slug','subtitle',
-                'telephone','website','email','slug','gallery','author')
+                'telephone','website','email','slug','gallery','author','season','offseason','open')
                 model = MountainHut

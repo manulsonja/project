@@ -64,8 +64,15 @@ export default function Landing() {
           </Grid>
         </Box>
       </Container>
+      <Container maxWidth="xl" style={{ marginBottom: '30px', paddingBottom: '30px', paddingTop: '30px', backgroundPosition: 'center top', backgroundSize: '100%', backgroundImage: `url(${MEDIA_URL}/media/footerbg.jpeg)`}}>
+
           <Tours props={newestTours}/>
+      </Container>
+      <Container maxWidth="xl" style={{ marginBottom: '30px',}}>
+
           <Tours props={currentTours}/>
+          </Container>
+
     </React.Fragment>
   );
 }

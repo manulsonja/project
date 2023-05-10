@@ -1,14 +1,15 @@
 import * as React from 'react';
 
 import Typography from '@mui/material/Typography';
-import axiosInstance from '../../utils/axios';
+import axiosInstance from '../../../utils/axios';
 import { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Gallery from '../../components/gallery.js';
+import Gallery from '../../../components/gallery.js';
 import { useParams } from 'react-router-dom';
-
+import InfoBox from './InfoBox.tsx';
+import DetailMap from './DetailMap.js';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SingleParking(props) {
+export default function SingleParking() {
 	const { slug } = useParams();
 	const classes = useStyles();
 	const [appState, setAppState] = useState({
@@ -59,26 +60,28 @@ export default function SingleParking(props) {
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
 	return (
-		<Container component="main" maxWidth="xl" className='tourArticle'>
+		<Container component="main" maxWidth="lg" className='tourArticle'>
 				<CssBaseline />
-					<Container maxWidth="sm">				
+					<Container maxWidth="lg">				
 				</Container>
-				<Container maxWidth="md">
+				<Container maxWidth="lg">
 					<Typography
 						component="h1"
-						variant="h2"
+						variant="h1"
 						align="center"
 						color="textPrimary"
 						gutterBottom>
 						{appState.posts.name}
 					</Typography>
 					
-					<Gallery props={appState.posts.gallery}/> 			
+					<Gallery props={appState.posts.gallery}/> 	
+					<InfoBox data={appState.posts} />		
+					<DetailMap position={appState.posts.position}/>		
 				</Container>
 			<div className={classes.heroContent}>
-				<Container maxWidth="md">		
+				<Container maxWidth="lg">		
 					<Typography
-						variant="h5"
+						variant="h6"
 						align="left"
 						color="textSecondary"
 						paragraph >

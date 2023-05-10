@@ -5,6 +5,8 @@ from users.models import NewUser
 from pictures.models import PictureField
 from django.utils.text import slugify
 from geography.models import Zone, Gebirge, Region
+from multiselectfield import MultiSelectField
+
 
 hut_type_options = (
         ('alm', 'Alm'),
@@ -22,7 +24,14 @@ rating_choices = [
         ("3","3"),
         ("4","4"),
         ("5","5"),]
-    
+
+season_multichoices = (
+        ('1','January'),
+        ('2','February'),('3','March'),('4','April'),
+        ('5','Mai'),('6','June'),('7','July'),
+        ('8','August'),('9','September'),('10','Octobre'),
+        ('11','November'),('12','Decembre'),
+    ) 
 
 def upload_to(instance, filename):
     return 'huts/{filename}'.format(filename=filename)
@@ -55,7 +64,9 @@ class MountainHut(models.Model):
         choices=rating_choices,
         default='1',
         blank=True)
-    
+    season = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
+    offseason = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
+
     region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name="huts", null=True)
     gebirge = models.ForeignKey(Gebirge,on_delete=models.CASCADE,related_name="huts", null=True)
 

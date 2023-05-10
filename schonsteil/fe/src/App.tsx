@@ -10,7 +10,7 @@
 	import Register from './sites/Auth/register.js';
 	import Login from './sites/Auth/login.js';
 	import SingleHut from './sites/SingleSites/SingleHut/SingleHut.js';
-	import SingleParking from './sites/SingleSites/singleParking.js';
+	import SingleParking from './sites/SingleSites/SingleParking/SingleParking.js';
 	import Landing from './sites/LandingPage.tsx';
 	import PrivateRoute from './utils/PrivateRoute';
 	import { ThemeProvider } from '@mui/material/styles';
@@ -22,7 +22,6 @@
 	import store from './store';
 	import Facebook from './sites/Auth/Facebook.js';
 	import Google from './sites/Auth/Google.js';
-	import SingleArticle from './sites/SingleSites/singleArticle.js';
 	import Dashboard from './dashboard/Dashboard.tsx';
 	import theme from './theme';
 	import Tours from './sites/ListViews/Tours.tsx';

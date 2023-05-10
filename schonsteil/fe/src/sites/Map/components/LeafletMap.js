@@ -6,6 +6,8 @@ import L from "leaflet";
 import { Link } from '@material-ui/core';
 import { MEDIA_URL } from "../../../SETTINGS";
 import { connect } from "react-redux";
+import { setmapbounds } from "../../../actions/map";
+import { useEffect } from "react";
 
 const icon = L.icon({
   iconUrl: MEDIA_URL + '/media/marker.png',
@@ -102,8 +104,8 @@ const renderLocationMarker = (locations) => {
       })
   )
 }
-function Leaflet({ props, offset}) {
-    const height_offset = offset + 112
+function Leaflet({ props, offset, setmapbounds}) {
+    const height_offset = offset + 112 + props.offset
     const position = [47.259659,11.400375]
     const screen = props.screen;
     const tours = props.state.posts;
@@ -117,17 +119,18 @@ function Leaflet({ props, offset}) {
     
     function MyComponent() {
       const map = useMap()
-      return null
-    }
-    
-    function MyComponentTwo() {
-      const map = useMapEvent('zoomanim', () => { console.log('zoom')
-      })
+      
+      const bounds = map.getBounds()
+      useEffect(() =>{
+        console.log('dfdf')
+      },[])
       return null
     }
     
     function MyComponentThree() {
-      const map = useMapEvent('mouseup', () => { console.log('mouseup')
+      const map = useMapEvent('mouseup', () => { 
+        const bounds = map.getBounds()
+        setmapbounds(bounds)
       })
       return null
     }
@@ -144,7 +147,6 @@ return (
           {renderLocationMarker(locations)}
 
     <MyComponent />
-    <MyComponentTwo />
     <MyComponentThree />
   </MapContainer>
 </div>  
@@ -152,7 +154,7 @@ return (
 const mapStateToProps = state => ({
 	offset: state.map.offset,
 	});
-export default connect(mapStateToProps, null)(Leaflet)
+export default connect(mapStateToProps, {setmapbounds})(Leaflet)
 
 /*     https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png
 https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"

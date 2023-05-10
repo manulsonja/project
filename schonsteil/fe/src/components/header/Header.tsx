@@ -134,6 +134,7 @@
 		setState({ ...state, [anchor]: open });
 		};
 	const theme = useTheme();
+
 	const matches = useMediaQuery(theme.breakpoints.up('sm'));
 	const classes = useStyles();
 

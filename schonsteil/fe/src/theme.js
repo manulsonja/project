@@ -1,14 +1,16 @@
-import { createTheme } from '@mui/material/styles';
-import { green, purple } from '@mui/material/colors';
+import { createTheme } from '@material-ui/core';
+import { green, purple, blue } from '@material-ui/core/colors';
 
 const theme = createTheme({
   palette: {
     primary: {
       main: purple[500],
+      light: '#FFDABC',
     },
     secondary: {
-      main: green[500],
+      main: '#FFFFF8',
     },
+ 
    
   },
   typography: {
@@ -20,7 +22,19 @@ const theme = createTheme({
         },
         h2: { fontSize: "24px",
         fontWeight: 700,
+      }, 
+
+      footer: {
+        fontWeight: 500,
+        fontSize: "24px",
+
       },
+      footerH1: {
+        fontWeight: 500,
+        fontSize: "28px",
+
+      }
+  
   },
 });
 

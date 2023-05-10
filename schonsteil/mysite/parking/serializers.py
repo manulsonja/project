@@ -21,5 +21,5 @@ class ParkingSerializer(serializers.ModelSerializer):
         def get_gallery(self,obj):
                 return PictureSerializer(obj.gallery.all(), many=True).data 
         class Meta:
-                fields = ('parkingtype', 'name', 'position','image','toilet','fees','slug','text','gallery')
+                fields = ('parkingtype', 'name','estate','ground_type','capacity', 'short_text','position','image','toilet','fees','slug','text','gallery')
                 model = Parking

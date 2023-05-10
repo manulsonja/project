@@ -15,12 +15,19 @@ import {  DIFFICULTY_SELECTION,
           SLIDER_RELOAD_VAR,
           D3_SELECTION,
           D3_INDEX,
-          D3_ELEVATION} from "./types";
+          D3_ELEVATION,
+          MAP_BOUNDS} from "./types";
 
 export const mapsearch = (searchstring) => dispatch => {
     dispatch({
         type: MAP_SEARCHSTRING,
         payload: searchstring,
+    });
+};
+export const setmapbounds = (bounds) => dispatch => {
+    dispatch({
+        type: MAP_BOUNDS,
+        payload: bounds,
     });
 };
 export const diffselection = (diff) => dispatch => {
