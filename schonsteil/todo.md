@@ -8,27 +8,34 @@ make categories global var
 
 hohe prioritaet
 0 social LOGIN BUGFIX
-1  geosearch implementieren
 2  pagination
 6  datenschutz erklaerung fuer cookies
 ----------------------------------
 
 2 mittlere prioritaet
 
+leaflet initial bounds
+kontakt drawer fuer huetten
+refactor diff selector menu 
+
+touren menue desktop
+    - schwierigkeit
+huetten menu geoeffnet
+
+sortieren nach filter
+hoehenprofil
 haversine ersetzen vincenty
-profile pages
-prerender templates
-profil formatierung auf single tour seite 
-karte ausblenden wenn kein track vorhanden 
-profilseite
-ganze karte fuer listenitems hyperlink
 
 3 irgendwann mal 
 
-modelle fuer huetten und parkplaetze
 eventuell aktuelle gefahrenmeldungen / kommentare
 login crud panels
 wrap components in loading components
+ganze karte fuer listenitems hyperlink
+profilseite
+prerender templates
+
+
 
 ============================================
 ============================================
@@ -42,6 +49,12 @@ erledigt
 karte bei single huette hinzufuegen
 hoehenprofil
 7  touren jahreszeiten oeffnungszeiten
+modelle fuer huetten und parkplaetze
+profil formatierung auf single tour seite 
+1  geosearch implementieren
+
+
+
 
 
 

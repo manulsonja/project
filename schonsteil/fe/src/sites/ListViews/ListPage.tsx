@@ -14,6 +14,7 @@ import { distancesetmax, durationsetmax, durationselection, elevationsetmax} fro
 import { Button, Collapse } from '@mui/material';
 import { Grid } from '@mui/material';
 import TourSlider from '../Map/components/MobileMenu/TourSlider.tsx';
+import DiffSelector from '../Map/components/DesktopMenu/DiffSelector.tsx';
 
 const drawerWidth = 150;
 
@@ -90,19 +91,17 @@ const Loading = () => {
 }
 const renderSlider = () => { return(
 	<React.Fragment>
-	<Button onClick={() => {setOpened(!opened)}} style={{marginLeft:'200px'}}>Sesam oeffne dich!</Button>
+	<Button onClick={() => {setOpened(!opened)}} style={{marginLeft:'200px'}}>Touren filtern!</Button>
 	<Collapse in={opened}>
 	<Box sx={{ marginLeft: '20px', marginRight: '20px', height: '200px'}}>
-	<Grid container>
-		<Grid item  md={6} lg={4} xs={12}>
+	<Grid container spacing={2}>
+		<Grid item  md={6}  xs={12}>
 		<TourSlider/>
 		</Grid>
-		<Grid item xs={4}>
-		item 2
+		<Grid item  md={6}  xs={12}>
+		<DiffSelector/>
 		</Grid> 
-		<Grid item xs={4}>
-		item 3
-		</Grid>
+		
 	</Grid>
 	</Box>
 	</Collapse>
@@ -112,7 +111,9 @@ const renderSlider = () => { return(
 return (
 <React.Fragment>  
 <Box className={classes.huttenliste} style={{marginLeft:(matches? '150px': null)}}>
-{ renderSlider()}
+{((type==='tour' && matches)?  renderSlider(): null)}
+
+
 {(!appState.posts || appState.posts.length === 0)? 'Starker Stuhlgang behindert die Rettungsarbeiten': Loading()}
 </Box>
 </React.Fragment>

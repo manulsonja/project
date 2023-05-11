@@ -9,6 +9,14 @@ import Link from '@material-ui/core/Link';
 import Rating from '@mui/material/Rating';
 import { Box } from '@material-ui/core';
 import { Typography } from '@mui/material';
+import PhoneIcon from '@mui/icons-material/Phone';
+import { useState } from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -23,13 +31,49 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function Huts(props) {
+    const [dialogeOpen, setDialogeOpen] = useState(false)
 	const classes = useStyles();
     const appState=props.props;
+
+
+const render_dialoge = () => {
+    return (
+     <React.Fragment>
+    <Dialog
+    open={dialogeOpen}
+    onClose={() => {setDialogeOpen(false)}}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">
+      {`Kontaktdaten ${dialogeOpen.hut_name}`}
+    </DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">
+        <ul>
+            <li>Telephone: {dialogeOpen.telephone}</li>
+            <li>Email: {dialogeOpen.email}</li>
+            <li>Website: {dialogeOpen.website}</li>
+
+        </ul>
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={() => {setDialogeOpen(false)}} autoFocus>
+        Schliessen
+      </Button>
+    </DialogActions>
+  </Dialog>
+  </React.Fragment>   
+  )
+}
 
 if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
   return (
     <React.Fragment>
+        {render_dialoge(appState.posts)}
         <Container component="main" maxWidth="xl">
             <Grid container spacing={2}>
                 {appState.posts.map((touren) => {
@@ -55,8 +99,14 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
                                     <Grid  xs={4}>
                                     <Rating name="read-only" value={touren.rating} readOnly  />  </Grid>
 
-                                    <Grid  xs={12}>
+                                    <Grid  xs={8}>
                                     <Box dangerouslySetInnerHTML={{__html: `${touren.subtitle}`}} />	
+                                    </Grid>
+                                    <Grid  xs={4}>
+                                    <PhoneIcon fontSize='large' onClick={() => {setDialogeOpen({'hut_name':touren.name, 
+                                                                                                'telephone':touren.telephone, 
+                                                                                                'email':touren.email, 
+                                                                                                'website':touren.website})}}/>
                                     </Grid>
                                     </Grid>          
                                 </CardContent>

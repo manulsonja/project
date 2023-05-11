@@ -126,9 +126,15 @@ function Leaflet({ props, offset, setmapbounds}) {
       },[])
       return null
     }
-    
+    function MyComponentTwo() {
+      const map = useMapEvent('zoomend', () => { 
+        const bounds = map.getBounds()
+        setmapbounds(bounds)
+      })
+      return null
+    } 
     function MyComponentThree() {
-      const map = useMapEvent('mouseup', () => { 
+      const map = useMapEvent('dragend', () => { 
         const bounds = map.getBounds()
         setmapbounds(bounds)
       })
@@ -147,6 +153,8 @@ return (
           {renderLocationMarker(locations)}
 
     <MyComponent />
+    <MyComponentTwo />
+
     <MyComponentThree />
   </MapContainer>
 </div>  

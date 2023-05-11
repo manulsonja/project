@@ -7,7 +7,6 @@ import {  diffselection,
           elevationselection, 
           sliderreload } from '../../../../actions/map';
 import Slider from '@mui/material/Slider';
-import { useEffect } from 'react';
 const TourSlider = ({duration, 
                     distance, 
                     reload_state, 
@@ -21,7 +20,6 @@ const TourSlider = ({duration,
                     durationselection,
                     tourtype}) => {
 
-useEffect(() => {  console.log('rerender')  },[tourtype]);          
   return (
     <React.Fragment>
        

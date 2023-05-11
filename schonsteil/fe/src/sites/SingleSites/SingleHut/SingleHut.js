@@ -11,7 +11,7 @@
 	import InfoBox from './InfoBox.tsx';
 	import DetailMap from './DetailMap.js';
 	import Season from '../Season.tsx';
-import OpenedWidget from './OpenedWidget';
+	import OpenedWidget from './OpenedWidget';
 
 	const useStyles = makeStyles((theme) => ({	
 	rating: {
@@ -35,6 +35,7 @@ import OpenedWidget from './OpenedWidget';
 		loading: false,
 		posts: null,
 	});
+	
 
 	useEffect(() => {
 		const url = 'huts/' + slug + '/'
@@ -49,7 +50,6 @@ import OpenedWidget from './OpenedWidget';
 		<Container component="main" maxWidth="lg" className={classes.tourArticle}>
 				<Container maxWidth="lg" xs={12}>
 				<OpenedWidget open={appState.posts.open}/>
-
 					<Typography
 						component="h1"
 						variant="h1"
@@ -59,9 +59,10 @@ import OpenedWidget from './OpenedWidget';
 						{appState.posts.name}
 					</Typography>
 						<div className={classes.rating}> 
-							<Rating name="read-only" value={appState.posts.rating} readOnly />			
+							<Rating name="read-only" value={appState.posts.rating} readOnly />	
+		
 						</div>
-					<Gallery props={appState.posts.gallery}/>			
+					<Gallery props={appState.posts.gallery}/>	
 				</Container>
 				
 				<Container maxWidth="lg">

@@ -214,7 +214,7 @@ PICTURES = {
     "FILE_TYPES": ["JPEG"],
     "PIXEL_DENSITIES": [1, 2],
 }
-PICTURES["USE_PLACEHOLDERS"] = True
+PICTURES["USE_PLACEHOLDERS"] = False
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -244,4 +244,8 @@ DJOSER = {
         'user_delete': 'users.serializers.UserCreateSerializer',
     }
 }
+
+GEOIP_PATH =os.path.join(BASE_DIR, 'geoip')
+GEOIP_COUNTRY = 'country.mmdb'
+GEOIP_CITY = 'city.mmdb'
 

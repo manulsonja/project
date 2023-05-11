@@ -2,6 +2,9 @@ import gpxpy
 import gpxpy.gpx
 from django.contrib.gis.geos import Point, LineString
 import math
+from django.contrib.gis.geos import Polygon
+from django.contrib.gis.geos import Point
+
 # Parsing an existing file:
 # -------------------------
 
@@ -69,3 +72,17 @@ def naive_elevation(linestring):
     # There are many more utility methods and functions:
     # You can manipulate/add/remove tracks, segments, points, waypoints and routes and
     # get the GPX XML file from the resulting object:
+
+
+def leafletBoundsToPoly(bounds):
+            ne = bounds['_northEast']
+            sw = bounds['_southWest']
+
+            west = float(sw['lng'])
+            east = float(ne['lng'])
+
+            north = float(ne['lat'])
+            south = float(sw['lat'])
+  
+            geom = Polygon(( (north, west), (north, east), (south, east),(south, west),(north, west)))
+            return geom

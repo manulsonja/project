@@ -53,7 +53,7 @@ const Tours = ({tourtype, hardness, distance, duration, elevation, reload_state}
             const qs = '/touren/touren/?tourtypes='+tourtype+'&search=&diff='+hardness+'&dist='+distance+'&dur='+duration+'&ele='+elevation;           
             setUrl(qs);
         } 
-      },[reload_state, tourtype]);
+      },[reload_state, tourtype, hardness]);
   
   return (
     <React.Fragment>

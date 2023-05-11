@@ -7,11 +7,8 @@ from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, IsAuthenti
 from rest_framework import filters
 from rest_framework import pagination
 from django.db.models import Max
-from rest_framework.response import Response
-from pprint import pprint
-import json
-from django.contrib.gis.geos import Polygon
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geoip2 import GeoIP2
+from utils.parser.parse import leafletBoundsToPoly
 
 class CustomPagination(pagination.CursorPagination):
     page_size = 12
@@ -40,31 +37,16 @@ class ViewTouren(viewsets.ModelViewSet):
     def create(self, request):
         qs = self.get_queryset()
         try:
-            ne = request.data['mapbounds']['_northEast']
-            sw = request.data['mapbounds']['_southWest']
-
-            west = float(sw['lng'])
-            east = float(ne['lng'])
-
-            north = float(ne['lat'])
-            south = float(sw['lat'])
-  
-            geom = Polygon(( (north, west), (north, east), (south, east),(south, west),(north, west)))
-            print("geom")
-
+            bounds = request.data['mapbounds']
+            geom = leafletBoundsToPoly(bounds)
             qs = qs.filter(track__intersects=geom)
             
         except:
             pass
-        results = []
-        
-        for q in qs:
-            entry = TourSerializer(q).data
-            results.append(entry)
-        resp = {
-            "results": results
-        }
-        return Response(resp)
+
+        result_page = self.paginate_queryset(qs)
+        serializer = TourSerializer(result_page, many=True)
+        return self.get_paginated_response(serializer.data)
 
     def get_queryset(self):
         try:
@@ -74,7 +56,6 @@ class ViewTouren(viewsets.ModelViewSet):
             duration_touple =  self.request.query_params.get('dur', None)
             elevation_touple =  self.request.query_params.get('ele', None)
   
-
             if diff:
                 diff = diff.split(',')
             if tourtype:
@@ -104,8 +85,6 @@ class ViewTouren(viewsets.ModelViewSet):
                 elevation_array = elevation_touple.split(',')
                 lower = elevation_array[0]
                 upper = elevation_array[1]  
-                print(lower)
-                print(upper)
                 qs = qs.filter(elevation_gain__gte=lower, elevation_gain__lte=upper)
         except:
             print('exception api/views.py line 72 Probably insufficient or no query params provided but required for filtering in django')
@@ -163,7 +142,6 @@ class ViewHaF(viewsets.ModelViewSet):
     # Define Custom Queryset
     def get_queryset(self):
         return HikeAndFly.objects.all()
-
 
 class ViewKlettertour(viewsets.ModelViewSet):
 

@@ -39,16 +39,9 @@ import TourSlider from './TourSlider.tsx';
 
 const TourMenuStatic = ({ diffselection, 
                     tourselection,
-                    durationselection,
-                    distanceselection,
-                    elevationselection,
                     tourtype, 
                     hardness, 
-                    elevation, 
-                    duration, 
-                    distance,
-                    distance_max,
-                    duration_max,}) => {
+                 }) => {
 
   const tour_arr = ['Wandern','Hochtour','Klettertour','Hike and Fly','Skitour']
   const tourbuttons = ['wd.jpeg','ht.jpeg','kl.jpeg','hikeandfly1.jpeg','st.jpeg']

@@ -3,6 +3,7 @@ import React from 'react'
 
 const renderOpen = () => {
     return(
+    <div style={{float: 'left', width: '100%'}}>
     <div style={{ 
                 float: 'left',
                 backgroundColor: '#16A30B', 
@@ -11,11 +12,13 @@ const renderOpen = () => {
                 padding: '2px 10px'}}>
             Geoeffnet
     </div>
+    </div>
     )
 }
 
 const renderUncertain = () => {
     return(
+    <div style={{float: 'left', width: '100%'}}>
     <div style={{
                 float: 'left',
                 backgroundColor: '#d3d3d3', 
@@ -23,11 +26,15 @@ const renderUncertain = () => {
                 padding: '2px 10px'}}>
             Vielleicht Geoeffnet
     </div>
+    </div>
+
     )
 }
 
 const renderClosed = () => {
     return(
+    <div style={{float: 'left', width: '100%'}}>
+
     <div style={{
                 float: 'left',
                 backgroundColor: 'red', 
@@ -36,6 +43,8 @@ const renderClosed = () => {
                 padding: '2px 10px'}}>
             Geschlossen
     </div>
+    </div>
+
     )
 }
 
