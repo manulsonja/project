@@ -50,7 +50,7 @@ useEffect(() => {
 		name_array=names
 	}
 	else name_array=tourtype;
-	const url = "touren/touren/"+query_string+name_array+search_querystring+searchphrase+diff_querystring+hardness
+	const url = "touren/touren/filter/"
 	const config = {
         headers: {
             'Content-Type': 'application/json'

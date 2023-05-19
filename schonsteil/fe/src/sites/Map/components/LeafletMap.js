@@ -15,7 +15,7 @@ const icon = L.icon({
   iconAnchor: [13,41]
 });
 const hutIcon = L.icon({
-  iconUrl: MEDIA_URL + '/media/hut.png',
+  iconUrl: MEDIA_URL + '/media/ressources/mapIcons/hutMarker.png',
   iconSize: [32,32],
   iconAnchor: [16,32]
 });

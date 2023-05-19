@@ -9,6 +9,9 @@ import Link from '@material-ui/core/Link';
 import Rating from '@mui/material/Rating';
 import { Box } from '@material-ui/core';
 import { Typography } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Tours(props) {
-
-
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
 	const classes = useStyles();
     const appState=props.props;
 
-if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
+if ((!appState.posts || appState.posts.length === 0) ) return (
+<div style={{float:'left', width:'100%', textAlign:'center'}}><h2>Keine Touren gefunden.</h2></div>);
   return (
     <React.Fragment>
         <Container component="main" maxWidth="xl">
@@ -56,7 +60,13 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
                                     </Typography>
                                     </Grid>
                                     <Grid  xs={4}>
-                                    <Rating name="read-only" value={touren.rating} readOnly  />  </Grid>
+
+                                    {(matches? <Rating name="read-only" value={touren.rating} readOnly  />  
+                                    : <Rating name="read-only" value={touren.rating} readOnly size="small"  />  )}
+                                    
+                                                                        
+                                    
+                                    </Grid>
 
                                     <Grid  xs={12}>
                                     <Box dangerouslySetInnerHTML={{__html: `${touren.subtitle}`}} />	

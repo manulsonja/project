@@ -215,7 +215,7 @@
 		return(
 			<React.Fragment>
 					<Link to="/dashboard">
-							<div style={{color:'white'}}>Hallo, {user.first_name}</div>
+							<div style={{color:'white'}}>Hallo! {/* {user.first_name} */}</div>
 					</Link>
 					<Button
 						href="#"

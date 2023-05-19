@@ -25,23 +25,23 @@ const NavButtons = () => {
     <Grid container>
         <Grid item xs={6} >
         <ButtonBase onClick={() => navigate('/tours')}>        
-        <img className={classes.navImage} src={`${process.env.REACT_APP_API_URL}/media/touren.jpeg`}></img>
+        <img className={classes.navImage} src={`${process.env.REACT_APP_API_URL}/media/ressources/navButtons/touren.jpeg`}></img>
         </ButtonBase>
         </Grid>
         <Grid item xs={6} >
         <ButtonBase onClick={() => navigate('/huts')}>        
-        <img className={classes.navImage} src={`${process.env.REACT_APP_API_URL}/media/hutten.jpeg`}></img>
+        <img className={classes.navImage} src={`${process.env.REACT_APP_API_URL}/media/ressources/navButtons/huetten.jpeg`}></img>
         </ButtonBase> 
         </Grid>
         <Grid item xs={6}>
         <ButtonBase onClick={() => navigate('/parking')}>        
-        <img className={classes.navImage} src={`${process.env.REACT_APP_API_URL}/media/locations.jpeg`}></img>
+        <img className={classes.navImage} src={`${process.env.REACT_APP_API_URL}/media/ressources/navButtons/locations.jpeg`}></img>
         </ButtonBase> 
         </Grid>
        
         <Grid item xs={6} >
         <ButtonBase onClick={() => navigate('/map')}>        
-        <img className={classes.navImage} src={`${process.env.REACT_APP_API_URL}/media/karte.jpeg`}></img>
+        <img className={classes.navImage} src={`${process.env.REACT_APP_API_URL}/media/ressources/navButtons/karte.jpeg`}></img>
         </ButtonBase>
         </Grid>
  

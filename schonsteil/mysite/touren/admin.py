@@ -10,30 +10,9 @@ class WandernAdmin(admin.ModelAdmin):
     exclude=('track',)
     readonly_fields=('distance','geojson_track','elevation_gain',)
     inlines = [PhotoAdmin]
-
-class SkitourAdmin(admin.ModelAdmin):
-    model = Skitour
-    exclude=('track',)
-    readonly_fields=('distance','geojson_track','elevation_gain',)
-    inlines = [PhotoAdmin]
-class HikeAndFlyAdmin(admin.ModelAdmin):
-    model = HikeAndFly
-    exclude=('track',)
-    readonly_fields=('distance','geojson_track','elevation_gain',)
-    inlines = [PhotoAdmin]
-class KlettertourAdmin(admin.ModelAdmin):
-    model = Klettertour
-    exclude=('track',)
-    readonly_fields=('distance','geojson_track','elevation_gain',)
-    inlines = [PhotoAdmin]
-class HochtourAdmin(admin.ModelAdmin):
-    model = Hochtour
-    exclude=('track',)
-    readonly_fields=('distance','geojson_track','elevation_gain',)
-    inlines = [PhotoAdmin]
     fields = (
         ('title','rating',),
-        'subtitle',
+        ('subtitle','tour_duration'),
         'gpxfile',
         'image',
         ('fitness_difficulty','tech_difficulty', 'region'),
@@ -41,6 +20,29 @@ class HochtourAdmin(admin.ModelAdmin):
         'text',
         'author',
     )
+
+class SkitourAdmin(WandernAdmin):
+    model = Skitour
+
+class HikeAndFlyAdmin(WandernAdmin):
+    model = HikeAndFly
+ 
+class KlettertourAdmin(WandernAdmin):
+    model = Klettertour
+    fields = (
+        ('title','rating',),
+        ('subtitle','tour_duration'),
+        'gpxfile',
+        'image',
+        ('climbing_grade','protection', 'region'),
+        ('season', 'offseason'),
+        'text',
+        'author',
+    )
+
+class HochtourAdmin(WandernAdmin):
+    model = Hochtour
+
 admin.site.register(Klettertour, KlettertourAdmin)
 admin.site.register(Skitour,SkitourAdmin)
 admin.site.register(Wandern, WandernAdmin)

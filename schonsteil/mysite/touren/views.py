@@ -3,14 +3,22 @@ from .serializers import *
 from rest_framework import viewsets
 from rest_framework import filters
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions
+from rest_framework.permissions import AllowAny
 from rest_framework import filters
 from rest_framework import pagination
 from django.db.models import Max
 from django.contrib.gis.geoip2 import GeoIP2
 from utils.parser.parse import leafletBoundsToPoly
+from rest_framework.decorators import action
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from datetime import timedelta
 
 class CustomPagination(pagination.CursorPagination):
+    page_size = 12
+    cursor_query_param = 'c'
+    ordering = '-created'
+    
+class SearchPagination(pagination.CursorPagination):
     page_size = 12
     cursor_query_param = 'c'
     ordering = '-created'
@@ -33,64 +41,102 @@ class ViewTouren(viewsets.ModelViewSet):
         return get_object_or_404(Tour, slug=item)
 
     # Define Custom Queryset
-        
-    def create(self, request):
+
+    @action(methods=['post'], detail=False, permission_classes=[AllowAny], url_path='tour-filter') 
+    def filter(self, request):
+        self.tourtypes = request.data.get('tourtypes', None)
+        self.diff = request.data.get('difficulty', None)
+        self.q = request.data.get('searchstring', None)
+        # if filters exist get them
+        self.dist = request.data.get('distance', None)
+        self.dur = request.data.get('duration', None)
+        self.ele = request.data.get('elevation', None)
+
         qs = self.get_queryset()
-        try:
-            bounds = request.data['mapbounds']
-            geom = leafletBoundsToPoly(bounds)
-            qs = qs.filter(track__intersects=geom)
-            
-        except:
-            pass
+
+   
+        if self.q:
+            """  self.pagination_class = SearchPagination
+            vector = SearchVector('title','subtitle', weight="A") + SearchVector('text', weight="B")
+            query = SearchQuery(q) """
+            qs = qs.filter(title__icontains=self.q)
 
         result_page = self.paginate_queryset(qs)
         serializer = TourSerializer(result_page, many=True)
-        return self.get_paginated_response(serializer.data)
+        response =  self.get_paginated_response(serializer.data)
+        response.data['duration_slider'] = self.duration_slider
+        response.data['distance_slider'] = self.distance_slider
+        response.data['elevation_slider'] = self.elevation_slider
+        return response 
+    @action(methods=['post'], detail=False, permission_classes=[AllowAny], url_path='filter') 
+    def filtered(self, request):
+        self.tourtypes = request.data['tourtypes']
+        self.diff = request.data['difficulty']
+        self.bounds = request.data['mapbounds']
+        self.q = request.data['searchstring']
+        # if filters exist get them
+        self.dist = request.data.get('distance', None)
+        self.dur = request.data.get('duration', None)
+        self.ele = request.data.get('elevation', None)
 
-    def get_queryset(self):
+        qs = self.get_queryset()
+
+   
         try:
-            diff = self.request.query_params.get('diff', None)
-            tourtype = self.request.query_params.get('tourtypes', None) 
-            distance_touple =  self.request.query_params.get('dist', None)
-            duration_touple =  self.request.query_params.get('dur', None)
-            elevation_touple =  self.request.query_params.get('ele', None)
-  
-            if diff:
-                diff = diff.split(',')
-            if tourtype:
-                tourtype = tourtype.split(',')
-            
-            qs = Tour.tourobjects.all()
-            if diff:
-                qs = qs.filter(difficulty__in=diff)
-            if tourtype:
-                qs = qs.filter(tourtype__in=tourtype)
-            self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
-            self.duration_slider = qs.aggregate(Max('tour_duration')).get('tour_duration__max')
-            self.elevation_slider = qs.aggregate(Max('elevation_gain')).get('elevation_gain__max')
-          
-            if distance_touple:
-                distance_array = distance_touple.split(',')
-                lower = distance_array[0]
-                upper = distance_array[1]              
-                qs = qs.filter(distance__gte=lower, distance__lte=upper)
-            
-            if duration_touple:
-                duration_array = duration_touple.split(',')
-                lower = duration_array[0]
-                upper = duration_array[1]  
-                qs = qs.filter(tour_duration__gte=lower, tour_duration__lte=upper)
-            if elevation_touple:
-                elevation_array = elevation_touple.split(',')
-                lower = elevation_array[0]
-                upper = elevation_array[1]  
-                qs = qs.filter(elevation_gain__gte=lower, elevation_gain__lte=upper)
+            geom = leafletBoundsToPoly(bounds)
+            qs = qs.filter(track__intersects=geom)
+        
         except:
-            print('exception api/views.py line 72 Probably insufficient or no query params provided but required for filtering in django')
-            pass 
+            pass
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
+            pass
+            """ self.pagination_class = SearchPagination
+            vector = SearchVector('title','subtitle', weight="A") + SearchVector('text', weight="B")
+            query = SearchQuery(q)
+            qs = qs.annotate(rank=SearchRank(vector, query, cover_density=True)).order_by('-rank') """
+
+        result_page = self.paginate_queryset(qs)
+        serializer = TourSerializer(result_page, many=True)
+        response =  self.get_paginated_response(serializer.data)
+        response.data['duration_slider'] = self.duration_slider
+        response.data['distance_slider'] = self.distance_slider
+        response.data['elevation_slider'] = self.elevation_slider
+        return response 
+    def get_queryset(self):
+        print('getting queryset')
+  
+         
+        qs = Tour.tourobjects.all()
+        if self.diff:
+            qs = qs.filter(difficulty__in=self.diff)
+        if self.tourtypes:
+            qs = qs.filter(tourtype__in=self.tourtypes)
+        self.distance_slider = qs.aggregate(Max('distance')).get('distance__max')
+        self.duration_slider = qs.aggregate(Max('tour_duration')).get('tour_duration__max')
+        self.elevation_slider = qs.aggregate(Max('elevation_gain')).get('elevation_gain__max')
+          
+        qs = self.apply_filters(qs)
+
         
         return qs
+    
+    def apply_filters(self, qs):
+            if self.dist:
+                lower = self.dist[0]
+                upper = self.dist[1] 
+                qs = qs.filter(distance__gte=lower, distance__lte=upper)
+            
+            if self.dur:
+                lower = timedelta(minutes=self.dur[0])
+                upper = timedelta(minutes=self.dur[1]) 
+                qs = qs.filter(tour_duration__gte=lower, tour_duration__lte=upper)
+            if self.ele:
+                lower = self.ele[0]
+                upper = self.ele[1]  
+                qs = qs.filter(elevation_gain__gte=lower, elevation_gain__lte=upper)
+
+            return qs
     
 class ViewHochtouren(viewsets.ModelViewSet):
     queryset = Hochtour.tourobjects.all()

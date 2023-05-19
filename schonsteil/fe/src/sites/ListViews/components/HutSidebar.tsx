@@ -35,8 +35,8 @@ const useStyles = makeStyles({
 
 const HutSidebar = ({huttype, huttypeselection}) => {
 
-const cat_arr = ['Huette','Alm','Gasthof']
-const buttons = ['huette.jpeg','alm.jpeg','gh.jpeg']
+const cat_arr = ['huette','alm','gasthof']
+const buttons = ['huette.jpeg','alm.jpeg','gasthof.jpeg']
 
 const classes = useStyles();
 
@@ -75,7 +75,7 @@ function ToggleImage(data) {
 
    { 
    cat_arr.map((item, i) => {
-            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
+            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/ressources/navButtons/${buttons[i]}")`
            return(ToggleImage({'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
      }
     

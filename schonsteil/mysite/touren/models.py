@@ -25,6 +25,17 @@ diff_choices = [
         ("mittel","MITTEL"),
         ("schwierig","SCHWIERIG"),
        ]
+alpine_diff_choices = [
+        (0,"F-"),
+        (1,"F"),
+        (2,"F+"),
+        (3,"PD-"),
+        (4,"PD"),
+        (5,"PD+"),
+        (6,"AD-"),
+        (7,"AD"),
+        (8,"AD+-"),
+       ]
 season_multichoices = (
         ('1','January'),
         ('2','February'),('3','March'),('4','April'),
@@ -47,15 +58,15 @@ def upload_to(instance, filename):
   
 class Tour(models.Model):
 
+    class TourObjects(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset() .filter(status='published')
+
     tour_duration = models.DurationField(null=True)
     gpxfile = models.FileField(upload_to='files', null=True)
     track = models.LineStringField(null=True, dim=3, srid=4326)
     geojson_track = models.TextField(null=True)
     tourtype = models.CharField(max_length=30, editable=False)
-    
-    class TourObjects(models.Manager):
-        def get_queryset(self):
-            return super().get_queryset() .filter(status='published')
     
     distance = models.IntegerField(null=True)
     elevation_gain = models.FloatField(null=True)
@@ -131,7 +142,7 @@ class Klettertour(Tour):
     for grade in grades_choices:
         g_choices.append((grade[1],grade[0]))
 
-    climbing_grades=models.IntegerField(
+    climbing_grade=models.IntegerField(
         choices=g_choices,
         default=1,)
 
@@ -141,15 +152,17 @@ class Klettertour(Tour):
 
     topo = models.ImageField("topo", upload_to=upload_to, default='topo/default.jpg')
     def save(self, *args, **kwargs):
+        if(self.climbing_grade <12):
+            self.difficulty = 'leicht'
+        elif(self.climbing_grade <21):
+            self.difficulty = 'mittel'
+        else:
+            self.difficulty = 'schwierig'
+
         self.tourtype = "Klettern"
         super().save(*args, **kwargs)
 
 class Skitour(Tour):
-    def save(self, *args, **kwargs):
-        self.tourtype = "Schitour"
-        super().save(*args, **kwargs)
-
-class Hochtour(Tour):
     fitness_difficulty = models.CharField(
         max_length=10,
         choices=diff_choices,
@@ -165,21 +178,69 @@ class Hochtour(Tour):
             self.difficulty = 'mittel'
         else:
             self.difficulty = 'leicht'
-            print('heureeeka')
 
-        print(self.difficulty)
-        print(self.fitness_difficulty)
-        print(self.tech_difficulty)
+        sel
+        self.tourtype = "Schitour"
+        super().save(*args, **kwargs)
+
+class Hochtour(Tour):
+    fitness_difficulty = models.CharField(
+        max_length=10,
+        choices=diff_choices,
+        default='schwierig',)
+    tech_difficulty = models.IntegerField(
+        choices=alpine_diff_choices,
+        default='schwierig',)
+    def save(self, *args, **kwargs):
+        if self.tech_difficulty == 'schwierig' or self.fitness_difficulty == 'schwierig':
+            self.difficulty = 'schwierig' 
+        elif self.tech_difficulty =='mittel' or self.fitness_difficulty == 'mittel':
+            self.difficulty = 'mittel'
+        else:
+            self.difficulty = 'leicht'
+
         self.tourtype = "Hochtour"
         super().save(*args, **kwargs)
 
 class Wandern(Tour):
-    def save(self, *args, **kwargs):  
+    fitness_difficulty = models.CharField(
+        max_length=10,
+        choices=diff_choices,
+        default='schwierig',)
+    tech_difficulty = models.CharField(
+        max_length=10,
+        choices=diff_choices,
+        default='schwierig',)
+    def save(self, *args, **kwargs):
+        if self.tech_difficulty == 'schwierig' or self.fitness_difficulty == 'schwierig':
+            self.difficulty = 'schwierig' 
+        elif self.tech_difficulty =='mittel' or self.fitness_difficulty == 'mittel':
+            self.difficulty = 'mittel'
+        else:
+            self.difficulty = 'leicht'
+ 
         self.tourtype = "Wandern"
         super().save(*args, **kwargs)
 
 class HikeAndFly(Tour):
+    
+    fitness_difficulty = models.CharField(
+        max_length=10,
+        choices=diff_choices,
+        default='schwierig',)
+    tech_difficulty = models.CharField(
+        max_length=10,
+        choices=diff_choices,
+        default='schwierig',)
     def save(self, *args, **kwargs):
+        if self.tech_difficulty == 'schwierig' or self.fitness_difficulty == 'schwierig':
+            self.difficulty = 'schwierig' 
+        elif self.tech_difficulty =='mittel' or self.fitness_difficulty == 'mittel':
+            self.difficulty = 'mittel'
+        else:
+            self.difficulty = 'leicht'
+
+        sel
         self.tourtype = "Hike and Fly"
         super().save(*args, **kwargs)
 

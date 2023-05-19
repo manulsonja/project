@@ -17,6 +17,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -32,7 +35,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
 export default function Huts(props) {
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
     const [dialogeOpen, setDialogeOpen] = useState(false)
 	const classes = useStyles();
     const appState=props.props;
@@ -55,7 +62,15 @@ const render_dialoge = () => {
         <ul>
             <li>Telephone: {dialogeOpen.telephone}</li>
             <li>Email: {dialogeOpen.email}</li>
-            <li>Website: {dialogeOpen.website}</li>
+            <li>          
+            <Button                
+                target="_blank"
+                component="a"
+                href= {`http://${dialogeOpen.website}`}
+                rel="noreferrer">
+                {dialogeOpen.website}
+                </Button>
+            </li>
 
         </ul>
       </DialogContentText>
@@ -70,7 +85,7 @@ const render_dialoge = () => {
   )
 }
 
-if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
+if ((!appState.posts || appState.posts.length === 0) ) return <p>Keine Huetten gefunden.</p>;
   return (
     <React.Fragment>
         {render_dialoge(appState.posts)}
@@ -97,16 +112,35 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
                                     </Typography>
                                     </Grid>
                                     <Grid  xs={4}>
-                                    <Rating name="read-only" value={touren.rating} readOnly  />  </Grid>
+
+                                    {(matches? <Rating name="read-only" value={touren.rating} readOnly  />  
+                                    : <Rating name="read-only" value={touren.rating} readOnly size="small"  />  )}
+                                    
+                                    
+                                    
+                                    </Grid>
 
                                     <Grid  xs={8}>
                                     <Box dangerouslySetInnerHTML={{__html: `${touren.subtitle}`}} />	
                                     </Grid>
                                     <Grid  xs={4}>
-                                    <PhoneIcon fontSize='large' onClick={() => {setDialogeOpen({'hut_name':touren.name, 
+
+
+                                    {(matches?    <PhoneIcon fontSize='large' onClick={() => {setDialogeOpen({'hut_name':touren.name, 
                                                                                                 'telephone':touren.telephone, 
                                                                                                 'email':touren.email, 
                                                                                                 'website':touren.website})}}/>
+
+                                    :    <PhoneIcon  onClick={() => {setDialogeOpen({'hut_name':touren.name, 
+                                            'telephone':touren.telephone, 
+                                            'email':touren.email, 
+                                            'website':touren.website})}}/> )}
+                                    
+                                    
+
+
+
+                                 
                                     </Grid>
                                     </Grid>          
                                 </CardContent>

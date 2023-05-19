@@ -22,7 +22,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import { lightBlue } from '@mui/material/colors'
+
 function Header({ logout, isAuthenticated, user }) {
 	const [state, setState] = React.useState({
 		top: false,
@@ -40,6 +40,11 @@ function Header({ logout, isAuthenticated, user }) {
 		
 		},
 		link: {
+			color: 'black',
+			margin: theme.spacing(1, 1.5), 
+
+		},
+		mlink: {
 			color: 'white',
 			margin: theme.spacing(1, 1.5), 
 
@@ -56,6 +61,7 @@ function Header({ logout, isAuthenticated, user }) {
 			color: 'black',
 			margin: theme.spacing(1, 1.5), 
 		},	
+	
 }));
 
 	const list = (anchor: Anchor) => (
@@ -169,6 +175,32 @@ function Header({ logout, isAuthenticated, user }) {
 					</Button>
 		</React.Fragment>
 	)};
+	const mobileGuestLinks = () => {
+		return(
+		<React.Fragment>
+		<nav 
+	>
+						<Link
+							color="textPrimary"
+							href="#"
+							className={classes.mlink}
+							component={NavLink}
+							to="/register"
+						>
+							Register
+						</Link>
+					</nav>
+					<Button
+						color="primary"
+						variant="outlined"
+						className={classes.mlink}
+						component={NavLink}
+						to="/login"
+					>
+						Login
+					</Button>
+		</React.Fragment>
+	)};
 
 	function MobileAppbar() {
 		return (
@@ -190,23 +222,21 @@ function Header({ logout, isAuthenticated, user }) {
 				<IconButton
 					size="large"
 					edge="start"
-					color="inherit"
 					aria-label="menu"
-					sx={{ mr: 2 }}
+					sx={{ mr: 2 , color: 'white'}}
+	
 					onClick={toggleDrawer("bottom", true)}
 				>
 					<MenuIcon />
 				</IconButton>
 				<Link
 							color="textPrimary"
-							href="#"
-							className={classes.link}
-							component={NavLink}
+							className={classes.mlink}
 							to="/"
 						>
 							Home
 						</Link>
-				{(isAuthenticated && user)? authLinksMobile() :  guestLinks()}
+				{(isAuthenticated && user)? authLinksMobile() :  mobileGuestLinks()}
 
 				</Toolbar>
 			</AppBar>
@@ -228,7 +258,7 @@ function Header({ logout, isAuthenticated, user }) {
 						Logout
 					</Button>
 					<Link to="/dashboard" className={classes.fullLink}>
-					<div>Hallo, {user.first_name}</div>
+					<div>Hallo! {/* {user.first_name} */}</div>
 					</Link>
 			</React.Fragment>
 		)  
@@ -246,8 +276,8 @@ function Header({ logout, isAuthenticated, user }) {
 					>
 						Logout
 					</Button>
-					<Link to="/dashboard" className={classes.link}>
-					<div>Hallo, {user.first_name}</div>
+					<Link to="/dashboard" className={classes.mlink}>
+					<div>Hallo!{/*  {user.first_name} */}</div>
 					</Link>
 			</React.Fragment>
 		)  
@@ -283,37 +313,25 @@ function Header({ logout, isAuthenticated, user }) {
 					</Typography>
 					
 						<Link
-							color="textPrimary"
-							href="#"
 							className={classes.fullLink}
-							component={NavLink}
 							to="/map"
 						>
 							Karte
 						</Link>
 						<Link
-							color="textPrimary"
-							href="#"
 							className={classes.fullLink}
-							component={NavLink}
 							to="/tours"
 						>
 							Touren
 						</Link>
 						<Link
-							color="textPrimary"
-							href="#"
 							className={classes.fullLink}
-							component={NavLink}
 							to="/huts"
 						>
 							Huetten
 						</Link>
 						<Link
-							color="textPrimary"
-							href="#"
 							className={classes.fullLink}
-							component={NavLink}
 							to="/parking"
 						>
 							Locations

@@ -140,10 +140,16 @@ export const checkAuthenticated = () => async dispatch => {
                 dispatch({
                     type: AUTHENTICATED_FAIL
                 });
+                dispatch({
+                    type: LOGOUT
+                });
             }
         } catch (err) {
-            dispatch({
+                  dispatch({
                 type: AUTHENTICATED_FAIL
+            });
+            dispatch({
+                type: LOGOUT
             });
         }
 

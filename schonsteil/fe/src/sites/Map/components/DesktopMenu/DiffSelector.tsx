@@ -10,8 +10,7 @@ import { List } from '@mui/material';
 import Slider from '@mui/material/Slider';
 
 
-const tour_arr = ['Wandern','Hochtour','Klettertour','Hike and Fly','Skitour']
-  const tourbuttons = ['wd.jpeg','ht.jpeg','kl.jpeg','hikeandfly1.jpeg','st.jpeg']
+const tour_arr = ['Wandern','Hochtour','Klettern','Hike and Fly','Skitour']
   const diff_arr = ['leicht', 'mittel', 'schwierig']
   const diff_colors = ['blue', 'red', 'black']
 

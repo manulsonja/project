@@ -38,31 +38,36 @@ def upload_to(instance, filename):
 
 class MountainHut(models.Model): 
 
+    class HutObjects(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset() .filter(status='published')
+
     name = models.CharField(max_length=30)
-    subtitle = models.CharField(max_length=150, blank=True, null=True)
-    text =  tinymce_models.HTMLField(blank=True, null=True)
+    subtitle = models.CharField(max_length=150, null=True)
+    text =  tinymce_models.HTMLField( null=True)
    
     telephone = models.CharField(max_length=20, blank=True, null=True)
     email = models.CharField(max_length=50,blank=True, null=True)  
     website = models.CharField(max_length=50, blank=True, null=True)
     overnight = models.BooleanField(null=True, blank=True)
+
     # Oeffnungszeiten
-    position = models.PointField(blank=True, null=True)  
-    altitude = models.IntegerField(blank=True, null=True)   
+    position = models.PointField(null=True)  
+    altitude = models.IntegerField(null=True)   
  
     image = PictureField("Image", upload_to=upload_to, default='tour/default.jpg', aspect_ratios=["16/9"])
     created = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
         NewUser, on_delete=models.CASCADE, related_name='hut_posts') 
     status = models.CharField(
-        max_length=10, choices=options, default='published')
+        max_length=10, choices=options, default='draft')
     
     hut_type = models.CharField(
         max_length=10, choices=hut_type_options, default='Huette')
     rating = models.CharField(
         max_length=1,
         choices=rating_choices,
-        default='1',
+        default='3',
         blank=True)
     season = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
     offseason = MultiSelectField(choices=season_multichoices, max_length=100, default=None)
@@ -72,6 +77,10 @@ class MountainHut(models.Model):
 
 
     slug = models.SlugField(max_length=250, unique_for_date='created', editable=False, null=True)
+
+    objects = models.Manager()  # default manager
+    hutobjects = HutObjects()  # custom manager
+
     class Meta:
         ordering = ('-created',)
     def __str__(self):

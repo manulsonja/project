@@ -14,10 +14,9 @@ const theme = createTheme({
    
   },
   typography: {
-  
     fontFamily: 'Raleway',
     fontWeight: 300,
-         h1: { fontSize: "30px",
+        h1: { fontSize: "30px",
           fontWeight: 800,
         },
         h2: { fontSize: "24px",
@@ -33,7 +32,16 @@ const theme = createTheme({
         fontWeight: 500,
         fontSize: "28px",
 
-      }
+      },
+      infobox: {
+        fontWeight: 700,
+        fontSize: "20px",
+      },
+    
+      articleTitle: {
+        fontWeight: 800,
+       },
+      
   
   },
 });

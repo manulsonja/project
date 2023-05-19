@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from touren.models import Tour, Hochtour, Wandern, Klettertour, HikeAndFly, Skitour
 from pictures.contrib.rest_framework import PictureField
-from pictures.contrib.rest_framework import PictureField
 from users.serializers import AuthorSerializer
 
 class PictureSerializer(serializers.Serializer):
@@ -12,7 +11,7 @@ class PictureSerializer(serializers.Serializer):
 #FIELDS FOR DETAIL VIEW WITHOUT SPECIFICS -- BELONGS TO TOURDETAILSERIALIZER
 GLOBAL_FIELDS = ('id', 'title', 'text', 'tourtype', 'rating','author', 'created',
         'profile_pk','image','slug','season','offseason','geojson_track','starting_pnt',
-        'photoalbum','tour_duration','distance','elevation_values','steps', 'elevation_gain','fitness_difficulty','tech_difficulty')
+        'photoalbum','tour_duration','distance','elevation_values','steps', 'elevation_gain')
 
 class TourSerializer(serializers.ModelSerializer):
         image = PictureField()
@@ -28,7 +27,7 @@ class TourSerializer(serializers.ModelSerializer):
                 return start
         class Meta:
                 fields = ('id', 'title', 'text', 'tourtype', 'rating','author', 'created','image','slug',
-                'track','starting_pnt','subtitle','tour_duration','distance','difficulty','season','elevation_values','steps')
+                'starting_pnt','subtitle','tour_duration','distance','difficulty','season', 'elevation_gain')
                 model = Tour
 
 class TourDetailSerializer(TourSerializer):
@@ -40,32 +39,30 @@ class TourDetailSerializer(TourSerializer):
                 return PictureSerializer(obj.album.all(), many=True).data 
         def get_author_name(self,obj):
                 return obj.author.user_name
-     
-
         def get_profile_pk(self,obj):
                 return obj.author.profile.pk
     
 class HochtourSerializer(TourDetailSerializer):
-     class Meta:
-        fields = GLOBAL_FIELDS
-        model = Hochtour
+        class Meta:
+                fields = GLOBAL_FIELDS+('fitness_difficulty', 'tech_difficulty')
+                model = Hochtour
 
 class WandernSerializer(TourDetailSerializer):
         class Meta:
-                fields = GLOBAL_FIELDS
+                fields = GLOBAL_FIELDS+('fitness_difficulty', 'tech_difficulty')
                 model = Wandern
 
 class KlettertourSerializer(TourDetailSerializer):
-     class Meta:
-        fields = GLOBAL_FIELDS
-        model = Klettertour
+        class Meta:
+                fields = GLOBAL_FIELDS+('protection', 'climbing_grade')
+                model = Klettertour
 
 class HikeAndFlySerializer(TourDetailSerializer):
-     class Meta:
-        fields = GLOBAL_FIELDS
-        model = HikeAndFly
+        class Meta:
+                fields = GLOBAL_FIELDS+('fitness_difficulty', 'tech_difficulty')
+                model = HikeAndFly
 
 class SkitourSerializer(TourDetailSerializer):
-     class Meta:
-        fields = GLOBAL_FIELDS
-        model = Skitour
+        class Meta:
+                fields = GLOBAL_FIELDS+('fitness_difficulty', 'tech_difficulty')
+                model = Skitour

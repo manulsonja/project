@@ -23,8 +23,8 @@ import { List } from '@mui/material';
 
 const HutMenuStatic = ({ huttype, huttypeselection}) => {
 
-  const hut_arr = ['Huette','Alm','Gasthof']
-  const hutbuttons = ['huette.jpeg','alm.jpeg','gh.jpeg']
+  const hut_arr = ['huette','alm','gasthof']
+  const hutbuttons = ['huette.jpeg','alm.jpeg','gasthof.jpeg']
   const [opened, setCollapsed] = React.useState({'locations': false, 'tours': true, 'huts': false})
   const useStyles = makeStyles({
       buttonRow: {
@@ -38,7 +38,7 @@ const HutMenuStatic = ({ huttype, huttypeselection}) => {
   return(
     <div className={classes.buttonRow}>
       {array.map((item, i) => {
-        const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${icons[i]}")`
+        const bgurl = `url("${process.env.REACT_APP_API_URL}/media/ressources/navButtons/${icons[i]}")`
         const style={...{["backgroundImage"]:bgurl}}
         const isIncluded = state.includes(item)
         return(

@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import TuneIcon from '@mui/icons-material/Tune';
 import Button from '@mui/material/Button';
-import { resetselection, tourselection, diffselection, mapsearch, mapoffset } from '../../../actions/map';
+import { resetselection, tourselection, diffselection, mapsearch, mapoffset, huttypeselection } from '../../../actions/map';
 import { connect } from 'react-redux';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Chip from '@mui/material/Chip';
@@ -19,14 +19,10 @@ import HutMenu from './MobileMenu/HutMenu.tsx';
 import LocationMenu from './MobileMenu/LocationMenu.tsx';
 import LocationMenuStatic from './MobileMenu/LocationMenuStatic.tsx';
 import HutMenuStatic from './MobileMenu/HutMenuStatic.tsx';
+import SearchBar from './Search.tsx';
 
 const useStyles = makeStyles((theme) => ({
-    search: {
-        backgroundColor: 'white',
-        maxWidth: 120,
-        borderRadius: "10px",
-        border: '0',
-    },
+
     toolbarTitle: {
         flexGrow: 1,
         color: 'white',
@@ -35,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
     filterChips: {
         width: '100%',
         backgroundColor: 'white',
+        position:'fixed', bottom: 55,
+     
     },
     buttons: {
         margin: theme.spacing(1, 1.5), 
@@ -42,7 +40,17 @@ const useStyles = makeStyles((theme) => ({
         borderColor: 'white',
     },
 }));
-function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring, diffselection, tourselection, searchstring, mapoffset}) {
+function MobileMenuWrapper({  resetselection, 
+                              props, 
+                              difficulty, 
+                              tourtype, 
+                              sstring, 
+                              diffselection, 
+                              tourselection, 
+                              mapsearch, 
+                              mapoffset, 
+                              huttypeselection, 
+                              huttype}) {
     const classes = useStyles()
     const touroption = props.touroption
     const locationoption = props.locationoption
@@ -93,7 +101,8 @@ function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring
      <Box className={classes.filterChips}>
      {(difficulty.length===0)? null :  <Chip label="Anspruch" onDelete={() => {diffselection([])}} />  }
      {(tourtype.length===0)? null : <Chip label="Tourtyp" onDelete={() => {tourselection([])}}/>  }
-     {(sstring==="")? null :       <Chip label="Suche" onDelete={() => {searchstring('')}} />  }  
+     {(huttype.length===0)? null : <Chip label="Huettentyp" onDelete={() => {huttypeselection([])}}/>  }
+     {(sstring==="")? null :       <Chip label="Suche" onDelete={() => {mapsearch('')}} />  }  
      {((sstring==='' && tourtype.length==0 && difficulty.length==0)? mapoffset(0) : mapoffset(35))}
 
  </Box>
@@ -104,16 +113,16 @@ function MobileMenuWrapper({resetselection, props, difficulty, tourtype, sstring
    }}}
 >
   <AppBar position="static">
- <Toolbar sx={{ justifyContent: "space-between" }}>   
+ <Toolbar sx={{ justifyContent: "space-evenly" }}>   
      <Button 
-            
             variant="contained"
             onClick={toggleDrawer("bottom", true)}
             style={{backgroundColor:'#EE0E79'}}
             startIcon={<TuneIcon />}>
-                <Typography variant='h8'> FILTER 
+                <Typography variant='h8'> FILTER
                 </Typography>
       </Button>
+      <SearchBar/>
       <Button 
              variant="contained"
              style={{backgroundColor:'#EE0E79'}}
@@ -134,6 +143,12 @@ const mapStateToProps = state => ({
     difficulty: state.map.difficulty,
     tourtype: state.map.tourtype,
     sstring: state.map.searchstring,
+    huttype: state.map.huttype,
 });
-export default connect(mapStateToProps, { resetselection, tourselection, diffselection, mapsearch, mapoffset })(MobileMenuWrapper);
+export default connect(mapStateToProps, { resetselection,
+                                          tourselection,
+                                          diffselection,
+                                          mapsearch, 
+                                          mapoffset,
+                                          huttypeselection })(MobileMenuWrapper);
 

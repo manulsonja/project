@@ -11,6 +11,9 @@ hohe prioritaet
 2  pagination
 6  datenschutz erklaerung fuer cookies
 ----------------------------------
+permissios
+debug etc off
+secret key into secret json
 
 2 mittlere prioritaet
 
@@ -18,13 +21,13 @@ leaflet initial bounds
 kontakt drawer fuer huetten
 refactor diff selector menu 
 
-touren menue desktop
-    - schwierigkeit
+add functional draft choices for all models
 huetten menu geoeffnet
 
 sortieren nach filter
 hoehenprofil
 haversine ersetzen vincenty
+problem with custom user model refactor!!!!
 
 3 irgendwann mal 
 
@@ -43,6 +46,8 @@ prerender templates
 erledigt
 --------------------------------------------
 --------------------------------------------
+touren menue desktop
+    - schwierigkeit
 3  problem mit window.listener reload in react loesen 
 2  andere filter implementieren
 4  thumbnails!!!!!!

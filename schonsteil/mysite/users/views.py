@@ -5,14 +5,14 @@ from rest_framework.views import APIView
 #from .serializers import CustomUserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
-
+from .serializers import UserCreateSerializer
 
 class CustomUserCreate(APIView):
     print('customusercrateview')
     permission_classes = [AllowAny]
 
     def post(self, request, format='json'):
-        serializer = CustomUserSerializer(data=request.data)
+        serializer = UserCreateSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
             if user:

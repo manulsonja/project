@@ -83,13 +83,14 @@ const useStyles = makeStyles((theme) => ({
 const Posts = (props) => {
 	const { posts } = props;
 	const classes = useStyles();
-	if ((!posts || posts.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
+	if ((!posts || posts.length === 0) ) return <p>Keine Posts gefunden.</p>;
 	return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main" disableGutters={true}>
 				<Grid container spacing={1} alignItems="flex-end">
 					{posts.map((post) => {
 
+						console.log(post)
 						setcolor(post.tourtype)
 						return (
 							<Grid item key={post.id} xs={12} md={12}>
@@ -137,7 +138,7 @@ const Posts = (props) => {
 										</ListItem>
 										<ListItem disablePadding={true}>
 												<HeightIcon />
-											<ListItemText primary="Work" />
+											<ListItemText primary={parseInt(post.elevation_gain)} />
 										</ListItem>
 										<ListItem disablePadding={true}>								
 												<SettingsEthernetIcon />

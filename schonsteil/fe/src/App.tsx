@@ -6,7 +6,7 @@
 	} from "react-router-dom";
 	import Map from './sites/Map/Map.tsx';
 	import Footer from './components/Footer';
-	import SingleTour from './sites/SingleSites/SingleTour.js';
+	import SingleTour from './sites/SingleSites/Tour/SingleTour.js';
 	import Register from './sites/Auth/register.js';
 	import Login from './sites/Auth/login.js';
 	import SingleHut from './sites/SingleSites/SingleHut/SingleHut.js';
@@ -27,6 +27,8 @@
 	import Tours from './sites/ListViews/Tours.tsx';
 	import Huts from './sites/ListViews/Huts.tsx';
 	import Locations from './sites/ListViews/Locations.tsx';
+import SingleArticle from './sites/SingleSites/singleArticle.js';
+import Impressum from './sites/static/impressum.js';
 	
 	const App = () => {
 	return (
@@ -41,7 +43,10 @@
 					</PrivateRoute>
 				}/>	
 					<Route exact path="map" element={<Map/>} />
-					
+					<Route exact path="impressum" element={<Impressum/>} />
+
+					<Route exact path="/article/:slug" element={<SingleArticle/>} />
+
 					{/* --------------------------------------------------------- */}
 					<Route exact path="tours" element={<Tours/>} />
 					<Route path="/tour/:category/:slug" element={<SingleTour/>} />

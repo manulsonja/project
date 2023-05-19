@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { MEDIA_URL } from '../../../SETTINGS';
 import { Link } from '@material-ui/core';
+import { Typography } from '@mui/material';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -25,7 +26,7 @@ export default function InfoBox(props) {
     <Box sx={{ width: '100%', backgroundColor: '', padding: '10px 10px 10px' }}>
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={2}>
-          <Item>Untergrund<h1>{data.ground_type}</h1></Item>
+          <Item>Untergrund<Typography variant='h4'>{data.ground_type}</Typography></Item>
         </Grid>
         <Grid item xs={2}>
           <Item>Gebuehren<h1>{data.fees}</h1></Item>

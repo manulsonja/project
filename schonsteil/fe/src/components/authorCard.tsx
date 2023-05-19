@@ -22,6 +22,8 @@ export default function AuthorCard(props) {
  }
  const author_name = `${data.first_name} ${data.last_name}`;
  const profileimage = data.profile.profilepic.ratios['1/1'].sources['image/jpeg']['300']
+ const about = data.profile.about_short
+ console.log(data.profile)
   return (
     <div style={{marginTop:'50px'}}>
     <Grid container  xs={12} className={classes.profileCard}
@@ -38,7 +40,7 @@ export default function AuthorCard(props) {
             {author_name} 
       </Typography>
       <Typography gutterBottom component="div">
-        Max is an avid hiker and loyal writer for schonsteil.com
+         {about}
       </Typography>
           <Button size="small" color="primary">
           More about {author_name}

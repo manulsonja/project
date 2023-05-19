@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 const LocationSidebar = ({locationtype, locationselection}) => {
 
 const cat_arr = ['Huette','Alm','Gasthof']
-const buttons = ['wd.jpeg','ht.jpeg','kl.jpeg']
+const buttons = ['wandern.jpeg','hochtour.jpeg','klettern.jpeg']
 const classes = useStyles();
 
 function ToggleImage(data) {
@@ -68,7 +68,7 @@ function ToggleImage(data) {
     <div className={classes.buttonContainer}>  </div>
   
   { cat_arr.map((item, i) => {
-            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
+            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/ressources/navButtons/${buttons[i]}")`
            return(ToggleImage({'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
     })  }
      </React.Fragment>

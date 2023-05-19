@@ -28,10 +28,14 @@ class UserCreateSerializer(UserCreateSerializer):
     print('usercreateserializer')
     class Meta(UserCreateSerializer.Meta):
         model = NewUser
-        fields = ('id', 'email', 'first_name', 'last_name', 'password')
+        fields = ('id', 'email', 'first_name', 'last_name', 'password', 'user_name')
+
 
 class ProfileImageSerializer(serializers.Serializer):
+        about_short = serializers.CharField()
         profilepic=PictureField()
+
+     
 
 class AuthorSerializer(serializers.ModelSerializer):
     profile = serializers.SerializerMethodField()

@@ -22,10 +22,16 @@ export default function ContactDialoge({open, close, data}) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
            <ul>
-            <li>Website: {data.website}            </li>
-
-            <li>Telephone: {data.telephone}            </li>
-
+            <li>
+              <Button                
+                target="_blank"
+                component="a"
+                href= {`http://${data.website}`}
+                rel="noreferrer">
+                {data.website}
+                </Button>  
+              </li>
+            <li>Telephone: {data.telephone}</li>
             <li>Email: {data.email}</li>
            </ul>
           </DialogContentText>

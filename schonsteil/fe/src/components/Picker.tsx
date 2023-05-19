@@ -221,8 +221,8 @@ const Picker = ({tourtype,
       );
     }
 
-const cat_arr = ['Wandern','Hochtour','Klettertour','Hike and Fly','Skitour']
-const buttons = ['wd.jpeg','ht.jpeg','kl.jpeg','hikeandfly1.jpeg','st.jpeg']
+const cat_arr = ['Wandern','Hochtour','Klettern','Hike and Fly','Skitour']
+const buttons = ['wandern.jpeg','hochtour.jpeg','klettern.jpeg','hikeandfly.jpeg','skitour.jpeg']
 
 const diff_arr = ['leicht', 'mittel', 'schwierig']
 const diff_colors = ['blue', 'red', 'black']
@@ -234,7 +234,7 @@ return (
       <Stack spacing={0}>    
         <Item>
          {cat_arr.map((item, i) => {
-            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${buttons[i]}")`
+            const bgurl = `url("${process.env.REACT_APP_API_URL}/media/ressources/navButtons/${buttons[i]}")`
                return(ToggleImage({'selectorItem':item, 'bg':bgurl, 'bgtype':"backgroundImage"}))
          })}
   

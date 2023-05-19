@@ -1,22 +1,19 @@
 import React from 'react'
-import ListPage from './ListPage.tsx'
 import Drawer from '@mui/material/Drawer';
 import { makeStyles } from '@material-ui/core';
 import HutSidebar from './components/HutSidebar.tsx';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { connect } from 'react-redux';
-import { useEffect } from 'react';
 import MobileMenuWrapper from '../Map/components/MobileMenuWrapper.tsx';
+import ListPagePost from './ListPagePost.tsx';
 
 const drawerWidth = 150;
 const useStyles = makeStyles((theme) => ({	
-
 	sideBar: {
 		backgroundColor: '#272727',
-
 	}
 }));
+
 const RenderSidebar = () => {
   const classes = useStyles()
 
@@ -40,32 +37,20 @@ const RenderSidebar = () => {
   </Drawer>
   )
 }
-const Huts = ({huttype}) => {
+  const Huts = () => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
-
-  const [url, setUrl] = React.useState('huts/')
-  useEffect(() => {   
-      if(huttype.length==0) setUrl('huts/');
-      else {
-          const qs = '/huts/?huttypes='+huttype;           
-          setUrl(qs.toLocaleLowerCase());
-      } 
-    },[huttype]);
 
   return (
     <React.Fragment>
       {(matches? <RenderSidebar/> : null)}
-    <ListPage props={{'url':url, 'type':'hut'}}/>
+    <ListPagePost props={{'type':'hut'}}/>
     {(!matches?  <MobileMenuWrapper props={{'touroption': false, 'hutoption': true, 'locationoption': false, 'static': true}}/> : null)}
 
     </React.Fragment>
   )
 }
 
-const mapStateToProps = state => ({
-    huttype: state.map.huttype,
-  
-  
-  });
-export default connect(mapStateToProps)(Huts);
+export default Huts;
+
+

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'left',
 	},
 	postText: {
-		display: 'flex',
+		difsplay: 'flex',
 		justifyContent: 'left',
 		alignItems: 'baseline',
 		fontSize: '12px',
@@ -75,8 +75,8 @@ if ((!appState.posts || appState.posts.length === 0) ) return <p>Bergrettung kan
 					</Typography>
 					
 					<Gallery props={appState.posts.gallery}/> 	
-					<InfoBox data={appState.posts} />		
-					<DetailMap position={appState.posts.position}/>		
+{/* 					<InfoBox data={appState.posts} />		
+ */}					<DetailMap position={appState.posts.position}/>		
 				</Container>
 			<div className={classes.heroContent}>
 				<Container maxWidth="lg">		

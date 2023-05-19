@@ -50,9 +50,9 @@ const MobileMenu = ({diffselection, tourselection, tourtype, huttype, huttypesel
   }
     setState({ ...state, [anchor]: open });
   };
-  const tour_arr = ['Wandern','Hochtour','Klettertour','Hike and Fly','Skitour']
-  const tourbuttons = ['wd.jpeg','ht.jpeg','kl.jpeg','hikeandfly1.jpeg','st.jpeg']
-  const hut_arr = ['Huette','Alm','Gasthof']
+  const tour_arr = ['Wandern','Hochtour','Klettern','Hike and Fly','Skitour']
+  const tourbuttons = ['wandern.jpeg','hochtour.jpeg','klettern.jpeg','hikeandfly.jpeg','skitour.jpeg']
+  const hut_arr = ['huette','alm','gasthof']
   const hutbuttons = ['huette.jpeg','alm.jpeg','gh.jpeg']
   const diff_arr = ['leicht', 'mittel', 'schwierig']
   const diff_colors = ['blue', 'red', 'black']
@@ -69,7 +69,7 @@ const MobileMenu = ({diffselection, tourselection, tourtype, huttype, huttypesel
   return(
     <div className={classes.buttonRow}>
       {array.map((item, i) => {
-        const bgurl = `url("${process.env.REACT_APP_API_URL}/media/${icons[i]}")`
+        const bgurl = `url("${process.env.REACT_APP_API_URL}/media/ressources/navButtons/${icons[i]}")`
         const style={...{["backgroundImage"]:bgurl}}
         const isIncluded = state.includes(item)
         console.log(bgurl)

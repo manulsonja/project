@@ -47,7 +47,7 @@ class MountainHutAdmin(admin.ModelAdmin):
         ('region', 'gebirge'),
         ('season', 'offseason'),
         'text',
-        'author',
+        ('author','status',),
     )
 
 

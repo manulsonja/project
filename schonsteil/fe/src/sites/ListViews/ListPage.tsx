@@ -45,7 +45,9 @@ const [appState, setAppState] = useState({
 });
 
 useEffect(() => {
-	axiosInstance.get(props.url).then((res) => {
+
+
+	axiosInstance.get(props.url, props.body).then((res) => {
 		setAppState({ ...appState,loading: false, posts: res.data.results, next:res.data.next, previous:res.data.previous });
 		const duration_max = res.data.duration_slider;
 		const distance_max = parseInt(res.data.distance_slider);
