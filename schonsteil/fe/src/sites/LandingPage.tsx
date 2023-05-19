@@ -80,7 +80,10 @@ export default function Landing() {
               <Typography align="center" variant='h1' sx={{ m: '10px' }} > {featureArticle.title}</Typography>
               
             <Typography align="center" sx={{ m: '10px' }} >
-              {featureArticle.subtitle}
+              {featureArticle.subtitle}{'   '}
+              <Link to={'/article/'+featureArticle.slug}>
+              Weiterlesen... 
+            </Link>
             </Typography>
             </React.Fragment>
             )}

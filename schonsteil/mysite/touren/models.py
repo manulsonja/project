@@ -240,7 +240,6 @@ class HikeAndFly(Tour):
         else:
             self.difficulty = 'leicht'
 
-        sel
         self.tourtype = "Hike and Fly"
         super().save(*args, **kwargs)
 

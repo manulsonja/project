@@ -7,6 +7,13 @@ import {  diffselection,
           elevationselection, 
           sliderreload } from '../../../../actions/map';
 import Slider from '@mui/material/Slider';
+import Stack from '@mui/material/Stack';
+
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import HeightIcon from '@mui/icons-material/Height';
+import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
+
+
 const TourSlider = ({duration, 
                     distance, 
                     reload_state, 
@@ -21,11 +28,14 @@ const TourSlider = ({duration,
                     tourtype}) => {
 
   return (
+
     <React.Fragment>
        
      {(!distance_max? <h2>KEINE TOUREN</h2>: 
      <div>
-     <Slider
+        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center"> 
+        <AccessTimeIcon />
+        <Slider
         value={duration}
         max={duration_max}
         aria-label="Small"
@@ -35,8 +45,11 @@ const TourSlider = ({duration,
         }}
         onChangeCommitted={()=>{ sliderreload(!reload_state)}}
       /> 
-       
-      <Slider
+
+      </Stack>
+      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center"> 
+        <SettingsEthernetIcon />
+        <Slider
         value={distance}
         max={distance_max}
 
@@ -48,7 +61,11 @@ const TourSlider = ({duration,
         onChangeCommitted={()=>{ sliderreload(!reload_state)}}
 
       /> 
-         <Slider
+
+      </Stack>
+      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center"> 
+        <HeightIcon />
+        <Slider
         value={elevation}
         max={elevation_max}
 
@@ -59,7 +76,11 @@ const TourSlider = ({duration,
         }}
         onChangeCommitted={()=>{ sliderreload(!reload_state)}}
 
-      />  </div>)} 
+      /> 
+
+      </Stack>
+     
+     </div>)} 
       </React.Fragment>
   )
 }
