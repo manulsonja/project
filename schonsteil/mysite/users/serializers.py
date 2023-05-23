@@ -46,3 +46,17 @@ class AuthorSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'profile')
         model = NewUser
 
+
+
+class ProfileDataSerializer(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+    def get_profile(self, obj):
+            try:
+                photos = obj.profile
+            except: 
+                 return {"Anonymous"}
+            return ProfileImageSerializer(photos).data     
+    class Meta:
+        fields = ('first_name', 'last_name', 'profile', 'user_name')
+        model = NewUser
+

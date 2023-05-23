@@ -11,6 +11,7 @@ import { MEDIA_URL } from '../SETTINGS';
 import NavButtons from '../components/NavButtons.tsx';
 import { makeStyles } from '@material-ui/core';
 import LoadingSpinner from '../components/LoadingSpinner.tsx';
+import LPTours from './ListViews/Tiles/LPTours.tsx';
 
 const useStyles = makeStyles((theme) => ({
 	sectionTwo: {
@@ -99,13 +100,13 @@ export default function Landing() {
       </Container>
     {(newestTours.loading? <LoadingSpinner/> : 
     <div className={classes.sectionTwo}>
-      <Tours props={newestTours}/>
+      <LPTours props={newestTours}/>
     </div>
     )}
      {(currentTours.loading? <LoadingSpinner/> : 
 
     <div className={classes.sectionThree}>
-    <Tours props={currentTours}/>
+    <LPTours props={currentTours}/>
     </div>
      )}
     </React.Fragment>

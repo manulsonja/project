@@ -5,7 +5,19 @@ from rest_framework.views import APIView
 #from .serializers import CustomUserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
-from .serializers import UserCreateSerializer
+from .serializers import UserCreateSerializer, ProfileDataSerializer
+from .models import NewUser
+from rest_framework.response import Response
+
+
+class ProfileView(APIView):
+    def get(self, request, format=None):
+        user = request.user
+        serializer =  ProfileDataSerializer(user)
+        return Response(serializer.data)
+            
+   
+
 
 class CustomUserCreate(APIView):
     print('customusercrateview')

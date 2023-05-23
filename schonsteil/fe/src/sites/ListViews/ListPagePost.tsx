@@ -42,7 +42,8 @@ function ListPagePost({	props,
 						elevation, 
 						duration,
 						difficulty,
-						reload_state }) {
+						reload_state,
+					}) {
 				
 const init_type = (type) =>
 {
@@ -92,7 +93,7 @@ const [appState, setAppState] = useState({
 });
 
 useEffect(() => {
-
+		setAppState({...appState, loading: true})
 		axiosInstance.post(url, body).then((res) => {
 		setAppState({ ...appState, loading: false, posts: res.data.results, next:res.data.next, previous:res.data.previous });
 
@@ -106,6 +107,8 @@ useEffect(() => {
 
 	});
 }, [huttype, searchstring, tourtype, difficulty, reload_state]); 
+
+
 
 const hasMore = () => { 
 	if(appState.next===null)
@@ -157,7 +160,6 @@ const renderSlider = () => { return(
 	</Collapse>
 </React.Fragment>
 )}
-console.log(appState)
 
 return (
 <React.Fragment>  
@@ -182,5 +184,5 @@ distance: state.map.distance,
 reload_state: state.map.reload_state,
 
 })
-export default connect(mapStateToProps,{distancesetmax, durationsetmax, durationselection, elevationsetmax})(ListPagePost)
+export default connect(mapStateToProps,{ distancesetmax, durationsetmax, durationselection, elevationsetmax})(ListPagePost)
 

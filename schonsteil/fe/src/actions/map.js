@@ -16,7 +16,8 @@ import {  DIFFICULTY_SELECTION,
           D3_SELECTION,
           D3_INDEX,
           D3_ELEVATION,
-          MAP_BOUNDS} from "./types";
+          MAP_BOUNDS,
+          AXIOS_LOADING} from "./types";
 
 export const mapsearch = (searchstring) => dispatch => {
     dispatch({
@@ -34,6 +35,12 @@ export const diffselection = (diff) => dispatch => {
     dispatch({
         type: DIFFICULTY_SELECTION,
         payload: diff,
+    });
+};
+export const setaxiosloading = (loading) => dispatch => {
+    dispatch({
+        type: AXIOS_LOADING,
+        payload: loading,
     });
 };
 export const tourselection = (tourtypes) => dispatch => {

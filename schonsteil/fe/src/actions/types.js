@@ -45,3 +45,5 @@ export const RESET_SELECTION = 'RESET_SELECTION'
 export const D3_SELECTION = 'D3_SELECTION'
 export const D3_INDEX = 'D3_INDEX'
 export const D3_ELEVATION = 'D3_ELEVATION'
+
+export const AXIOS_LOADING = 'AXIOS_LOADING'

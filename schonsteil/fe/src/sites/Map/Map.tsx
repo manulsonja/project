@@ -15,9 +15,6 @@ import SelectionBar from './components/SelectionBar.tsx';
 function getCurrentDimension(){
 return { width: window.innerWidth, height: window.innerHeight }}
 
-const query_string="?tourtypes="
-const diff_querystring='&diff='
-const search_querystring='&search='
 const names = CATEGORIES
 
 function Map({ hardness, tourtype, huttype, searchphrase, mapbounds }) {
@@ -69,20 +66,19 @@ useEffect(() => {
 	});
 }, [tourtype, searchphrase, hardness, mapbounds]);
 
+const hut_body = {
+	'huttype': huttype,
+	'searchstring': searchphrase,
+
+	} 
 useEffect(() =>{
 
-		let url;
-		if(huttype.length==0) {
-			url = hutState.huturl  }
-		else {
-			url = hutState.huturl+'?huttypes='+huttype;
-		}
 
-		axiosInstance.get(url.toLocaleLowerCase()).then((res) => {
+		axiosInstance.post('huts/filter/', hut_body).then((res) => {
 		const huts = res.data.results;
 		setHuts({ ...hutState,loading: false, huts: huts });
 	});
-},[huttype])
+},[huttype, searchphrase])
 
 useEffect(() =>{
 	axiosInstance.get(locationState.locationUrl).then((res) => {

@@ -5,6 +5,7 @@ import {bisect } from 'd3'
 import { connect } from 'react-redux'
 import { setd3selection, setd3index,d3setelevation} from '../../../actions/map'
 import './chart.css';
+import NewChart from './NewChart.tsx'
 
 const useResizeObserver = ref => {
 
@@ -14,6 +15,7 @@ const useResizeObserver = ref => {
         const resizeObserver = new ResizeObserver((entries) =>{
             entries.forEach(entry => {
                 setDimensions(entry.contentRect);
+
             })
             
         })
@@ -27,21 +29,14 @@ const useResizeObserver = ref => {
 }
 
 
-
 const Chart = ({props, d3selection, setd3selection, setd3index, d3setelevation}) => {
   
 const ele = props.posts.elevation_values
 const dist = props.posts.steps
 
 const svgRef = useRef()
-const overScgRef = useRef()
-
 const wrapperRef = useRef()
-
 const dimensions = useResizeObserver(wrapperRef)
-
-useEffect(() => {
-    console.log('rerender')
 
     if(ele && dist && dimensions){
 
@@ -49,13 +44,13 @@ useEffect(() => {
         const w = dimensions.width;
         const h = dimensions.height;
         const margin = 40
-        const innerwidth = w-margin*2
-        const innerheight = h-margin*2
 
         const y_max = Math.max(...ele)
         const y_min = Math.min(...ele) 
         
         const svg = select(svgRef.current)
+
+
 
         const xScale = scaleLinear()
             .domain([0, xmax*1000])
@@ -64,9 +59,10 @@ useEffect(() => {
             .domain([y_min,y_max])
             .range([h-margin,0+margin])
 
-            const handleDrag = (e) => {
+
+        const handleDrag = (e) => {
                 console.log("herure")
-                const x = e.x + 40
+                const x = e.x 
                 const loc = xScale.invert(x)
                 setd3selection(loc)
         
@@ -76,16 +72,10 @@ useEffect(() => {
                 setd3index(bisected)
                 d3setelevation(ele[bisected])    }   
 
-
-            const dr = drag()
+        const dr = drag()
             .on('drag', handleDrag);
          
-        
-
-
-
-
-
+     
         const xAxis = axisBottom(xScale);
         svg.select('.xAxis')
         .style('transform',`translateY(${h-margin}px)`)    
@@ -97,10 +87,11 @@ useEffect(() => {
         .style('transform',`translateX(${margin}px)`)    
         .call(yAxis)
         
-         const myLine = area()
+         const myArea = area()
             .x((value, i) => xScale(dist[i]*1000))
             .y1(value => yScale(value))
-            .y0(h)
+            .y0(yScale(y_min))
+            console.log(yScale(y_min))
         
  
          
@@ -111,75 +102,37 @@ useEffect(() => {
         .style('background', 'LightGray')
    
 
-
-
-
         //indicator line   
         svg.select('.indicator-line')
-        .attr('class','overlay')
+        .attr('x1', xScale(d3selection))
+        .attr('x2', xScale(d3selection))
         .attr('stroke','red')
         .attr('stroke-width', 20)
-        .attr('x1', 3000)
-        .attr('x2', 3000)
         .attr('y1', 0)
         .attr('y2', h)
         .call(dr); 
-
+ 
         
-         svg.select('.overlay')
-        .attr('x1', xScale(d3selection))
-        .attr('x2', xScale(d3selection))
-        .attr('y1', 0)
-        .attr('y2', h);
-
-
-  
-        
-        svg.select('.action-layer')
-        .attr('width', innerwidth)
-        .attr('height', innerheight)
-
-        .style('transform',`translate(${margin}px,${margin}px)`) 
-        .attr('fill', "none")
-        .attr('pointer-events', 'all')
-   /*      .on("mousemove", function(event) {
-            const e = event.layerX
-            const x = e +40
-            const loc = xScale.invert(x)
-            setd3selection(loc)
-
-            const needle = loc/1000
-            const bisected =  bisect(dist, needle)
-
-            setd3index(bisected)
-            d3setelevation(ele[bisected])
-            
-          }); */
-         
-          svg.selectAll('.graph')
+   svg.select('.graph')
           .data([ele])
-          .attr('d', myLine)
+          .attr('d', myArea)
+
+    
     }
    
-},[d3selection, dimensions]);
- 
-
   return (
-    <div ref={wrapperRef} style={{ height: '200px'}}>
-        
-        <svg ref={svgRef} style={{verticalAlign: 'middle'}}>
+    <React.Fragment>
+    <div>
+    <div ref={wrapperRef} style={{ aspectRatio: '3/1'}}>
+      <svg ref={svgRef} style={{verticalAlign: 'middle'}}>
         <path className='graph'></path>
-        <rect className='action-layer'></rect>
-        <g className='xAxis'></g>        
+       <g className='xAxis'></g>        
         <g className='yAxis'></g>
-        <g>
-        <line className='indicator-line'></line>
-        <rect className='touch_area'></rect>
-
-        </g>
-    </svg>
+         <line className='indicator-line'></line>
+    </svg></div>
     </div>
-  
+    <NewChart ele={ele} dist={dist}/>
+    </React.Fragment>
 )}
 
 const mapStateToProps = state => ({

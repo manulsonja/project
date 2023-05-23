@@ -22,13 +22,13 @@
 	import store from './store';
 	import Facebook from './sites/Auth/Facebook.js';
 	import Google from './sites/Auth/Google.js';
-	import Dashboard from './dashboard/Dashboard.tsx';
 	import theme from './theme';
 	import Tours from './sites/ListViews/Tours.tsx';
 	import Huts from './sites/ListViews/Huts.tsx';
 	import Locations from './sites/ListViews/Locations.tsx';
 import SingleArticle from './sites/SingleSites/singleArticle.js';
 import Impressum from './sites/static/impressum.js';
+import Profile from './sites/Profile/Profile.tsx';
 	
 	const App = () => {
 	return (
@@ -62,7 +62,7 @@ import Impressum from './sites/static/impressum.js';
 					{/* ------------------  Authentication----------------------- */}
 
 					<Route path="/register" element={<Register/>} />
-					<Route path="/dashboard" element={<Dashboard/>} />
+					<Route path="/dashboard" element={<Profile/>} />
 
 					<Route path="/login" element={<Login/>} />
 					<Route path="/reset-password" element={<ResetPassword/>} />

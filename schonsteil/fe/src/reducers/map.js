@@ -16,7 +16,8 @@ import {
     D3_SELECTION,
     D3_INDEX,
     D3_ELEVATION,
-    MAP_BOUNDS} from "../actions/types";
+    MAP_BOUNDS,
+    AXIOS_LOADING} from "../actions/types";
 
 const initialState = {
     offset: 0,
@@ -35,6 +36,7 @@ const initialState = {
     d3selection: 0,
     d3index:0,
     d3elevation:0,
+    axios_loading: true,
 
 };
 
@@ -51,6 +53,10 @@ export default function(state = initialState, action) {
     case D3_ELEVATION: return {
         ...state,
         d3elevation: payload,        
+}
+case AXIOS_LOADING: return {
+    ...state,
+    setaxiosloading: payload,        
 }
     
     case D3_INDEX: return {
