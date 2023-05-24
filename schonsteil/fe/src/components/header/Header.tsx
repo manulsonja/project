@@ -214,7 +214,7 @@
 	const authLinks = () => {
 		return(
 			<React.Fragment>
-					<Link to="/dashboard">
+					<Link to={`/profile/${user.id}`} className={classes.fullLink}>
 							<div style={{color:'white'}}>Hallo! {/* {user.first_name} */}</div>
 					</Link>
 					<Button
@@ -311,6 +311,7 @@
 	const mapStateToProps = state => ({
 	isAuthenticated: state.auth.isAuthenticated,
 	user: state.auth.user,
+
 	});
 
 	export default connect(mapStateToProps, { logout })(Header);

@@ -5,19 +5,40 @@ from rest_framework.views import APIView
 #from .serializers import CustomUserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
-from .serializers import UserCreateSerializer, ProfileDataSerializer
+from .serializers import UserCreateSerializer, ProfileDataSerializer, GuestProfileSerializer, AuthorProfileSerializer
 from .models import NewUser
 from rest_framework.response import Response
 
-
 class ProfileView(APIView):
-    def get(self, request, format=None):
-        user = request.user
-        serializer =  ProfileDataSerializer(user)
-        return Response(serializer.data)
-            
-   
+    def get(self, request, uid,  format=None):
+        authuid = request.user.pk 
 
+        print(authuid)
+        print(uid)
+
+        user = NewUser.objects.get(pk=uid)
+        if authuid == uid:
+            resp = self.get_auth_profile(user)
+        else:
+            if user.is_staff is True:
+                resp = self.get_author_profile(user)
+            else:
+                resp = self.get_guest_profile(user)
+                    
+        """       except:
+            resp = Response("User nicht gefunden", status=404) """
+            
+        return resp
+
+    def get_auth_profile(self, user):
+        return Response(ProfileDataSerializer(user).data)
+    
+    def get_guest_profile(self, user): 
+        return Response(GuestProfileSerializer(user).data)
+    def get_author_profile(self, user): 
+        return Response(AuthorProfileSerializer(user).data)
+           
+            
 
 class CustomUserCreate(APIView):
     print('customusercrateview')

@@ -257,7 +257,7 @@ function Header({ logout, isAuthenticated, user }) {
 					>
 						Logout
 					</Button>
-					<Link to="/dashboard" className={classes.fullLink}>
+					<Link to={`/profile/${user.id}`} className={classes.fullLink}>
 					<div>Hallo! {/* {user.first_name} */}</div>
 					</Link>
 			</React.Fragment>
@@ -276,7 +276,7 @@ function Header({ logout, isAuthenticated, user }) {
 					>
 						Logout
 					</Button>
-					<Link to="/dashboard" className={classes.mlink}>
+					<Link to={`/profile/${user.id}`} className={classes.fullLink}>
 					<div>Hallo!{/*  {user.first_name} */}</div>
 					</Link>
 			</React.Fragment>

@@ -2,6 +2,8 @@ from rest_framework import serializers
 from users.models import NewUser
 from djoser.serializers import UserCreateSerializer
 from pictures.contrib.rest_framework import PictureField
+from blog.models import BlogArticle
+from touren.models import Tour
 """ 
 class CustomUserSerializer(serializers.ModelSerializer):
     Currently unused in preference of the below.
@@ -39,24 +41,75 @@ class ProfileImageSerializer(serializers.Serializer):
 
 class AuthorSerializer(serializers.ModelSerializer):
     profile = serializers.SerializerMethodField()
+    aid = serializers.SerializerMethodField()
+    def get_aid(self, obj):
+         return obj.pk
     def get_profile(self, obj):
             photos = obj.profile
             return ProfileImageSerializer(photos).data     
     class Meta:
-        fields = ('first_name', 'last_name', 'profile')
+        fields = ('first_name', 'last_name', 'profile', 'aid')
         model = NewUser
 
 
 
 class ProfileDataSerializer(serializers.ModelSerializer):
+    auth_type = serializers.SerializerMethodField()
     profile = serializers.SerializerMethodField()
+    def get_auth_type(self,obj):
+         return 'owner'
+
     def get_profile(self, obj):
-            try:
-                photos = obj.profile
-            except: 
-                 return {"Anonymous"}
+            
+            photos = obj.profile
             return ProfileImageSerializer(photos).data     
     class Meta:
-        fields = ('first_name', 'last_name', 'profile', 'user_name')
+        fields = ('first_name', 'last_name', 'profile', 'user_name', 'auth_type')
         model = NewUser
 
+class GuestProfileSerializer(serializers.ModelSerializer):
+    auth_type = serializers.SerializerMethodField()
+    profile = serializers.SerializerMethodField()
+    def get_auth_type(self,obj):
+         return 'guest'
+    def get_profile(self, obj):
+            photos = obj.profile
+            return ProfileImageSerializer(photos).data     
+    class Meta:
+        fields = ('profile', 'user_name', 'auth_type')
+        model = NewUser
+
+
+
+class ArticleStubSerializer(serializers.ModelSerializer):
+      class Meta:
+        fields = ('title', 'image', 'subtitle','slug')
+        model = BlogArticle
+class TourStubSerializer(serializers.ModelSerializer):
+      class Meta:
+        fields = ('title', 'subtitle','slug','tourtype')
+        model = Tour
+     
+     
+class AuthorProfileSerializer(serializers.ModelSerializer):
+    auth_type = serializers.SerializerMethodField()
+    profile = serializers.SerializerMethodField()
+    articles = serializers.SerializerMethodField()
+    tours = serializers.SerializerMethodField()
+    def get_tours(self,obj):
+         tours = obj.tour_posts.all()
+         return TourStubSerializer(tours, many=True).data
+         
+    def get_articles(self,obj):
+         arts = obj.articles.all()
+         return ArticleStubSerializer(arts, many=True).data
+    def get_auth_type(self,obj):
+         return 'author_profile'
+    def get_profile(self, obj):
+            photos = obj.profile
+            return ProfileImageSerializer(photos).data     
+    class Meta:
+        fields = ('profile', 'user_name', 'auth_type', 'articles', 'tours')
+        model = NewUser
+
+     

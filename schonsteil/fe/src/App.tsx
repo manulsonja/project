@@ -62,7 +62,7 @@ import Profile from './sites/Profile/Profile.tsx';
 					{/* ------------------  Authentication----------------------- */}
 
 					<Route path="/register" element={<Register/>} />
-					<Route path="/dashboard" element={<Profile/>} />
+					<Route path="/profile/:uid" element={<Profile/>} />
 
 					<Route path="/login" element={<Login/>} />
 					<Route path="/reset-password" element={<ResetPassword/>} />

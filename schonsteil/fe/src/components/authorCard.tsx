@@ -2,6 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   profileImage: {
@@ -23,7 +24,7 @@ export default function AuthorCard(props) {
  const author_name = `${data.first_name} ${data.last_name}`;
  const profileimage = data.profile.profilepic.ratios['1/1'].sources['image/jpeg']['300']
  const about = data.profile.about_short
- console.log(data.profile)
+ const aid = data.aid
   return (
     <div style={{marginTop:'50px'}}>
     <Grid container  xs={12} className={classes.profileCard}
@@ -42,9 +43,11 @@ export default function AuthorCard(props) {
       <Typography gutterBottom component="div">
          {about}
       </Typography>
+      <Link to={`/profile/${aid}`} >
           <Button size="small" color="primary">
           More about {author_name}
         </Button> 
+       </Link>
     </Grid>
     </Grid>
   </div> 

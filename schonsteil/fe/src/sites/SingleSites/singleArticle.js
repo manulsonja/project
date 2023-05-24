@@ -67,7 +67,6 @@
 
 			console.log(appState)
 			if ((!appState.article || appState.article.length === 0) ) return <p>Bergrettung kann nicht ausruecken.</p>;
-			console.log(appState.article.author)
 			return (
 
 				<Container component="main" maxWidth="lg" className={classes.tourArticle}>
